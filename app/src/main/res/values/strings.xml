@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Group Loop</string>
+    <string name="title_activity_login_logout">LoginLogout</string>
 </resources>

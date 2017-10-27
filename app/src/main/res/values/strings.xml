@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Group Loop</string>
-    <string name="title_activity_login_logout">LoginLogout</string>
+    <string name="title_activity_login_logout">Login Logout</string>
+    <string name="title_activity_group_items">Group Items</string>
+
+    <string name="button_login_logout">Login/Logout</string>
+    <string name="button_group_items">Groups Items</string>
 </resources>

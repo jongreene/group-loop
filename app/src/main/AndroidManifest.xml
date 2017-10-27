@@ -25,7 +25,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ferocioushammerheads.grouploop.MainActivity" />
         </activity>
-        <activity android:name=".GroupItems" />
+        <activity
+            android:name=".GroupItems"
+            android:label="@string/title_activity_group_items"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ferocioushammerheads.grouploop.MainActivity" />
+        </activity>
         <activity android:name=".ScheduleItem" />
         <activity android:name=".ListItem" />
         <activity android:name=".GroupChatItem"></activity>

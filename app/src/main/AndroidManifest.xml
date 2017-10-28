@@ -27,7 +27,7 @@
         </activity>
         <activity
             android:name=".GroupItems"
-            android:label="@string/title_activity_group_items"
+            android:label="@string/title_activity_login_logout"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

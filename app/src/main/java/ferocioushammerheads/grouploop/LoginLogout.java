@@ -81,7 +81,7 @@ public class LoginLogout extends AppCompatActivity implements View.OnClickListen
             return;
         }
 
-//        showProgressDialog();
+        showProgressDialog();
 
         // [START create_user_with_email]
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -102,7 +102,7 @@ public class LoginLogout extends AppCompatActivity implements View.OnClickListen
                         }
 
                         // [START_EXCLUDE]
-//                        hideProgressDialog();
+                        hideProgressDialog();
                         // [END_EXCLUDE]
                     }
                 });
@@ -115,7 +115,7 @@ public class LoginLogout extends AppCompatActivity implements View.OnClickListen
             return;
         }
 
-//        showProgressDialog();
+        showProgressDialog();
 
         // [START sign_in_with_email]
         mAuth.signInWithEmailAndPassword(email, password)
@@ -139,7 +139,7 @@ public class LoginLogout extends AppCompatActivity implements View.OnClickListen
                         if (!task.isSuccessful()) {
                             mStatusTextView.setText(R.string.auth_failed);
                         }
-//                        hideProgressDialog();
+                        hideProgressDialog();
                         // [END_EXCLUDE]
                     }
                 });
@@ -205,11 +205,13 @@ public class LoginLogout extends AppCompatActivity implements View.OnClickListen
     }
 
     private void updateUI(FirebaseUser user) {
-//        hideProgressDialog();
+        hideProgressDialog();
         if (user != null) {
             mStatusTextView.setText(getString(R.string.emailpassword_status_fmt,
                     user.getEmail(), user.isEmailVerified()));
             mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
+
+
 
             findViewById(R.id.email_password_buttons).setVisibility(View.GONE);
             findViewById(R.id.email_password_fields).setVisibility(View.GONE);
@@ -228,6 +230,10 @@ public class LoginLogout extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
+
+//        findViewById(R.id.login_app_icon).setVisibility(View.GONE);
+        findViewById(R.id.login_loading_bar).setVisibility(View.VISIBLE);
+
         int i = v.getId();
         if (i == R.id.email_create_account_button) {
             createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
@@ -238,6 +244,17 @@ public class LoginLogout extends AppCompatActivity implements View.OnClickListen
         } else if (i == R.id.verify_email_button) {
             sendEmailVerification();
         }
+
+
+//        findViewById(R.id.login_loading_bar).setVisibility(View.GONE);
+    }
+
+    public void showProgressDialog() {
+        findViewById(R.id.login_loading_bar).setVisibility(View.VISIBLE);
+    }
+
+    public void hideProgressDialog() {
+        findViewById(R.id.login_loading_bar).setVisibility(View.GONE);
     }
 
 }

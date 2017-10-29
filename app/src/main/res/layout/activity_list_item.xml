@@ -37,5 +37,6 @@
         app:srcCompat="@android:drawable/ic_input_add"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="312dp"
-        tools:layout_editor_absoluteY="439dp" />
+        tools:layout_editor_absoluteY="439dp"
+        android:onClick="addItems" />
 </android.support.constraint.ConstraintLayout>

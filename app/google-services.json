@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "728897939573-qu93ck789sobv8psrk8oti85pc6uf4lt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ferocioushammerheads.grouploop",
+            "certificate_hash": "16ba3b3bc2a4f53396e1fbccf47c81956afb0566"
+          }
+        },
+        {
           "client_id": "728897939573-kitm0efvvcdr72b55uqfdqdlgtmsqdkh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

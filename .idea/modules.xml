@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-<<<<<<< HEAD
-      <module fileurl="file://$PROJECT_DIR$/GroupLoop.iml" filepath="$PROJECT_DIR$/GroupLoop.iml" />
-      <module fileurl="file://C:\Users\Ryan\StudioProjects\group-loop\GroupLoop.iml" filepath="C:\Users\Ryan\StudioProjects\group-loop\GroupLoop.iml" />
-||||||| merged common ancestors
-      <module fileurl="file://C:\Users\Ryan\StudioProjects\group-loop\GroupLoop.iml" filepath="C:\Users\Ryan\StudioProjects\group-loop\GroupLoop.iml" />
-=======
-      <module fileurl="file://$PROJECT_DIR$/GroupLoop.iml" filepath="$PROJECT_DIR$/GroupLoop.iml" />
->>>>>>> jon
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/group-loop.iml" filepath="$PROJECT_DIR$/group-loop.iml" />
     </modules>
   </component>
 </project>

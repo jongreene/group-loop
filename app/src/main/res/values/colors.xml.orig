@@ -6,6 +6,9 @@
 
     <color name="grey_100">#F5F5F5</color>
     <color name="grey_300">#E0E0E0</color>
+<<<<<<< HEAD
+=======
     <color name="white">#FFFFFF</color>
 
+>>>>>>> jon
 </resources>

@@ -9,6 +9,9 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 
 public class ListItem extends AppCompatActivity {
     ArrayList<String> listItems=new ArrayList<String>();
@@ -34,6 +37,13 @@ public class ListItem extends AppCompatActivity {
     public void addItems(View v) {
         temp   = (EditText)findViewById(R.id.itemEdit);
         listItems.add(temp.getText().toString());
+
+        // Write a message to the database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("message");
+
+        myRef.setValue("Hello, World!");
+
         temp.setText("");
         adapter.notifyDataSetChanged();
         findViewById(R.id.add_menu_item).setVisibility(View.GONE);

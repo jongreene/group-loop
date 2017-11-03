@@ -5,6 +5,7 @@ import android.os.Bundle;
 import java.util.*;
 
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -34,8 +35,9 @@ public class ListItem extends AppCompatActivity {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            listItems.add(snapshot.child("Names").getValue().toString());
+                        for (DataSnapshot snapshot : dataSnapshot.child("Names").getChildren()) {
+                            listItems.add(snapshot.getValue().toString());
+                            adapter.notifyDataSetChanged();
 
                         }
                     }
@@ -43,7 +45,6 @@ public class ListItem extends AppCompatActivity {
                     public void onCancelled(DatabaseError databaseError) {
                     }
                 });
-        adapter.notifyDataSetChanged();
     }
 
     public void addMenu(View v){

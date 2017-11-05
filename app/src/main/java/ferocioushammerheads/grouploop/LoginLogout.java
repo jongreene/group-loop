@@ -157,8 +157,6 @@ public class LoginLogout extends AppCompatActivity implements View.OnClickListen
     private void signOut() {
         mAuth.signOut();
         updateUI(null);
-
-        finish();
     }
 
     private void sendEmailVerification() {

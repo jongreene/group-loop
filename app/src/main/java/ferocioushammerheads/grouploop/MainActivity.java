@@ -13,7 +13,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "Firebase session";
+    private static final String TAG = "FirebaseSession";
 
     private Button ChangeGroupItems;
     private Button ChangeLogin;
@@ -22,33 +22,56 @@ public class MainActivity extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("message");
 
-//myRef.setValue("Hello, World!");
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-        } else {
-            Log.d(TAG, "onAuthStateChanged:signed_out");
-        }
-//
-//        // Write a message to the database
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference("message");
-//
-//        myRef.setValue("Hello, World!");
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        updateUserEnvironment();
     }
+
+    public void updateUserEnvironment(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        Button login_button = (Button)findViewById(R.id.viewChangeLogin);
+
+        if (user != null) {
+            Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+
+            login_button.setText(R.string.button_login_logout_logged_in);
+
+            findViewById(R.id.viewChangeGroupItems).setVisibility(View.VISIBLE);
+
+        } else {
+            Log.d(TAG, "onAuthStateChanged:signed_out");
+
+            findViewById(R.id.viewChangeGroupItems).setVisibility(View.GONE);
+
+            login_button.setText(R.string.button_login_logout_logged_out);
+        }
+
+
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK){
+                updateUserEnvironment();
+            }
+            if (resultCode == RESULT_CANCELED) {
+                //Write your code if there's no result
+                updateUserEnvironment();
+            }
+        }
+    }
+
 
 
     /** Called when the user taps the LoginLogout button */
     public void loginPage(View view) {
         Intent intent = new Intent(this, LoginLogout.class);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
+        updateUserEnvironment();
     }
 
     /** Called when the user taps the GroupItems button */

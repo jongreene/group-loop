@@ -1,5 +1,6 @@
 package ferocioushammerheads.grouploop;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -137,16 +138,23 @@ public class LoginLogout extends AppCompatActivity implements View.OnClickListen
                         if (!task.isSuccessful()) {
                             mStatusTextView.setText(R.string.auth_failed);
                         }
-                        hideProgressDialog();
                         // [END_EXCLUDE]
+
+                        hideProgressDialog();
+                        finish();
                     }
+
+
                 });
+
         // [END sign_in_with_email]
     }
 
     private void signOut() {
         mAuth.signOut();
         updateUI(null);
+
+        finish();
     }
 
     private void sendEmailVerification() {
@@ -216,6 +224,9 @@ public class LoginLogout extends AppCompatActivity implements View.OnClickListen
             findViewById(R.id.signed_in_buttons).setVisibility(View.VISIBLE);
 
             findViewById(R.id.verify_email_button).setEnabled(!user.isEmailVerified());
+
+
+
         } else {
             mStatusTextView.setText(R.string.signed_out);
             mDetailTextView.setText(null);
@@ -243,8 +254,6 @@ public class LoginLogout extends AppCompatActivity implements View.OnClickListen
             sendEmailVerification();
         }
 
-
-//        findViewById(R.id.login_loading_bar).setVisibility(View.GONE);
     }
 
     public void showProgressDialog() {

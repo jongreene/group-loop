@@ -126,12 +126,17 @@ public class LoginLogout extends AppCompatActivity implements View.OnClickListen
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
+                            hideProgressDialog();
+                            if(user.isEmailVerified()){
+                                finish();
+                            }
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(LoginLogout.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
+                            hideProgressDialog();
                         }
 
                         // [START_EXCLUDE]
@@ -140,8 +145,7 @@ public class LoginLogout extends AppCompatActivity implements View.OnClickListen
                         }
                         // [END_EXCLUDE]
 
-                        hideProgressDialog();
-                        finish();
+
                     }
 
 

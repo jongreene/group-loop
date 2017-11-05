@@ -37,7 +37,12 @@ public class MainActivity extends AppCompatActivity {
         if (user != null) {
             Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
 
-            login_button.setText(R.string.button_login_logout_logged_in);
+            if(user.isEmailVerified()){
+                login_button.setText(R.string.button_login_logout_logged_in);
+            }
+            else{
+                login_button.setText(R.string.button_login_logout_logged_in_no_email);
+            }
 
             findViewById(R.id.viewChangeGroupItems).setVisibility(View.VISIBLE);
 
@@ -55,13 +60,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == 1) {
-            if(resultCode == RESULT_OK){
-                updateUserEnvironment();
-            }
-            if (resultCode == RESULT_CANCELED) {
-                //Write your code if there's no result
-                updateUserEnvironment();
-            }
+            updateUserEnvironment();
         }
     }
 

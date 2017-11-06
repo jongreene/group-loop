@@ -58,12 +58,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         if (requestCode == 1) {
             updateUserEnvironment();
         }
     }
-
 
 
     /** Called when the user taps the LoginLogout button */

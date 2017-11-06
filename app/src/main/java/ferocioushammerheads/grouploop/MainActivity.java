@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     /** Called when the user taps the GroupItems button */
     public void groupItemsPage(View view) {
-        Intent intent = new Intent(this, ScheduleItem.class);
+        Intent intent = new Intent(this, ListItem.class);
         startActivity(intent);
     }
 }

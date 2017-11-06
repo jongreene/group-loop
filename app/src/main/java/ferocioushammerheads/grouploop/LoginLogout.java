@@ -1,3 +1,13 @@
+/**
+ * The LoginLogout class gives the user an interface to
+ * log in or logout of an existing account or to create
+ * a new account.
+ *
+ * @author  Ferocious Hammerheads
+ * @version Beta 1.0
+ * @since   2017-11-5
+ */
+
 package ferocioushammerheads.grouploop;
 
 import android.os.Bundle;

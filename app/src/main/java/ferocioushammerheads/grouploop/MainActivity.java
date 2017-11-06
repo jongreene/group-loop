@@ -1,6 +1,12 @@
 /**
- * The HelloWorld program implements an application that
- * simply displays "Hello World!" to the standard output.
+ * Group loop is a program designed for people living in
+ * groups (such as dorms, college houses, apartments)
+ * and allows them to communicate and coordinate their
+ * daily lives. This is provided through the use of various
+ * data types which are available to all users in a
+ * particular group. Groups are verified using online
+ * authentication(firebase) and can view live updates to
+ * the data store in a real time database(firebase database)
  *
  * @author  Ferocious Hammerheads
  * @version Beta 1.0

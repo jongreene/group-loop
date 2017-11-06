@@ -3,7 +3,7 @@
  * It will show a list of text lists and
  * schedules for the chosen group. When
  * the user clicks on one it goes to
- * listItem or ScheduleItem.
+ * listItem or ScheduleItem
  *
  * @author  Ferocious Hammerheads
  * @version Beta 1.0

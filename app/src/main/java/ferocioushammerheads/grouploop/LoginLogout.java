@@ -1,3 +1,13 @@
+/**
+ * The LoginLogout class gives the user an interface to
+ * log in or logout of an existing account or to create
+ * a new account.
+ *
+ * @author  Ferocious Hammerheads
+ * @version Beta 1.0
+ * @since   2017-11-5
+ */
+
 package ferocioushammerheads.grouploop;
 
 import android.os.Bundle;
@@ -20,12 +30,9 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginLogout extends AppCompatActivity implements View.OnClickListener {
 
-    public static String myViewName = "Email Password Sign In";
-
     private static final String TAG = "EmailPassword";
 
     private TextView mStatusTextView;
-    private TextView mDetailTextView;
     private EditText mEmailField;
     private EditText mPasswordField;
 
@@ -46,7 +53,6 @@ public class LoginLogout extends AppCompatActivity implements View.OnClickListen
 
         // Views
         mStatusTextView = (TextView) findViewById(R.id.status);
-        mDetailTextView = (TextView) findViewById(R.id.detail);
         mEmailField = (EditText) findViewById(R.id.field_email);
         mPasswordField = (EditText) findViewById(R.id.field_password);
 
@@ -61,6 +67,14 @@ public class LoginLogout extends AppCompatActivity implements View.OnClickListen
         // [END initialize_auth]
 
         mAuth.getCurrentUser();
+
+        // Auto logs out signed in users who have verified email accounts when activity is started
+        if(mAuth.getCurrentUser() != null && FirebaseAuth.getInstance().getCurrentUser().isEmailVerified()){
+            signOut();
+        }
+
+
+
     }
 
     // [START on_start_check_user]
@@ -69,6 +83,7 @@ public class LoginLogout extends AppCompatActivity implements View.OnClickListen
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
+
         updateUI(currentUser);
     }
     // [END on_start_check_user]
@@ -94,7 +109,7 @@ public class LoginLogout extends AppCompatActivity implements View.OnClickListen
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(LoginLogout.this, "Authentication failed.",
+                            Toast.makeText(LoginLogout.this, "Authentication failed. Password not long enough.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
@@ -125,22 +140,31 @@ public class LoginLogout extends AppCompatActivity implements View.OnClickListen
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
+                            hideProgressDialog();
+                            if(user.isEmailVerified()){
+                                finish();
+                            }
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(LoginLogout.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
+                            hideProgressDialog();
                         }
 
                         // [START_EXCLUDE]
                         if (!task.isSuccessful()) {
                             mStatusTextView.setText(R.string.auth_failed);
                         }
-                        hideProgressDialog();
                         // [END_EXCLUDE]
+
+
                     }
+
+
                 });
+
         // [END sign_in_with_email]
     }
 
@@ -207,18 +231,15 @@ public class LoginLogout extends AppCompatActivity implements View.OnClickListen
         if (user != null) {
             mStatusTextView.setText(getString(R.string.emailpassword_status_fmt,
                     user.getEmail(), user.isEmailVerified()));
-            mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
-
-
 
             findViewById(R.id.email_password_buttons).setVisibility(View.GONE);
             findViewById(R.id.email_password_fields).setVisibility(View.GONE);
             findViewById(R.id.signed_in_buttons).setVisibility(View.VISIBLE);
 
             findViewById(R.id.verify_email_button).setEnabled(!user.isEmailVerified());
+
         } else {
             mStatusTextView.setText(R.string.signed_out);
-            mDetailTextView.setText(null);
 
             findViewById(R.id.email_password_buttons).setVisibility(View.VISIBLE);
             findViewById(R.id.email_password_fields).setVisibility(View.VISIBLE);
@@ -229,7 +250,6 @@ public class LoginLogout extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
 
-//        findViewById(R.id.login_app_icon).setVisibility(View.GONE);
         findViewById(R.id.login_loading_bar).setVisibility(View.VISIBLE);
 
         int i = v.getId();
@@ -243,10 +263,9 @@ public class LoginLogout extends AppCompatActivity implements View.OnClickListen
             sendEmailVerification();
         }
 
-
-//        findViewById(R.id.login_loading_bar).setVisibility(View.GONE);
     }
 
+    /**    show/hide progress bar for logging in/out/creating account/sending email */
     public void showProgressDialog() {
         findViewById(R.id.login_loading_bar).setVisibility(View.VISIBLE);
     }

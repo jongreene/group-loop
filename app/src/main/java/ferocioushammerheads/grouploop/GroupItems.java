@@ -1,8 +1,17 @@
+/**
+ * GroupItems is currently a placeholder.
+ * It will show a list of text lists and
+ * schedules for the chosen group. When
+ * the user clicks on one it goes to
+ * listItem or ScheduleItem
+ *
+ * @author  Ferocious Hammerheads
+ * @version Beta 1.0
+ * @since   2017-11-5
+ */
 package ferocioushammerheads.grouploop;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;

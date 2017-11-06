@@ -34,7 +34,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ferocioushammerheads.grouploop.MainActivity" />
         </activity>
-        <activity android:name=".ScheduleItem" />
+        <activity
+            android:name=".ScheduleItem"
+            android:label="@string/title_activity_schedule_item"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ferocioushammerheads.grouploop.MainActivity" />
+        </activity>
         <activity android:name=".ListItem" />
         <activity android:name=".GroupChatItem" />
         <activity android:name=".SampleObjectView"></activity>

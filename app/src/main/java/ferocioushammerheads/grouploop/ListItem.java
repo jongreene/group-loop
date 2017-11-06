@@ -24,20 +24,20 @@ import com.google.firebase.database.ValueEventListener;
 
 
 public class ListItem extends AppCompatActivity {
-    ArrayList<String> listItems=new ArrayList<String>();
-    ArrayAdapter<String> adapter;
+    ArrayList<String> listItems=new ArrayList<String>(); //found at source 1
+    ArrayAdapter<String> adapter; //found at source 1
     private EditText temp;
     private static final String TAG = "List items";
     private Boolean createdOnce = false;
 
     @Override
     public void onCreate(Bundle icicle) {
-        super.onCreate(icicle);
+        super.onCreate(icicle); //found at source 1
         setContentView(R.layout.activity_list_item);
         final ListView listView = (ListView) findViewById(R.id.List);
         adapter=new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1,
-                listItems);
+                listItems); //found at source 1
         listView.setAdapter(adapter);
 //        ValueEventListener addItemListener = new ValueEventListener() {
 //            @Override

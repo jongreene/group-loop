@@ -60,11 +60,13 @@ public class MainActivity extends AppCompatActivity {
             }
 
             findViewById(R.id.viewChangeGroupItems).setVisibility(View.VISIBLE);
+            findViewById(R.id.viewScheduleDemo).setVisibility(View.VISIBLE);
 
         } else {
             Log.d(TAG, "onAuthStateChanged:signed_out");
 
             findViewById(R.id.viewChangeGroupItems).setVisibility(View.GONE);
+            findViewById(R.id.viewScheduleDemo).setVisibility(View.GONE);
 
             login_button.setText(R.string.button_login_logout_logged_out);
         }
@@ -90,6 +92,12 @@ public class MainActivity extends AppCompatActivity {
     public void groupItemsPage(View view) {
 //        Intent intent = new Intent(this, GroupItems.class);
         Intent intent = new Intent(this, ListItem.class);
+        startActivity(intent);
+    }
+
+    /** Called when the user taps the GroupItems button */
+    public void scheduleItemPage(View view) {
+        Intent intent = new Intent(this, ScheduleItem.class);
         startActivity(intent);
     }
 }

@@ -25,7 +25,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ferocioushammerheads.grouploop.MainActivity" />
         </activity>
-
         <activity
             android:name=".GroupItems"
             android:label="@string/title_activity_group_items"
@@ -35,10 +34,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ferocioushammerheads.grouploop.MainActivity" />
         </activity>
-
         <activity android:name=".ScheduleItem" />
         <activity android:name=".ListItem" />
-        <activity android:name=".GroupChatItem"></activity>
+        <activity android:name=".GroupChatItem" />
+        <activity android:name=".SampleObjectView"></activity>
     </application>
 
 </manifest>

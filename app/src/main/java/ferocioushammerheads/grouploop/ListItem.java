@@ -1,11 +1,14 @@
 package ferocioushammerheads.grouploop;
 
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import java.util.*;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -21,6 +24,7 @@ public class ListItem extends AppCompatActivity {
     ArrayList<String> listItems=new ArrayList<String>();
     ArrayAdapter<String> adapter;
     private EditText temp;
+    private static final String TAG = "List items";
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -31,11 +35,11 @@ public class ListItem extends AppCompatActivity {
                 android.R.layout.simple_list_item_1,
                 listItems);
         listView.setAdapter(adapter);
-        FirebaseDatabase.getInstance().getReference().child("users")
+        FirebaseDatabase.getInstance().getReference("items")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot snapshot : dataSnapshot.child("Names").getChildren()) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             listItems.add(snapshot.getValue().toString());
                             adapter.notifyDataSetChanged();
 
@@ -45,6 +49,14 @@ public class ListItem extends AppCompatActivity {
                     public void onCancelled(DatabaseError databaseError) {
                     }
                 });
+
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(TAG, "ListView item clicked.");
+            }
+        });
     }
 
     public void addMenu(View v){
@@ -58,11 +70,19 @@ public class ListItem extends AppCompatActivity {
 
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
+        DatabaseReference myRef = database.getReference("items");
+        myRef = myRef.push();
+        myRef.setValue(temp.getText().toString());
+        String key = myRef.getKey().toString();
 
-        myRef.setValue("Hello, World!");
 
-        temp.setText("");
+        SharedPreferences mSharedPreferences = getSharedPreferences("objectID", MODE_PRIVATE);
+        SharedPreferences.Editor mEditor = mSharedPreferences.edit();
+        Log.d(TAG, "Unique ID " +key);
+        mEditor.putString("key", temp.getText().toString());
+        mEditor.apply();
+
+        this.temp.setText("");
         adapter.notifyDataSetChanged();
         findViewById(R.id.add_menu_item).setVisibility(View.GONE);
         findViewById(R.id.listLayout).setVisibility(View.VISIBLE);

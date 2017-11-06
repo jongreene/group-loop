@@ -38,7 +38,6 @@
         <activity android:name=".ScheduleItem" />
         <activity android:name=".ListItem" />
         <activity android:name=".GroupChatItem" />
-        <activity android:name=".Schedule_date"></activity>
     </application>
 
 </manifest>

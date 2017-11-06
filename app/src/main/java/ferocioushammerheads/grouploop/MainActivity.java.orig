@@ -88,7 +88,10 @@ public class MainActivity extends AppCompatActivity {
 
     /** Called when the user taps the GroupItems button */
     public void groupItemsPage(View view) {
+<<<<<<< HEAD
+=======
 //        Intent intent = new Intent(this, GroupItems.class);
+>>>>>>> master
         Intent intent = new Intent(this, ListItem.class);
         startActivity(intent);
     }

@@ -99,7 +99,7 @@ public class LoginLogout extends AppCompatActivity implements View.OnClickListen
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(LoginLogout.this, "Authentication failed.",
+                            Toast.makeText(LoginLogout.this, "Authentication failed. Password not long enough.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }

@@ -20,15 +20,14 @@
             android:name=".LoginLogout"
             android:label="@string/title_activity_login_logout"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan">
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ferocioushammerheads.grouploop.MainActivity" />
         </activity>
         <activity
             android:name=".GroupItems"
-            android:label="@string/title_activity_login_logout"
+            android:label="@string/title_activity_group_items"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -38,6 +37,7 @@
         <activity android:name=".ScheduleItem" />
         <activity android:name=".ListItem" />
         <activity android:name=".GroupChatItem" />
+        <activity android:name=".SampleObjectView"></activity>
     </application>
 
 </manifest>

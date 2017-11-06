@@ -265,6 +265,7 @@ public class LoginLogout extends AppCompatActivity implements View.OnClickListen
 
     }
 
+    /**    show/hide progress bar for logging in/out/creating account/sending email */
     public void showProgressDialog() {
         findViewById(R.id.login_loading_bar).setVisibility(View.VISIBLE);
     }

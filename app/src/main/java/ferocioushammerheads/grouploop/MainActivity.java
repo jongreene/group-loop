@@ -42,12 +42,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        updateUserEnvironment();
+        Intent intent = new Intent(this, ChipItemInterface.class);
+        startActivity(intent);
+
+//        updateUserEnvironment();
     }
 
     public void updateUserEnvironment(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        Button login_button = (Button)findViewById(R.id.viewChangeLogin);
+        Button login_button = findViewById(R.id.viewChangeLogin);
 
         if (user != null) {
             Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
@@ -100,4 +103,5 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ScheduleItem.class);
         startActivity(intent);
     }
+
 }

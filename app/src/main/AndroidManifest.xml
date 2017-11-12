@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ferocioushammerheads.grouploop">
 
+    <!-- To access Google+ APIs: -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -45,7 +48,16 @@
         </activity>
         <activity android:name=".ListItem" />
         <activity android:name=".GroupChatItem" />
-        <activity android:name=".SampleObjectView"></activity>
+        <activity android:name=".SampleObjectView" />
+        <activity
+            android:name=".ChipItemInterface"
+            android:label="@string/title_activity_chip_item_interface"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ferocioushammerheads.grouploop.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

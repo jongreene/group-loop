@@ -1,3 +1,12 @@
+/**
+ * Uses a widget to allow users to create schedules
+ * for objects that are shared in the group
+ *
+ * @author  Ferocious Hammerheads
+ * @version Beta 1.0
+ * @since   2017-11-5
+ */
+
 package ferocioushammerheads.grouploop;
 
 import android.support.v7.app.AppCompatActivity;

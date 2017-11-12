@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
+import android.widget.EditText;
 
 public class ScheduleItem extends AppCompatActivity {
 
@@ -25,11 +26,7 @@ public class ScheduleItem extends AppCompatActivity {
 
     //this is for transitioning from the checkbox times to the discriptions
     public void onClickAdd(View v) {
-        /*
-        TODO:
-        database stuff
-        checkbox stuff
-         */
+        //From: https://stackoverflow.com/questions/9411540/android-get-checked-checkbox-values
         boolean time12AM = ((CheckBox)findViewById(R.id.checkBox32)).isChecked();
         boolean time01AM = ((CheckBox)findViewById(R.id.checkBox34)).isChecked();
         boolean time02AM = ((CheckBox)findViewById(R.id.checkBox35)).isChecked();
@@ -54,6 +51,10 @@ public class ScheduleItem extends AppCompatActivity {
         boolean time09PM = ((CheckBox)findViewById(R.id.checkBox13)).isChecked();
         boolean time10PM = ((CheckBox)findViewById(R.id.checkBox14)).isChecked();
         boolean time11PM = ((CheckBox)findViewById(R.id.checkBox15)).isChecked();
+        /*
+        TODO:
+        database stuff
+         */
 
         findViewById(R.id.datePicker).setVisibility(View.GONE);
         findViewById(R.id.floatingActionButton2).setVisibility(View.GONE);
@@ -65,10 +66,13 @@ public class ScheduleItem extends AppCompatActivity {
 
     //this is for transitioning from the discriptions to the checkbox times
     public void onClickDone(View v) {
+        //From: https://stackoverflow.com/questions/15301157/how-to-set-the-text-entered-in-android-studio-edittext-to-a-variable
+        String description = ((EditText)findViewById(R.id.editText2)).getText().toString();
         /*
         TODO:
         database stuff
          */
+
         findViewById(R.id.datePicker).setVisibility(View.GONE);
         findViewById(R.id.floatingActionButton2).setVisibility(View.VISIBLE);
         findViewById(R.id.scrollView2).setVisibility(View.VISIBLE);
@@ -82,14 +86,11 @@ public class ScheduleItem extends AppCompatActivity {
         int yy = ((DatePicker)findViewById(R.id.datePicker)).getYear();
         int mm = ((DatePicker)findViewById(R.id.datePicker)).getMonth();
         int dd = ((DatePicker)findViewById(R.id.datePicker)).getDayOfMonth();
-
-        /*String test = ""+dd+"/"+mm+"/"+yy+"";
-        ((TextView)findViewById(R.id.textView2)).setText(test);
-        */
         /*
         TODO:
         database stuff
          */
+
         findViewById(R.id.datePicker).setVisibility(View.GONE);
         findViewById(R.id.floatingActionButton2).setVisibility(View.VISIBLE);
         findViewById(R.id.scrollView2).setVisibility(View.VISIBLE);

@@ -12,6 +12,7 @@ package ferocioushammerheads.grouploop;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 
 public class ScheduleItem extends AppCompatActivity {
@@ -29,6 +30,31 @@ public class ScheduleItem extends AppCompatActivity {
         database stuff
         checkbox stuff
          */
+        boolean time12AM = ((CheckBox)findViewById(R.id.checkBox32)).isChecked();
+        boolean time01AM = ((CheckBox)findViewById(R.id.checkBox34)).isChecked();
+        boolean time02AM = ((CheckBox)findViewById(R.id.checkBox35)).isChecked();
+        boolean time03AM = ((CheckBox)findViewById(R.id.checkBox36)).isChecked();
+        boolean time04AM = ((CheckBox)findViewById(R.id.checkBox37)).isChecked();
+        boolean time05AM = ((CheckBox)findViewById(R.id.checkBox38)).isChecked();
+        boolean time06AM = ((CheckBox)findViewById(R.id.checkBox39)).isChecked();
+        boolean time07AM = ((CheckBox)findViewById(R.id.checkBox40)).isChecked();
+        boolean time08AM = ((CheckBox)findViewById(R.id.checkBox41)).isChecked();
+        boolean time09AM = ((CheckBox)findViewById(R.id.checkBox42)).isChecked();
+        boolean time10AM = ((CheckBox)findViewById(R.id.checkBox)).isChecked();
+        boolean time11AM = ((CheckBox)findViewById(R.id.checkBox2)).isChecked();
+        boolean time12PM = ((CheckBox)findViewById(R.id.checkBox3)).isChecked();
+        boolean time01PM = ((CheckBox)findViewById(R.id.checkBox4)).isChecked();
+        boolean time02PM = ((CheckBox)findViewById(R.id.checkBox5)).isChecked();
+        boolean time03PM = ((CheckBox)findViewById(R.id.checkBox6)).isChecked();
+        boolean time04PM = ((CheckBox)findViewById(R.id.checkBox7)).isChecked();
+        boolean time05PM = ((CheckBox)findViewById(R.id.checkBox8)).isChecked();
+        boolean time06PM = ((CheckBox)findViewById(R.id.checkBox9)).isChecked();
+        boolean time07PM = ((CheckBox)findViewById(R.id.checkBox11)).isChecked();
+        boolean time08PM = ((CheckBox)findViewById(R.id.checkBox12)).isChecked();
+        boolean time09PM = ((CheckBox)findViewById(R.id.checkBox13)).isChecked();
+        boolean time10PM = ((CheckBox)findViewById(R.id.checkBox14)).isChecked();
+        boolean time11PM = ((CheckBox)findViewById(R.id.checkBox15)).isChecked();
+
         findViewById(R.id.datePicker).setVisibility(View.GONE);
         findViewById(R.id.floatingActionButton2).setVisibility(View.GONE);
         findViewById(R.id.scrollView2).setVisibility(View.GONE);

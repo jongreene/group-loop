@@ -1,12 +1,16 @@
 package ferocioushammerheads.grouploop;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.google.android.gms.plus.PlusOneButton;
 
@@ -30,9 +34,11 @@ public class ViewAllChipItems extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private PlusOneButton mPlusOneButton;
+    private FloatingActionButton mAddChipItemButton;
+    private Button ChipItemSearchButton;
 
     private OnFragmentInteractionListener mListener;
+    private ButtonClickListener mButtonClickListener;
 
     public ViewAllChipItems() {
         // Required empty public constructor
@@ -72,7 +78,15 @@ public class ViewAllChipItems extends Fragment {
         View view = inflater.inflate(R.layout.fragment_view_all_chip_items, container, false);
 
         //Find the +1 button
-//        mPlusOneButton = (PlusOneButton) view.findViewById(R.id.plus_one_button);
+        mAddChipItemButton = view.findViewById(R.id.addChipItem);
+        ChipItemSearchButton = view.findViewById(R.id.ChipItemSearch);
+
+        if (mButtonClickListener == null) {
+            mButtonClickListener = new ButtonClickListener();
+        }
+        mAddChipItemButton.setOnClickListener(mButtonClickListener);
+        ChipItemSearchButton.setOnClickListener(mButtonClickListener);
+
 
         return view;
     }
@@ -82,13 +96,14 @@ public class ViewAllChipItems extends Fragment {
         super.onResume();
 
         // Refresh the state of the +1 button each time the activity receives focus.
-//        mPlusOneButton.initialize(PLUS_ONE_URL, PLUS_ONE_REQUEST_CODE);
+//        mButton.addOnAttachStateChangeListener();
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+//    // TODO: Rename method, update argument and hook method into UI event
+//    public void onButtonPressed(Uri uri) {
+    public void onButtonPressed() {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+//            mListener.onFragmentInteraction(uri);
             mListener.onFragmentInteraction("asdf");
         }
     }
@@ -98,6 +113,7 @@ public class ViewAllChipItems extends Fragment {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
+
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -122,8 +138,15 @@ public class ViewAllChipItems extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
         void onFragmentInteraction(String test);
     }
 
+    private class ButtonClickListener implements View.OnClickListener {
+        ButtonClickListener() {}
+
+        @Override
+        public void onClick(View view) {
+            mListener.onFragmentInteraction("Add chip item");
+        }
+    }
 }

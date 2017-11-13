@@ -6,12 +6,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.View;
 
 public class ChipItems extends AppCompatActivity
         implements ViewAllChipItems.OnFragmentInteractionListener,
             ViewCalendarItem.OnFragmentInteractionListener,
             ViewListItem.OnFragmentInteractionListener
 {
+
+    private static final String TAG = "ChipItemsDebug";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,14 @@ public class ChipItems extends AppCompatActivity
     }
 
     public void onFragmentInteraction(String test){
+        Log.d(TAG, "Value passed:" + test);
+    }
 
+    public void onFragmentInteraction(View view){
+        if (view.getId() == R.id.addChipItem) {
+
+        } else if (view.getId() == R.id.ChipItemSearch) {
+
+        }
     }
 }

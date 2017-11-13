@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="ferocioushammerheads.grouploop.ChipItemInterface"
+    tools:context="ferocioushammerheads.grouploop.ChipItem"
     tools:showIn="@layout/activity_chip_item_interface">
 
     <FrameLayout

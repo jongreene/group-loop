@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusedByDefault="false"
-    tools:context="ferocioushammerheads.grouploop.ChipItem">
+    tools:context="ferocioushammerheads.grouploop.ChipItems">
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="match_parent"
@@ -43,6 +43,6 @@
 
     <include
         android:id="@+id/include2"
-        layout="@layout/content_chip_item_interface" />
+        layout="@layout/content_chip_items" />
 
 </android.support.design.widget.CoordinatorLayout>

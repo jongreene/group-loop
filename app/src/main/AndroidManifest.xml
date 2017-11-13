@@ -50,7 +50,7 @@
         <activity android:name=".GroupChatItem" />
         <activity android:name=".SampleObjectView" />
         <activity
-            android:name=".ChipItem"
+            android:name=".ChipItems"
             android:label="@string/title_activity_chip_item_interface"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">

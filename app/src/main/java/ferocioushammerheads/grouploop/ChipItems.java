@@ -2,25 +2,21 @@ package ferocioushammerheads.grouploop;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
-public class ChipItem extends AppCompatActivity
+public class ChipItems extends AppCompatActivity
         implements ViewAllChipItems.OnFragmentInteractionListener,
             ViewCalendarItem.OnFragmentInteractionListener,
-            ViewListItem.OnFragmentInteractionListener,
-            ChipItemInterface
+            ViewListItem.OnFragmentInteractionListener
 {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chip_item_interface);
+        setContentView(R.layout.activity_chip_items);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

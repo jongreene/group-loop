@@ -1,5 +1,6 @@
 package ferocioushammerheads.grouploop;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -41,7 +42,7 @@ public class ChipItemInterface extends AppCompatActivity
         }
     }
 
-    public void onFragmentInteraction(){
+    public void onFragmentInteraction(Uri uri){
 
     }
 }

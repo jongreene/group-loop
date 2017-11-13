@@ -98,6 +98,14 @@ public class ListItem extends AppCompatActivity {
                 Log.d(TAG, "LIST ID: " + listView.getItemIdAtPosition(position));
             }
         });
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                listItems.remove(i);
+                adapter.notifyDataSetChanged();
+                return true;
+            }
+        });
     }
 
     /**

@@ -10,7 +10,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 public class ChipItemInterface extends AppCompatActivity
-        implements ViewAllChipItems.OnFragmentInteractionListener {
+        implements ViewAllChipItems.OnFragmentInteractionListener,
+            ViewCalendarItem.OnFragmentInteractionListener,
+            ViewListItem.OnFragmentInteractionListener
+{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

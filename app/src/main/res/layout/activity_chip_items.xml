@@ -13,6 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <include layout="@layout/content_login_logout" />
+    <include layout="@layout/content_chip_items" />
 
 </android.support.v4.widget.DrawerLayout>

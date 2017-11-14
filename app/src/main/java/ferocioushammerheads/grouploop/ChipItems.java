@@ -12,7 +12,8 @@ import android.view.View;
 public class ChipItems extends AppCompatActivity
         implements ViewAllChipItems.OnFragmentInteractionListener,
             ViewCalendarItem.OnFragmentInteractionListener,
-            ViewListItem.OnFragmentInteractionListener
+            ViewListItem.OnFragmentInteractionListener,
+            CreateChipItem.OnFragmentInteractionListener
 {
 
     private static final String TAG = "ChipItemsDebug";
@@ -27,24 +28,26 @@ public class ChipItems extends AppCompatActivity
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        if (savedInstanceState == null) {
-            Fragment fragment = null;
-            Class fragmentClass = ViewAllChipItems.class;
-
-            try {
-                fragment = (Fragment) fragmentClass.newInstance();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            // Insert the fragment by replacing any existing fragment
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.ChipItemInterfaceFrame, fragment).commit();
-        }
+        fragmentChanger(ViewAllChipItems.class,R.id.ChipItemInterfaceFrame);
     }
 
-    public void onFragmentInteraction(Uri uri){
+    public void fragmentChanger(Class newFragment, int containerName){
+        Fragment fragment = null;
+        Class fragmentClass = newFragment;
 
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Insert the fragment by replacing any existing fragment
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(containerName, fragment).commit();
+    }
+
+    public void onFragmentInteraction(){
+//        blank fragment listener
     }
 
     public void onFragmentInteraction(String test){
@@ -53,9 +56,12 @@ public class ChipItems extends AppCompatActivity
 
     public void onFragmentInteraction(View view){
         if (view.getId() == R.id.addChipItem) {
-
-        } else if (view.getId() == R.id.ChipItemSearch) {
-
+//            switch to add chip item fragment
+            fragmentChanger(CreateChipItem.class,R.id.ChipItemInterfaceFrame);
         }
+//        will be used when new buttons are added from other fragments
+//        else if (view.getId() == R.id.ChipItemSearch) {
+//
+//        }
     }
 }

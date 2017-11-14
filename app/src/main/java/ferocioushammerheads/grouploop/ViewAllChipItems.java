@@ -1,9 +1,6 @@
 package ferocioushammerheads.grouploop;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -11,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.android.gms.plus.PlusOneButton;
 
@@ -39,6 +37,7 @@ public class ViewAllChipItems extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private ButtonClickListener mButtonClickListener;
+    private EditText chipSearch;
 
     public ViewAllChipItems() {
         // Required empty public constructor
@@ -68,6 +67,7 @@ public class ViewAllChipItems extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
 
@@ -87,6 +87,7 @@ public class ViewAllChipItems extends Fragment {
         mAddChipItemButton.setOnClickListener(mButtonClickListener);
         ChipItemSearchButton.setOnClickListener(mButtonClickListener);
 
+        chipSearch = view.findViewById(R.id.editText);
 
         return view;
     }
@@ -99,11 +100,8 @@ public class ViewAllChipItems extends Fragment {
 //        mButton.addOnAttachStateChangeListener();
     }
 
-//    // TODO: Rename method, update argument and hook method into UI event
-//    public void onButtonPressed(Uri uri) {
     public void onButtonPressed() {
         if (mListener != null) {
-//            mListener.onFragmentInteraction(uri);
             mListener.onFragmentInteraction("asdf");
         }
     }
@@ -139,6 +137,7 @@ public class ViewAllChipItems extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(String test);
+        void onFragmentInteraction(View view);
     }
 
     private class ButtonClickListener implements View.OnClickListener {
@@ -146,7 +145,16 @@ public class ViewAllChipItems extends Fragment {
 
         @Override
         public void onClick(View view) {
-            mListener.onFragmentInteraction("Add chip item");
+            int clickedId = view.getId();
+            if (mListener != null) {
+                if (clickedId == R.id.addChipItem) {
+                    mListener.onFragmentInteraction(view);
+                } else if (clickedId == R.id.ChipItemSearch) {
+                    String value = chipSearch.getText().toString();
+
+                    mListener.onFragmentInteraction(value);
+                }
+            }
         }
     }
 }

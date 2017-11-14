@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 
 /**
@@ -26,8 +27,10 @@ public class UserAccountPreferences extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Button ChipItemSearchButton;
 
     private OnFragmentInteractionListener mListener;
+    private ButtonClickListener mButtonClickListener;
 
     public UserAccountPreferences() {
         // Required empty public constructor
@@ -63,8 +66,19 @@ public class UserAccountPreferences extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_account_preferences, container, false);
+        View view = inflater.inflate(R.layout.fragment_user_account_preferences, container, false);
+
+        ChipItemSearchButton = view.findViewById(R.id.account_pref_login);
+
+        if (mButtonClickListener == null) {
+            mButtonClickListener = new ButtonClickListener();
+        }
+        ChipItemSearchButton.setOnClickListener(mButtonClickListener);
+
+        // Inflate the layout for this fragment
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -93,5 +107,20 @@ public class UserAccountPreferences extends Fragment {
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction();
+        void onFragmentInteraction(View view);
+    }
+
+    private class ButtonClickListener implements View.OnClickListener {
+        ButtonClickListener() {}
+
+        @Override
+        public void onClick(View view) {
+            int clickedId = view.getId();
+            if (mListener != null) {
+
+                mListener.onFragmentInteraction(view);
+
+            }
+        }
     }
 }

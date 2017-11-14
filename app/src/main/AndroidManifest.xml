@@ -20,14 +20,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginLogout"
-            android:label="@string/title_activity_login_logout"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="ferocioushammerheads.grouploop.MainActivity" />
-        </activity>
-        <activity
             android:name=".GroupItems"
             android:label="@string/title_activity_group_items"
             android:parentActivityName=".MainActivity">

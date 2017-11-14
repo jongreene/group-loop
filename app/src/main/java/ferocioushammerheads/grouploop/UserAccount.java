@@ -25,7 +25,7 @@ public class UserAccount extends AppCompatActivity
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+//        DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
 
 //        fragmentChanger(Login.class,R.id.user_account_frag_frame, "Login");

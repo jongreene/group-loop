@@ -16,9 +16,12 @@
 package ferocioushammerheads.grouploop;
 
 import android.content.Intent;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 
@@ -42,12 +45,31 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+
+//        Intent intent = new Intent(this, ChipItems.class);
+        Intent intent = new Intent(this, UserAccount.class);
+        startActivity(intent);
+
         updateUserEnvironment();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        return true;
     }
 
     public void updateUserEnvironment(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        Button login_button = (Button)findViewById(R.id.viewChangeLogin);
+        Button login_button = findViewById(R.id.viewChangeLogin);
 
         if (user != null) {
             Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
@@ -100,4 +122,5 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ScheduleItem.class);
         startActivity(intent);
     }
+
 }

@@ -11,7 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 public class UserAccount extends AppCompatActivity
-        implements Login.OnFragmentInteractionListener {
+        implements Login.OnFragmentInteractionListener,
+        UserAccountPreferences.OnFragmentInteractionListener
+{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +28,8 @@ public class UserAccount extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
 
-        fragmentChanger(Login.class,R.id.user_account_frag_frame, "Login");
+//        fragmentChanger(Login.class,R.id.user_account_frag_frame, "Login");
+        fragmentChanger(UserAccountPreferences.class,R.id.user_account_frag_frame, "Login");
     }
 
     public void fragmentChanger(Class newFragment, int containerName, String fragName){

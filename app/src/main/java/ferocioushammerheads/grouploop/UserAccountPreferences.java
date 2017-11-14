@@ -117,7 +117,6 @@ public class UserAccountPreferences extends Fragment {
         public void onClick(View view) {
             int clickedId = view.getId();
             if (mListener != null) {
-
                 mListener.onFragmentInteraction(view);
 
             }

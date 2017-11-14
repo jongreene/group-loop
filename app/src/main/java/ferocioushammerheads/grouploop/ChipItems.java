@@ -69,21 +69,18 @@ public class ChipItems extends AppCompatActivity
 
     @Override
     //    override back button to swap fragment instead of restart activity
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            Fragment myFragment = fragmentManager.findFragmentByTag("ViewAllChipItems");
-            if (myFragment != null && myFragment.isVisible()) {
-                Toast.makeText(getApplicationContext(), "Default behavior", Toast.LENGTH_SHORT).show();
+    public void onBackPressed() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment myFragment = fragmentManager.findFragmentByTag("ViewAllChipItems");
+        if (myFragment != null && myFragment.isVisible()) {
+            Toast.makeText(getApplicationContext(), "Default behavior", Toast.LENGTH_SHORT).show();
 //            finish();
-                super.onKeyDown(keyCode, event);
-            }
-            else{
-                Toast.makeText(getApplicationContext(), "Overriding default", Toast.LENGTH_SHORT).show();
-                fragmentChanger(ViewAllChipItems.class, R.id.ChipItemInterfaceFrame, "ViewAllChipItems");
-            }
+            super.onBackPressed();
         }
-        return true;
+        else{
+            Toast.makeText(getApplicationContext(), "Overriding default", Toast.LENGTH_SHORT).show();
+            fragmentChanger(ViewAllChipItems.class, R.id.ChipItemInterfaceFrame, "ViewAllChipItems");
+        }
     }
 
     public void fragmentChanger(Class newFragment, int containerName, String fragName){

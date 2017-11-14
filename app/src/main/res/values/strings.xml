@@ -54,7 +54,7 @@
 
     <string name="id_fmt">User ID: %s</string>
     <string name="email_fmt">Email: %s</string>
-    <string name="title_activity_chip_item_interface">ChipItemInterface</string>
+    <string name="title_activity_chip_item">ChipItem</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -11,19 +11,17 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".LoginLogout"
             android:label="@string/title_activity_login_logout"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ferocioushammerheads.grouploop.MainActivity" />
@@ -31,8 +29,7 @@
         <activity
             android:name=".GroupItems"
             android:label="@string/title_activity_group_items"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ferocioushammerheads.grouploop.MainActivity" />
@@ -40,8 +37,7 @@
         <activity
             android:name=".ScheduleItem"
             android:label="@string/title_activity_schedule_item"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ferocioushammerheads.grouploop.MainActivity" />
@@ -51,9 +47,8 @@
         <activity android:name=".SampleObjectView" />
         <activity
             android:name=".ChipItems"
-            android:label="@string/title_activity_chip_item_interface"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:label="@string/title_activity_chip_item"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ferocioushammerheads.grouploop.MainActivity" />

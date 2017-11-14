@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,19 +47,40 @@ public class ChipItems extends AppCompatActivity
     }
 
     @Override
-//    override back button to swap fragment instead of restart activity
+    //    override back button in toolbar to swap fragment instead of restart activity
     public boolean onOptionsItemSelected(MenuItem item) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment myFragment = fragmentManager.findFragmentByTag("ViewAllChipItems");
         if (myFragment != null && myFragment.isVisible()) {
-            Toast.makeText(getApplicationContext(), "Returning to main activity!", Toast.LENGTH_SHORT).show();
-            finish();
+            Toast.makeText(getApplicationContext(), "Default behavior", Toast.LENGTH_SHORT).show();
+//            finish();
+            return super.onOptionsItemSelected(item);
         }
         else {
             switch (item.getItemId()) {
                 case android.R.id.home:
+                    Toast.makeText(getApplicationContext(), "Overriding default", Toast.LENGTH_SHORT).show();
                     fragmentChanger(ViewAllChipItems.class, R.id.ChipItemInterfaceFrame, "ViewAllChipItems");
                     break;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    //    override back button to swap fragment instead of restart activity
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            Fragment myFragment = fragmentManager.findFragmentByTag("ViewAllChipItems");
+            if (myFragment != null && myFragment.isVisible()) {
+                Toast.makeText(getApplicationContext(), "Default behavior", Toast.LENGTH_SHORT).show();
+//            finish();
+                super.onKeyDown(keyCode, event);
+            }
+            else{
+                Toast.makeText(getApplicationContext(), "Overriding default", Toast.LENGTH_SHORT).show();
+                fragmentChanger(ViewAllChipItems.class, R.id.ChipItemInterfaceFrame, "ViewAllChipItems");
             }
         }
         return true;

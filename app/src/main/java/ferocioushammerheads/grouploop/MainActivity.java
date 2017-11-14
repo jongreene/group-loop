@@ -53,10 +53,9 @@ public class MainActivity extends AppCompatActivity {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
         Intent intent = new Intent(this, ChipItems.class);
-//        Intent intent = new Intent(this, LoginLogout.class);
         startActivity(intent);
 
-//        updateUserEnvironment();
+        updateUserEnvironment();
     }
 
     @Override

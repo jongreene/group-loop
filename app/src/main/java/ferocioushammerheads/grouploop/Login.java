@@ -111,8 +111,7 @@ public class Login extends Fragment {
 
 //        // Auto logs out signed in users who have verified email accounts when activity is started
 //        if(mAuth.getCurrentUser() != null && FirebaseAuth.getInstance().getCurrentUser().isEmailVerified()){
-////            TODO: add signOut();
-//            //            signOut();
+            //            signOut();
 //        }
 
         // Inflate the layout for this fragment
@@ -156,8 +155,7 @@ public class Login extends Fragment {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-//        TODO: add update UI
-//        updateUI(currentUser);
+        updateUI(currentUser);
     }
     // [END on_start_check_user]
 
@@ -170,28 +168,27 @@ public class Login extends Fragment {
         showProgressDialog();
 
         // [START create_user_with_email]
-        mAuth.createUserWithEmailAndPassword(email, password);
-//        mAuth.createUserWithEmailAndPassword(email, password)
-//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if (task.isSuccessful()) {
-//                            // Sign in success, update UI with the signed-in user's information
-//                            Log.d(TAG, "createUserWithEmail:success");
-//                            FirebaseUser user = mAuth.getCurrentUser();
-//                            updateUI(user);
-//                        } else {
-//                            // If sign in fails, display a message to the user.
-//                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-//                            Toast.makeText(this, "Authentication failed. Password not long enough.",Toast.LENGTH_SHORT).show();
-//                            updateUI(null);
-//                        }
-//
-//                        // [START_EXCLUDE]
-//                        hideProgressDialog();
-//                        // [END_EXCLUDE]
-//                    }
-//                });
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "createUserWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(view.getContext(), "Authentication failed. Password not long enough.",Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
+
+                        // [START_EXCLUDE]
+                        hideProgressDialog();
+                        // [END_EXCLUDE]
+                    }
+                });
         // [END create_user_with_email]
     }
 
@@ -204,7 +201,6 @@ public class Login extends Fragment {
         showProgressDialog();
 
         // [START sign_in_with_email]
-//        mAuth.signInWithEmailAndPassword(email, password);
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -322,24 +318,6 @@ public class Login extends Fragment {
         }
     }
 
-//    @Override
-//    public void onClick(View v) {
-//
-//        view.findViewById(R.id.login_loading_bar).setVisibility(View.VISIBLE);
-//
-//        int i = v.getId();
-//        if (i == R.id.email_create_account_button) {
-//            createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
-//        } else if (i == R.id.email_sign_in_button) {
-//            signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
-//        } else if (i == R.id.sign_out_button) {
-//            signOut();
-//        } else if (i == R.id.verify_email_button) {
-//            sendEmailVerification();
-//        }
-//
-//    }
-
     /**    show/hide progress bar for logging in/out/creating account/sending email */
     public void showProgressDialog() {
         view.findViewById(R.id.login_loading_bar).setVisibility(VISIBLE);
@@ -360,7 +338,6 @@ public class Login extends Fragment {
 
                 mLoadingBar.setVisibility(View.VISIBLE);
 
-//                view.findViewById(R.id.login_loading_bar);
                 int i = view.getId();
                 if (i == R.id.email_create_account_button) {
                     createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());

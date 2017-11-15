@@ -10,4 +10,215 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <CheckBox
+                android:id="@+id/checkBox12am"
+                android:layout_column="0"
+                android:layout_row="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12AM   " />
+
+            <EditText
+                android:id="@+id/editText3"
+                android:layout_column="1"
+                android:layout_row="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textMultiLine" />
+
+            <CheckBox
+                android:id="@+id/checkBox01am"
+                android:layout_column="0"
+                android:layout_row="2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1AM" />
+
+            <CheckBox
+                android:id="@+id/checkBox02am"
+                android:layout_column="0"
+                android:layout_row="3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2AM" />
+
+            <CheckBox
+                android:id="@+id/checkBox03am"
+                android:layout_column="0"
+                android:layout_row="4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3AM" />
+
+            <CheckBox
+                android:id="@+id/checkBox04am"
+                android:layout_column="0"
+                android:layout_row="5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4AM" />
+
+            <CheckBox
+                android:id="@+id/checkBox05am"
+                android:layout_column="0"
+                android:layout_row="6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5AM" />
+
+            <CheckBox
+                android:id="@+id/checkBox06am"
+                android:layout_column="0"
+                android:layout_row="7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="6AM" />
+
+            <CheckBox
+                android:id="@+id/checkBox07am"
+                android:layout_column="0"
+                android:layout_row="8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="7AM" />
+
+            <CheckBox
+                android:id="@+id/checkBox08am"
+                android:layout_column="0"
+                android:layout_row="9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8AM" />
+
+            <CheckBox
+                android:id="@+id/checkBox09am"
+                android:layout_column="0"
+                android:layout_row="10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="9AM" />
+
+            <CheckBox
+                android:id="@+id/checkBox10am"
+                android:layout_column="0"
+                android:layout_row="11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10AM" />
+
+            <CheckBox
+                android:id="@+id/checkBox11am"
+                android:layout_column="0"
+                android:layout_row="12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="11AM" />
+
+            <CheckBox
+                android:id="@+id/checkBox12pm"
+                android:layout_column="0"
+                android:layout_row="13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12PM" />
+
+            <CheckBox
+                android:id="@+id/checkBox01pm"
+                android:layout_column="0"
+                android:layout_row="14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1PM" />
+
+            <CheckBox
+                android:id="@+id/checkBox02pm"
+                android:layout_column="0"
+                android:layout_row="15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2PM" />
+
+            <CheckBox
+                android:id="@+id/checkBox03pm"
+                android:layout_column="0"
+                android:layout_row="16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3PM" />
+
+            <CheckBox
+                android:id="@+id/checkBox04pm"
+                android:layout_column="0"
+                android:layout_row="17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4PM" />
+
+            <CheckBox
+                android:id="@+id/checkBox05pm"
+                android:layout_column="0"
+                android:layout_row="18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5PM" />
+
+            <CheckBox
+                android:id="@+id/checkBox06pm"
+                android:layout_column="0"
+                android:layout_row="19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="6PM" />
+
+            <CheckBox
+                android:id="@+id/checkBox07pm"
+                android:layout_column="0"
+                android:layout_row="20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="7PM" />
+
+            <CheckBox
+                android:id="@+id/checkBox08pm"
+                android:layout_column="0"
+                android:layout_row="21"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8PM" />
+
+            <CheckBox
+                android:id="@+id/checkBox09pm"
+                android:layout_column="0"
+                android:layout_row="22"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="9PM" />
+
+            <CheckBox
+                android:id="@+id/checkBox10pm"
+                android:layout_column="0"
+                android:layout_row="23"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10PM" />
+
+            <CheckBox
+                android:id="@+id/checkBox11pm"
+                android:layout_column="0"
+                android:layout_row="24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="11PM" />
+
+        </GridLayout>
+    </ScrollView>
 </FrameLayout>

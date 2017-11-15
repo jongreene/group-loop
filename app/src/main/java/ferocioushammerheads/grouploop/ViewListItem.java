@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -50,6 +51,10 @@ public class ViewListItem extends Fragment {
     private static final String TAG = "List items";
     private Boolean createdOnce = false;
 
+    private Button mAddItemMenu;
+    private Button mAddNewItem;
+    private ButtonClickListener mButtonClickListener;
+
     public ViewListItem() {
         // Required empty public constructor
     }
@@ -86,6 +91,8 @@ public class ViewListItem extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_view_list_item, container, false);
+        mAddItemMenu = view.findViewById(R.id.addItem);
+        mAddNewItem = view.findViewById(R.id.newItem);
         // Inflate the layout for this fragment
         /**
          * Assigning the list view

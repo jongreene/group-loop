@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.support.design.widget.FloatingActionButton;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -51,7 +52,7 @@ public class ViewListItem extends Fragment {
     private static final String TAG = "List items";
     private Boolean createdOnce = false;
 
-    private Button mAddItemMenu;
+    private FloatingActionButton mAddItemMenu;
     private Button mAddNewItem;
     private ButtonClickListener mButtonClickListener;
 
@@ -93,6 +94,11 @@ public class ViewListItem extends Fragment {
         view = inflater.inflate(R.layout.fragment_view_list_item, container, false);
         mAddItemMenu = view.findViewById(R.id.addItem);
         mAddNewItem = view.findViewById(R.id.newItem);
+        if (mButtonClickListener == null) {
+            mButtonClickListener = new ButtonClickListener();
+        }
+        mAddItemMenu.setOnClickListener(mButtonClickListener);
+        mAddNewItem.setOnClickListener(mButtonClickListener);
         // Inflate the layout for this fragment
         /**
          * Assigning the list view
@@ -198,7 +204,7 @@ public class ViewListItem extends Fragment {
      */
     public void addItemMenu(View v){
         view.findViewById(R.id.listLayout).setVisibility(View.GONE);
-//        view.findViewById(R.id.addItem).setVisibility(View.GONE);
+        view.findViewById(R.id.addItem).setVisibility(View.GONE);
         view.findViewById(R.id.add_menu_item).setVisibility(View.VISIBLE);
     }
 
@@ -221,6 +227,23 @@ public class ViewListItem extends Fragment {
         editText.setText("");
         view.findViewById(R.id.add_menu_item).setVisibility(View.GONE);
         view.findViewById(R.id.listLayout).setVisibility(View.VISIBLE);
-//        view.findViewById(R.id.addItem).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.addItem).setVisibility(View.VISIBLE);
+    }
+    private class ButtonClickListener implements View.OnClickListener{
+        ButtonClickListener(){}
+
+        @Override
+        public void onClick(View view){
+            if (mListener != null) {
+                int clickedId = view.getId();
+                if(clickedId == R.id.addItem){
+                    addItemMenu(view);
+                }
+                else if(clickedId == R.id.newItem){
+                    addItems(view);
+                }
+            }
+
+        }
     }
 }

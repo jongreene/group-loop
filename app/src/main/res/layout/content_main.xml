@@ -23,44 +23,41 @@
         app:srcCompat="@mipmap/logo_foreground" />
 
     <Button
-        android:id="@+id/viewChangeGroupItems"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:onClick="groupItemsPage"
-        android:text="@string/button_group_items"
-        app:layout_constraintBottom_toTopOf="@+id/viewChangeLogin"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <Button
-        android:id="@+id/viewChangeLogin"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:onClick="loginPage"
-        android:text="@string/button_login_logout_logged_out"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <Button
-        android:id="@+id/viewScheduleDemo"
+        android:id="@+id/scheduleDemoButton"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:onClick="scheduleItemPage"
         android:text="@string/button_schedule_items"
-        app:layout_constraintBottom_toTopOf="@+id/viewChangeGroupItems"
+        app:layout_constraintBottom_toTopOf="@+id/chipItemsButtons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/chipItemsButtons"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:text="@string/button_group_items"
+        app:layout_constraintBottom_toTopOf="@+id/preferencesButton"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/preferencesButton"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:text="@string/button_login_logout_logged_out"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

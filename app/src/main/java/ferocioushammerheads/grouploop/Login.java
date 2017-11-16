@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -21,6 +20,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import static android.view.View.VISIBLE;
 
@@ -49,6 +50,8 @@ public class Login extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private ButtonClickListener mButtonClickListener;
+
+    private DatabaseReference mDatabase;
 
     public Login() {
         // Required empty public constructor
@@ -109,11 +112,7 @@ public class Login extends Fragment {
 
         mAuth.getCurrentUser();
 
-//        // Auto logs out signed in users who have verified email accounts when activity is started
-//        if(mAuth.getCurrentUser() != null && FirebaseAuth.getInstance().getCurrentUser().isEmailVerified()){
-////            TODO: add signOut();
-//            //            signOut();
-//        }
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         // Inflate the layout for this fragment
         return view;
@@ -144,7 +143,6 @@ public class Login extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction();
         void onFragmentInteraction(View view);
     }
@@ -156,12 +154,12 @@ public class Login extends Fragment {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-//        TODO: add update UI
-//        updateUI(currentUser);
+        updateUI(currentUser);
     }
     // [END on_start_check_user]
 
     private void createAccount(String email, String password) {
+        final String username = email;
         Log.d(TAG, "createAccount:" + email);
         if (!validateForm()) {
             return;
@@ -170,29 +168,33 @@ public class Login extends Fragment {
         showProgressDialog();
 
         // [START create_user_with_email]
-        mAuth.createUserWithEmailAndPassword(email, password);
-//        mAuth.createUserWithEmailAndPassword(email, password)
-//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if (task.isSuccessful()) {
-//                            // Sign in success, update UI with the signed-in user's information
-//                            Log.d(TAG, "createUserWithEmail:success");
-//                            FirebaseUser user = mAuth.getCurrentUser();
-//                            updateUI(user);
-//                        } else {
-//                            // If sign in fails, display a message to the user.
-//                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-//                            Toast.makeText(this, "Authentication failed. Password not long enough.",Toast.LENGTH_SHORT).show();
-//                            updateUI(null);
-//                        }
-//
-//                        // [START_EXCLUDE]
-//                        hideProgressDialog();
-//                        // [END_EXCLUDE]
-//                    }
-//                });
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "createUserWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+//                            generates a folder under users for the user
+//                            mDatabase.child("users").child(user.getUid()).child("username").setValue(username);
+                            writeNewUser(user.getUid(), username, username);
+                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(view.getContext(), "Authentication failed. Password not long enough.",Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
+
+                        // [START_EXCLUDE]
+                        hideProgressDialog();
+                        // [END_EXCLUDE]
+                    }
+                });
         // [END create_user_with_email]
+
+
     }
 
     private void signIn(String email, String password) {
@@ -204,7 +206,6 @@ public class Login extends Fragment {
         showProgressDialog();
 
         // [START sign_in_with_email]
-//        mAuth.signInWithEmailAndPassword(email, password);
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -254,7 +255,6 @@ public class Login extends Fragment {
         // Send verification email
         // [START send_email_verification]
         final FirebaseUser user = mAuth.getCurrentUser();
-//        user.sendEmailVerification();
         user.sendEmailVerification()
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -267,11 +267,13 @@ public class Login extends Fragment {
                             Toast.makeText(view.getContext(),
                                     "Verification email sent to " + user.getEmail(),
                                     Toast.LENGTH_SHORT).show();
+                            hideProgressDialog();
                         } else {
                             Log.e(TAG, "sendEmailVerification", task.getException());
                             Toast.makeText(view.getContext(),
                                     "Failed to send verification email.",
                                     Toast.LENGTH_SHORT).show();
+                            hideProgressDialog();
                         }
                         // [END_EXCLUDE]
                     }
@@ -322,24 +324,6 @@ public class Login extends Fragment {
         }
     }
 
-//    @Override
-//    public void onClick(View v) {
-//
-//        view.findViewById(R.id.login_loading_bar).setVisibility(View.VISIBLE);
-//
-//        int i = v.getId();
-//        if (i == R.id.email_create_account_button) {
-//            createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
-//        } else if (i == R.id.email_sign_in_button) {
-//            signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
-//        } else if (i == R.id.sign_out_button) {
-//            signOut();
-//        } else if (i == R.id.verify_email_button) {
-//            sendEmailVerification();
-//        }
-//
-//    }
-
     /**    show/hide progress bar for logging in/out/creating account/sending email */
     public void showProgressDialog() {
         view.findViewById(R.id.login_loading_bar).setVisibility(VISIBLE);
@@ -360,7 +344,6 @@ public class Login extends Fragment {
 
                 mLoadingBar.setVisibility(View.VISIBLE);
 
-//                view.findViewById(R.id.login_loading_bar);
                 int i = view.getId();
                 if (i == R.id.email_create_account_button) {
                     createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
@@ -376,4 +359,9 @@ public class Login extends Fragment {
         }
     }
 
+    private void writeNewUser(String userId, String name, String email) {
+        UserProfile userProfile = new UserProfile(userId, name, email);
+
+        mDatabase.child("users").child(userId).setValue(userProfile);
+    }
 }

@@ -16,7 +16,6 @@
 package ferocioushammerheads.grouploop;
 
 import android.content.Intent;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -27,8 +26,6 @@ import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "FirebaseSession";
@@ -36,9 +33,16 @@ public class MainActivity extends AppCompatActivity {
     private Button ChangeGroupItems;
     private Button ChangeLogin;
 
-    // Write a message to the database
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("message");
+    private Button mScheduleDemoButton;
+    private Button mChipItemsButton;
+    private Button mPreferencesButton;
+
+    private ButtonClickListener mButtonClickListener;
+
+    public FirebaseUser user;
+    public UserProfile userProfile;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +54,21 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+//        set current user
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
-//        Intent intent = new Intent(this, ChipItems.class);
-        Intent intent = new Intent(this, ChipItems.class);
-        startActivity(intent);
+//        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+
+        mScheduleDemoButton = this.findViewById(R.id.scheduleDemoButton);
+        mChipItemsButton = this.findViewById(R.id.chipItemsButtons);
+        mPreferencesButton = this.findViewById(R.id.preferencesButton);
+
+        if (mButtonClickListener == null) {
+            mButtonClickListener = new ButtonClickListener();
+        }
+        mScheduleDemoButton.setOnClickListener(mButtonClickListener);
+        mChipItemsButton.setOnClickListener(mButtonClickListener);
+        mPreferencesButton.setOnClickListener(mButtonClickListener);
 
         updateUserEnvironment();
     }
@@ -67,9 +81,23 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    private class ButtonClickListener implements View.OnClickListener {
+        ButtonClickListener() {}
+
+        @Override
+        public void onClick(View view) {
+            int clickedId = view.getId();
+            if (clickedId == R.id.scheduleDemoButton || clickedId == R.id.chipItemsButtons || clickedId == R.id.preferencesButton) {
+                changeActivity(view);
+            } else {
+
+            }
+        }
+    }
+
     public void updateUserEnvironment(){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        Button login_button = findViewById(R.id.viewChangeLogin);
+
+        Button login_button = findViewById(R.id.preferencesButton);
 
         if (user != null) {
             Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
@@ -81,14 +109,15 @@ public class MainActivity extends AppCompatActivity {
                 login_button.setText(R.string.button_login_logout_logged_in_no_email);
             }
 
-            findViewById(R.id.viewChangeGroupItems).setVisibility(View.VISIBLE);
-            findViewById(R.id.viewScheduleDemo).setVisibility(View.VISIBLE);
+            findViewById(R.id.chipItemsButtons).setVisibility(View.VISIBLE);
+            findViewById(R.id.scheduleDemoButton).setVisibility(View.VISIBLE);
+
 
         } else {
             Log.d(TAG, "onAuthStateChanged:signed_out");
 
-            findViewById(R.id.viewChangeGroupItems).setVisibility(View.GONE);
-            findViewById(R.id.viewScheduleDemo).setVisibility(View.GONE);
+            findViewById(R.id.chipItemsButtons).setVisibility(View.GONE);
+            findViewById(R.id.scheduleDemoButton).setVisibility(View.GONE);
 
             login_button.setText(R.string.button_login_logout_logged_out);
         }
@@ -102,25 +131,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    /** Called when the user taps the LoginLogout button */
-    public void loginPage(View view) {
-        Intent intent = new Intent(this, LoginLogout.class);
-        startActivityForResult(intent, 1);
-        updateUserEnvironment();
+    public void changeActivity(View view){
+        if (view.getId() == R.id.scheduleDemoButton) {
+            Intent intent = new Intent(this, ScheduleItem.class);
+            startActivity(intent);        }
+        else if (view.getId() == R.id.chipItemsButtons) {
+            Intent intent = new Intent(this, ChipItems.class);
+            startActivity(intent);
+        }
+        else if (view.getId() == R.id.preferencesButton) {
+            Intent intent = new Intent(this, UserAccount.class);
+            startActivityForResult(intent, 1);
+            updateUserEnvironment();
+        }
     }
-
-    /** Called when the user taps the GroupItems button */
-    public void groupItemsPage(View view) {
-//        Intent intent = new Intent(this, GroupItems.class);
-        Intent intent = new Intent(this, ListItem.class);
-        startActivity(intent);
-    }
-
-    /** Called when the user taps the GroupItems button */
-    public void scheduleItemPage(View view) {
-        Intent intent = new Intent(this, ScheduleItem.class);
-        startActivity(intent);
-    }
-
 }

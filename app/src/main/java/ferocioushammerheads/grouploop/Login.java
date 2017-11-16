@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -178,7 +177,8 @@ public class Login extends Fragment {
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
 //                            generates a folder under users for the user
-                            mDatabase.child("users").child(user.getUid()).child("username").setValue(username);
+//                            mDatabase.child("users").child(user.getUid()).child("username").setValue(username);
+                            writeNewUser(user.getUid(), username, username);
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -360,8 +360,8 @@ public class Login extends Fragment {
     }
 
     private void writeNewUser(String userId, String name, String email) {
-        User user = new User(name, email);
+        UserProfile userProfile = new UserProfile(userId, name, email);
 
-        mDatabase.child("users").child(userId).setValue(user);
+        mDatabase.child("users").child(userId).setValue(userProfile);
     }
 }

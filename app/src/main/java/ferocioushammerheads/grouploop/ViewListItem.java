@@ -158,7 +158,7 @@ public class ViewListItem extends Fragment {
                 return true;
             }
         });
-        return inflater.inflate(R.layout.fragment_view_list_item, container, false);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -234,7 +234,7 @@ public class ViewListItem extends Fragment {
 
         @Override
         public void onClick(View view){
-            if (mListener != null) {
+//            if (mListener != null) {
                 int clickedId = view.getId();
                 if(clickedId == R.id.addItem){
                     addItemMenu(view);
@@ -242,7 +242,7 @@ public class ViewListItem extends Fragment {
                 else if(clickedId == R.id.newItem){
                     addItems(view);
                 }
-            }
+//            }
 
         }
     }

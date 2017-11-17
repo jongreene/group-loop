@@ -26,15 +26,6 @@
                 android:layout_height="wrap_content"
                 android:text="12AM   " />
 
-            <EditText
-                android:id="@+id/editText3"
-                android:layout_column="1"
-                android:layout_row="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textMultiLine" />
-
             <CheckBox
                 android:id="@+id/checkBox01am"
                 android:layout_column="0"
@@ -218,6 +209,197 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="11PM" />
+
+            <TextView
+                android:id="@+id/textView12am"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="1"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView01am"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="2"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView02am"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="3"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView03am"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="4"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView04am"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="5"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView05am"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="6"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView06am"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="7"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView07am"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="8"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView08am"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="9"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView09am"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="10"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView10am"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="11"
+                android:text="TextView" />
+            <TextView
+                android:id="@+id/textView11am"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="12"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView12pm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="13"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView01pm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="14"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView02pm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="15"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView03pm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="16"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView04pm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="17"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView05pm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="18"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView06pm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="19"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView07pm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="20"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView08pm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="21"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView09pm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="22"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView10pm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="23"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView11pm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="24"
+                android:text="TextView" />
 
         </GridLayout>
     </ScrollView>

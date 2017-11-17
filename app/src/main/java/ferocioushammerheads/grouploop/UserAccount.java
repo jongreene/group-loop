@@ -75,8 +75,9 @@ public class UserAccount extends MainActivity
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                userProfile = dataSnapshot.getValue(UserProfile.class);
-                Log.d(TAG, "email from snapshot:" + userProfile.getEmail());
+                UserProfile tmpProfile = dataSnapshot.getValue(UserProfile.class);
+                Log.d(TAG, "email from snapshot:" + tmpProfile.getEmail());
+                updateUserProfileVariable(tmpProfile);
             }
 
             @Override
@@ -86,5 +87,11 @@ public class UserAccount extends MainActivity
         };
 
         mDatabaseRef.addValueEventListener(postListener);
+    }
+
+    public void updateUserProfileVariable(UserProfile profile){
+        userProfile = profile;
+        Log.d(TAG, "email from snapshot2:" + userProfile.getEmail());
+
     }
 }

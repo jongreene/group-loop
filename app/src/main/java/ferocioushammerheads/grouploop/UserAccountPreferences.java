@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,6 +58,10 @@ public class UserAccountPreferences extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+//        FirebaseAuth mAuth;
+//        mAuth = FirebaseAuth.getInstance();
+//        mAuth.getCurrentUser();
+//        mAuth.signOut();
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);

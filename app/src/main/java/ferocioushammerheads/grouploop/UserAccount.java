@@ -33,7 +33,7 @@ public class UserAccount extends MainActivity
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-//        check if user is logged in and load profile
+//        check if user is logged in and load profile if they are
         if(user != null){
             loadUserProfile();
         }
@@ -69,6 +69,7 @@ public class UserAccount extends MainActivity
 
     }
 
+//    TODO: do a try catch incase the database doesnt have the correct structure
     public void loadUserProfile(){
         String userRefString = "/users/" + user.getUid();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference(userRefString);

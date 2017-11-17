@@ -58,9 +58,7 @@ public class UserAccountPreferences extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-//        FirebaseAuth mAuth;
-//        mAuth = FirebaseAuth.getInstance();
-//        mAuth.getCurrentUser();
+//        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 //        mAuth.signOut();
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {

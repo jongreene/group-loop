@@ -40,12 +40,12 @@ public class MainActivity extends AppCompatActivity {
     private ButtonClickListener mButtonClickListener;
 
     public FirebaseUser user;
-    public UserProfile userProfile;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+//        userProfile = new UserProfile();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

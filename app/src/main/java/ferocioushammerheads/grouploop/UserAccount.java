@@ -7,6 +7,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,7 +23,11 @@ public class UserAccount extends MainActivity
     private DatabaseReference mDatabaseRef;
 
 
+    public UserProfile userProfile;
+
     private static final String TAG = "snapshotTest";
+
+    Task<AuthResult> task;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +42,9 @@ public class UserAccount extends MainActivity
 //        check if user is logged in and load profile if they are
         if(user != null){
             loadUserProfile();
+
+//            while(userProfile == null){}
+            Log.d(TAG, "email from snapshot from top:" + userProfile.getEmail());
         }
 
 
@@ -90,8 +99,11 @@ public class UserAccount extends MainActivity
         mDatabaseRef.addValueEventListener(postListener);
     }
 
+//    TODO: make a copy constructor for UserProfile??
     public void updateUserProfileVariable(UserProfile profile){
-        userProfile = profile;
+//        userProfile = profile;
+        userProfile = new UserProfile(profile);
+
         Log.d(TAG, "email from snapshot2:" + userProfile.getEmail());
 
     }

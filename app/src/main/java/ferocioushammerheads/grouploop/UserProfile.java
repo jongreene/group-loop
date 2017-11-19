@@ -25,6 +25,15 @@ public class UserProfile {
         groupList.add("test2");
     }
 
+    public UserProfile(UserProfile c) {
+        userId = c.userId;
+        username = c.username;
+        email = c.email;
+
+        groupList = new ArrayList<String>();
+        groupList = c.groupList;
+    }
+
     public String getUserId(){
         return userId;
     }
@@ -42,10 +51,12 @@ public class UserProfile {
     }
 
 
-//    public void addGroup(){
-//
-//
-//    }
+    public boolean addGroup(String newGroup){
+        groupList.add(newGroup);
+
+//        TODO: check if already in group
+        return true;
+    }
 //
 //    public String deleteGroup(){
 //

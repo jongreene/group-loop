@@ -105,19 +105,19 @@
         </GridLayout>
 
         <Button
-            android:id="@+id/pref_verify_email"
+            android:id="@+id/pref_verify_email_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:text="@string/button_verify_email"
-            app:layout_constraintBottom_toTopOf="@+id/pref_notification_settings"
+            app:layout_constraintBottom_toTopOf="@+id/pref_notification_settings_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/pref_notification_settings"
+            android:id="@+id/pref_notification_settings_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"

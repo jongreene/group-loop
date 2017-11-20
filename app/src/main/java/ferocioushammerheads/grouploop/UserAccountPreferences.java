@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -39,10 +40,17 @@ public class UserAccountPreferences extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private ButtonClickListener mButtonClickListener;
+    private Button mVerifyEmail;
 
     private static final String TAG = "UserAccountPreferences";
 
+    private View view;
 
+    // [START declare_auth]
+    private FirebaseAuth mAuth;
+    // [END declare_auth]
+
+    private FirebaseUser user;
 
     public UserAccountPreferences() {
         // Required empty public constructor
@@ -71,6 +79,11 @@ public class UserAccountPreferences extends Fragment {
 //        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 //        mAuth.signOut();
 
+        // [START initialize_auth]
+        mAuth = FirebaseAuth.getInstance();
+        // [END initialize_auth]
+
+        user = mAuth.getCurrentUser();
         mListener.onFragmentInteraction(0);
 
         super.onCreate(savedInstanceState);
@@ -78,6 +91,7 @@ public class UserAccountPreferences extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
 
         loadUserProfile();
     }
@@ -87,7 +101,7 @@ public class UserAccountPreferences extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_user_account_preferences, container, false);
+        view = inflater.inflate(R.layout.fragment_user_account_preferences, container, false);
 
         ChipItemSearchButton = view.findViewById(R.id.pref_login_button);
 
@@ -96,7 +110,10 @@ public class UserAccountPreferences extends Fragment {
         }
         ChipItemSearchButton.setOnClickListener(mButtonClickListener);
 
+        mVerifyEmail = view.findViewById(R.id.pref_verify_email_button);
 
+
+        setupFragment();
 
         // Inflate the layout for this fragment
         return view;
@@ -165,5 +182,12 @@ public class UserAccountPreferences extends Fragment {
         };
 
         UserAccount.mDatabaseRef.addValueEventListener(postListener);
+    }
+
+    public void setupFragment(){
+        if(user.isEmailVerified()) {
+            mVerifyEmail.setVisibility(View.GONE);
+        }
+//        view.findViewById(R.id.pref_verify_email_button).setEnabled(!user.isEmailVerified());
     }
 }

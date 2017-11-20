@@ -8,6 +8,7 @@ public class UserProfile {
     private String userId;
     private String username;
     private String email;
+    private String currentGroup;
     private List<String> groupList;
 
 
@@ -19,18 +20,20 @@ public class UserProfile {
         this.userId = userId;
         this.username = username;
         this.email = email;
+        this.currentGroup = "default";
 
+        ArrayList<String> test;
         groupList = new ArrayList<String>();
-        groupList.add("test1");
-        groupList.add("test2");
+        groupList.add("Party house");
+        groupList.add("Moms");
     }
 
     public UserProfile(UserProfile c) {
         userId = c.userId;
         username = c.username;
         email = c.email;
+        currentGroup = c.currentGroup;
 
-        groupList = new ArrayList<String>();
         groupList = c.groupList;
     }
 
@@ -46,26 +49,20 @@ public class UserProfile {
         return email;
     }
 
+    public String getCurrentGroup(){
+        return currentGroup;
+    }
+
     public List<String> getGroupList(){
         return groupList;
     }
 
-
-    public boolean addGroup(String newGroup){
-        groupList.add(newGroup);
-
-//        TODO: check if already in group
-        return true;
+    public Boolean setCurrentGroup(int index) {
+        if(groupList.size() >= index && index >= 0){
+            currentGroup = groupList.get(index);
+            return true;
+        }
+        return false;
     }
-//
-//    public String deleteGroup(){
-//
-//        return null;
-//    }
-//
-//    public ArrayList<String> getGroups(){
-//
-//        return null;
-//    }
 
 }

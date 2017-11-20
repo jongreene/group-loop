@@ -39,9 +39,9 @@ public class MainActivity extends AppCompatActivity {
 
     private ButtonClickListener mButtonClickListener;
 
-    public FirebaseUser user;
+    public static FirebaseUser user;
 
-
+    public static UserProfile userProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

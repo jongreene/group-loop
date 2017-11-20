@@ -17,7 +17,7 @@
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             android:padding="10dp"
-            app:layout_constraintBottom_toTopOf="@+id/button4"
+            app:layout_constraintBottom_toTopOf="@+id/pref_verify_email"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="8dp">
 
@@ -60,7 +60,7 @@
                 android:textSize="18dp" />
 
             <TextView
-                android:id="@+id/textView32"
+                android:id="@+id/pref_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
@@ -71,7 +71,7 @@
                 android:textSize="18dp" />
 
             <TextView
-                android:id="@+id/textView33"
+                android:id="@+id/pref_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
@@ -82,7 +82,7 @@
                 android:textSize="18dp" />
 
             <TextView
-                android:id="@+id/textView34"
+                android:id="@+id/pref_group_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
@@ -93,7 +93,7 @@
                 android:textSize="18dp" />
 
             <TextView
-                android:id="@+id/textView35"
+                android:id="@+id/pref_active_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
@@ -105,43 +105,43 @@
         </GridLayout>
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/pref_verify_email"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:text="@string/button_verify_email"
-            app:layout_constraintBottom_toTopOf="@+id/button7"
+            app:layout_constraintBottom_toTopOf="@+id/pref_notification_settings"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/button7"
+            android:id="@+id/pref_notification_settings"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:text="@string/button_notification_settings"
-            app:layout_constraintBottom_toTopOf="@+id/button5"
+            app:layout_constraintBottom_toTopOf="@+id/pref_change_add_group_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/pref_change_add_group_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:text="@string/button_change_group"
-            app:layout_constraintBottom_toTopOf="@+id/account_pref_login"
+            app:layout_constraintBottom_toTopOf="@+id/pref_login_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/account_pref_login"
+            android:id="@+id/pref_login_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"

@@ -4,12 +4,18 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 /**
@@ -34,6 +40,10 @@ public class UserAccountPreferences extends Fragment {
     private OnFragmentInteractionListener mListener;
     private ButtonClickListener mButtonClickListener;
 
+    private static final String TAG = "UserAccountPreferences";
+
+
+
     public UserAccountPreferences() {
         // Required empty public constructor
     }
@@ -50,9 +60,9 @@ public class UserAccountPreferences extends Fragment {
     public static UserAccountPreferences newInstance(String param1, String param2) {
         UserAccountPreferences fragment = new UserAccountPreferences();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+//        args.putString(ARG_PARAM1, param1);
+//        args.putString(ARG_PARAM2, param2);
+//        fragment.setArguments(args);
         return fragment;
     }
 
@@ -60,11 +70,16 @@ public class UserAccountPreferences extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
 //        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 //        mAuth.signOut();
+
+        mListener.onFragmentInteraction(0);
+
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        loadUserProfile();
     }
 
     @Override
@@ -74,12 +89,14 @@ public class UserAccountPreferences extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user_account_preferences, container, false);
 
-        ChipItemSearchButton = view.findViewById(R.id.account_pref_login);
+        ChipItemSearchButton = view.findViewById(R.id.pref_login_button);
 
         if (mButtonClickListener == null) {
             mButtonClickListener = new ButtonClickListener();
         }
         ChipItemSearchButton.setOnClickListener(mButtonClickListener);
+
+
 
         // Inflate the layout for this fragment
         return view;
@@ -112,6 +129,8 @@ public class UserAccountPreferences extends Fragment {
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction();
         void onFragmentInteraction(View view);
+        void onFragmentInteraction(int operation);
+        void onFragmentInteraction(UserProfile profile);
     }
 
     private class ButtonClickListener implements View.OnClickListener {
@@ -125,5 +144,26 @@ public class UserAccountPreferences extends Fragment {
 
             }
         }
+    }
+
+    //    TODO: do a try catch incase the database doesnt have the correct structure
+    public void loadUserProfile(){
+        String userRefString = "/users/" + MainActivity.user.getUid();
+        UserAccount.mDatabaseRef = FirebaseDatabase.getInstance().getReference(userRefString);
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                UserProfile tmpProfile = dataSnapshot.getValue(UserProfile.class);
+                Log.d(TAG, "email from snapshot:" + tmpProfile.getEmail());
+                mListener.onFragmentInteraction(tmpProfile);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+            }
+        };
+
+        UserAccount.mDatabaseRef.addValueEventListener(postListener);
     }
 }

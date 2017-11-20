@@ -8,9 +8,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class UserAccount extends AppCompatActivity
         implements Login.OnFragmentInteractionListener,
@@ -21,11 +22,16 @@ public class UserAccount extends AppCompatActivity
 
     public TextView mUserName, mGroupList, mActiveGroup, mEmail;
 
-
+    AccountTools firebaseTools;
 
     private static final String TAG = "snapshotTest";
 
-    Task<AuthResult> task;
+    // [START declare_auth]
+    private FirebaseAuth mAuth;
+    // [END declare_auth]
+    private DatabaseReference mDatabase;
+
+    private View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +42,16 @@ public class UserAccount extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // [START initialize_auth]
+        mAuth = FirebaseAuth.getInstance();
+        // [END initialize_auth]
+
+        mAuth.getCurrentUser();
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        view = this.findViewById(android.R.id.content).getRootView();
+        firebaseTools = new AccountTools(mAuth, mDatabase, view);
 
 //        fragmentChanger(Login.class,R.id.user_account_frag_frame, "Login");
         fragmentChanger(UserAccountPreferences.class,R.id.user_account_frag_frame, "UserAccountPreferences");
@@ -64,9 +80,18 @@ public class UserAccount extends AppCompatActivity
     }
 
     public void onFragmentInteraction(View view){
+        FirebaseUser user = mAuth.getCurrentUser();
         if (view.getId() == R.id.pref_login_button) {
 //            switch to add chip item fragment
-            fragmentChanger(Login.class,R.id.user_account_frag_frame,"Login");
+            if(user==null) {
+                fragmentChanger(Login.class, R.id.user_account_frag_frame, "Login");
+            } else{
+                firebaseTools.signOut();
+            }
+        } else if(view.getId() == R.id.pref_verify_email_button){
+            if(user != null) {
+                firebaseTools.sendEmailVerification();
+            }
         }
 
     }
@@ -79,11 +104,12 @@ public class UserAccount extends AppCompatActivity
 //                loadUserProfile();
             }
         } else if(operation==1){
-
+//            firebaseTools.signOut();
         }
 
     }
 
+//    TODO: move most of this into UserAccoutnPreferences since thats where these exist
     public void updateUserProfileVariable(UserProfile profile){
         MainActivity.userProfile = new UserProfile(profile);
 

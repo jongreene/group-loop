@@ -3,6 +3,8 @@ package ferocioushammerheads.grouploop;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,11 +38,12 @@ public class UserAccountPreferences extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private Button ChipItemSearchButton;
+
 
     private OnFragmentInteractionListener mListener;
     private ButtonClickListener mButtonClickListener;
-    private Button mVerifyEmail;
+    private Button mVerifyEmailButton;
+    private Button mLoginButton;
 
     private static final String TAG = "UserAccountPreferences";
 
@@ -56,29 +59,8 @@ public class UserAccountPreferences extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment UserAccountPreferences.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static UserAccountPreferences newInstance(String param1, String param2) {
-        UserAccountPreferences fragment = new UserAccountPreferences();
-        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
-//        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-//        mAuth.signOut();
-
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
@@ -92,8 +74,9 @@ public class UserAccountPreferences extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-
-        loadUserProfile();
+        if(user!=null) {
+            loadUserProfile();
+        }
     }
 
     @Override
@@ -103,20 +86,28 @@ public class UserAccountPreferences extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_user_account_preferences, container, false);
 
-        ChipItemSearchButton = view.findViewById(R.id.pref_login_button);
+        mLoginButton = view.findViewById(R.id.pref_login_button);
+        mVerifyEmailButton = view.findViewById(R.id.pref_verify_email_button);
 
         if (mButtonClickListener == null) {
             mButtonClickListener = new ButtonClickListener();
         }
-        ChipItemSearchButton.setOnClickListener(mButtonClickListener);
+        mLoginButton.setOnClickListener(mButtonClickListener);
+        mVerifyEmailButton.setOnClickListener(mButtonClickListener);
 
-        mVerifyEmail = view.findViewById(R.id.pref_verify_email_button);
 
 
-        setupFragment();
+
 
         // Inflate the layout for this fragment
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setupFragment();
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -185,9 +176,8 @@ public class UserAccountPreferences extends Fragment {
     }
 
     public void setupFragment(){
-        if(user.isEmailVerified()) {
-            mVerifyEmail.setVisibility(View.GONE);
+        if(user!=null && !user.isEmailVerified()) {
+            mVerifyEmailButton.setVisibility(View.VISIBLE);
         }
-//        view.findViewById(R.id.pref_verify_email_button).setEnabled(!user.isEmailVerified());
     }
 }

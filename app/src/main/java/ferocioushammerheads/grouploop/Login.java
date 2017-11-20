@@ -88,6 +88,7 @@ public class Login extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
         view = inflater.inflate(R.layout.fragment_login, container, false);
 
 
@@ -155,6 +156,8 @@ public class Login extends Fragment {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
+
+
     }
     // [END on_start_check_user]
 

@@ -28,7 +28,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "FirebaseSession";
+    private static final String TAG = "AccountTools";
 
     private Button ChangeGroupItems;
     private Button ChangeLogin;

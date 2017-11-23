@@ -5,8 +5,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -57,6 +59,42 @@ public class UserAccount extends AppCompatActivity
 
 //        fragmentChanger(Login.class,R.id.user_account_frag_frame, "Login");
         fragmentChanger(UserAccountPreferences.class,R.id.user_account_frag_frame, "UserAccountPreferences");
+    }
+
+    @Override
+    //    override back button in toolbar to swap fragment instead of restart activity
+    public boolean onOptionsItemSelected(MenuItem item) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment myFragment = fragmentManager.findFragmentByTag("UserAccountPreferences");
+        if (myFragment != null && myFragment.isVisible()) {
+            Toast.makeText(getApplicationContext(), "Default behavior", Toast.LENGTH_SHORT).show();
+            return super.onOptionsItemSelected(item);
+        }
+        else {
+            switch (item.getItemId()) {
+                case android.R.id.home:
+                    Toast.makeText(getApplicationContext(), "Overriding default", Toast.LENGTH_SHORT).show();
+                    fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
+                    break;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    //    override back button to swap fragment instead of restart activity
+    public void onBackPressed() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment myFragment = fragmentManager.findFragmentByTag("UserAccountPreferences");
+        if (myFragment != null && myFragment.isVisible()) {
+            Toast.makeText(getApplicationContext(), "Default behavior", Toast.LENGTH_SHORT).show();
+//            finish();
+            super.onBackPressed();
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "Overriding default", Toast.LENGTH_SHORT).show();
+            fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
+        }
     }
 
     public void fragmentChanger(Class newFragment, int containerName, String fragName){

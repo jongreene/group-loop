@@ -36,6 +36,7 @@ public class UserAccountPreferences extends Fragment {
     private Button mVerifyEmailButton;
     private Button mLoginButton;
     private Button mChangeGroupButton;
+    private Button mNotificationSettings;
 
     private static final String TAG = "UserAccountPreferences";
 
@@ -81,6 +82,7 @@ public class UserAccountPreferences extends Fragment {
         mLoginButton = view.findViewById(R.id.pref_login_button);
         mVerifyEmailButton = view.findViewById(R.id.pref_verify_email_button);
         mChangeGroupButton = view.findViewById(R.id.pref_change_add_group_button);
+        mNotificationSettings = view.findViewById(R.id.pref_notification_settings_button);
 
         if (mButtonClickListener == null) {
             mButtonClickListener = new ButtonClickListener();
@@ -88,6 +90,7 @@ public class UserAccountPreferences extends Fragment {
         mLoginButton.setOnClickListener(mButtonClickListener);
         mVerifyEmailButton.setOnClickListener(mButtonClickListener);
         mChangeGroupButton.setOnClickListener(mButtonClickListener);
+        mNotificationSettings.setOnClickListener(mButtonClickListener);
 
         // Inflate the layout for this fragment
         return view;

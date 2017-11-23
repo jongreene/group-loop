@@ -16,7 +16,8 @@ import com.google.firebase.database.FirebaseDatabase;
 public class UserAccount extends AppCompatActivity
         implements Login.OnFragmentInteractionListener,
         UserAccountPreferences.OnFragmentInteractionListener,
-        ChangeGroup.OnFragmentInteractionListener
+        ChangeGroup.OnFragmentInteractionListener,
+        NotificationSettings.OnFragmentInteractionListener
 {
 
     public static DatabaseReference mDatabaseRef;
@@ -96,6 +97,11 @@ public class UserAccount extends AppCompatActivity
         } else if(view.getId() == R.id.pref_change_add_group_button){
             if(user != null) {
                 fragmentChanger(ChangeGroup.class, R.id.user_account_frag_frame, "ChangeGroup");
+            }
+        }
+        else if(view.getId() == R.id.pref_notification_settings_button){
+            if(user != null) {
+                fragmentChanger(NotificationSettings.class, R.id.user_account_frag_frame, "NotificationSettings");
             }
         }
 

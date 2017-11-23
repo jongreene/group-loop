@@ -15,7 +15,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class UserAccount extends AppCompatActivity
         implements Login.OnFragmentInteractionListener,
-        UserAccountPreferences.OnFragmentInteractionListener
+        UserAccountPreferences.OnFragmentInteractionListener,
+        ChangeGroup.OnFragmentInteractionListener
 {
 
     public static DatabaseReference mDatabaseRef;
@@ -91,6 +92,10 @@ public class UserAccount extends AppCompatActivity
         } else if(view.getId() == R.id.pref_verify_email_button){
             if(user != null) {
                 firebaseTools.sendEmailVerification();
+            }
+        } else if(view.getId() == R.id.pref_change_add_group_button){
+            if(user != null) {
+                fragmentChanger(ChangeGroup.class, R.id.user_account_frag_frame, "ChangeGroup");
             }
         }
 

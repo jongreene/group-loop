@@ -20,15 +20,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link UserAccountPreferences.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link UserAccountPreferences#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class UserAccountPreferences extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,6 +35,7 @@ public class UserAccountPreferences extends Fragment {
     private ButtonClickListener mButtonClickListener;
     private Button mVerifyEmailButton;
     private Button mLoginButton;
+    private Button mChangeGroupButton;
 
     private static final String TAG = "UserAccountPreferences";
 
@@ -88,16 +80,14 @@ public class UserAccountPreferences extends Fragment {
 
         mLoginButton = view.findViewById(R.id.pref_login_button);
         mVerifyEmailButton = view.findViewById(R.id.pref_verify_email_button);
+        mChangeGroupButton = view.findViewById(R.id.pref_change_add_group_button);
 
         if (mButtonClickListener == null) {
             mButtonClickListener = new ButtonClickListener();
         }
         mLoginButton.setOnClickListener(mButtonClickListener);
         mVerifyEmailButton.setOnClickListener(mButtonClickListener);
-
-
-
-
+        mChangeGroupButton.setOnClickListener(mButtonClickListener);
 
         // Inflate the layout for this fragment
         return view;
@@ -150,6 +140,8 @@ public class UserAccountPreferences extends Fragment {
             if (mListener != null) {
                 mListener.onFragmentInteraction(view);
 
+                // Update the fragment after logging out
+                setupFragment();
             }
         }
     }
@@ -176,8 +168,15 @@ public class UserAccountPreferences extends Fragment {
     }
 
     public void setupFragment(){
-        if(user!=null && !user.isEmailVerified()) {
+        if(user!=null) {
+            mLoginButton.setText(R.string.button_Logout);
             mVerifyEmailButton.setVisibility(View.VISIBLE);
+            if(!user.isEmailVerified()) {
+                mVerifyEmailButton.setVisibility(View.VISIBLE);
+            }
+        }
+        else{
+            mLoginButton.setText(R.string.button_login_logout_logged_out);
         }
     }
 }

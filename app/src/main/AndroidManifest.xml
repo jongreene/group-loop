@@ -20,14 +20,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".GroupItems"
-            android:label="@string/title_activity_group_items"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="ferocioushammerheads.grouploop.MainActivity" />
-        </activity>
-        <activity
             android:name=".ScheduleItem"
             android:label="@string/title_activity_schedule_item"
             android:parentActivityName=".MainActivity">
@@ -35,9 +27,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ferocioushammerheads.grouploop.MainActivity" />
         </activity>
-        <activity android:name=".ListItem" />
         <activity android:name=".GroupChatItem" />
-        <activity android:name=".SampleObjectView" />
         <activity
             android:name=".ChipItems"
             android:label="@string/title_activity_chip_item"

@@ -58,6 +58,8 @@ public class UserAccount extends AppCompatActivity
         view = this.findViewById(android.R.id.content).getRootView();
         firebaseTools = new AccountTools(mAuth, mDatabase, view);
 
+
+
 //        fragmentChanger(Login.class,R.id.user_account_frag_frame, "Login");
         fragmentChanger(UserAccountPreferences.class,R.id.user_account_frag_frame, "UserAccountPreferences");
     }
@@ -117,6 +119,16 @@ public class UserAccount extends AppCompatActivity
         }
 
         fragmentManager.beginTransaction().replace(containerName, fragment, fragName).commit();
+
+        if (fragName == "UserAccountPreferences") {
+            getSupportActionBar().setTitle("Account Preferences");
+        } else if(fragName == "Login"){
+            getSupportActionBar().setTitle("Login");
+        } else if(fragName == "ChangeGroup"){
+            getSupportActionBar().setTitle("Change Group");
+        } else if(fragName == "NotificationSettings"){
+            getSupportActionBar().setTitle("Notification Settings");
+        }
     }
 
     public void onFragmentInteraction(){}

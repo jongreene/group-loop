@@ -91,10 +91,6 @@ public class ChipItems extends AppCompatActivity
             e.printStackTrace();
         }
 
-        // Insert the fragment by replacing any existing fragment
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-
-
         fragmentManager.beginTransaction().replace(containerName, fragment, fragName).commit();
     }
 

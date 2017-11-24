@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -62,6 +63,13 @@ public class UserAccount extends AppCompatActivity
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
     //    override back button in toolbar to swap fragment instead of restart activity
     public boolean onOptionsItemSelected(MenuItem item) {
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -111,9 +119,7 @@ public class UserAccount extends AppCompatActivity
         fragmentManager.beginTransaction().replace(containerName, fragment, fragName).commit();
     }
 
-    public void onFragmentInteraction(){
-
-    }
+    public void onFragmentInteraction(){}
 
     public void onFragmentInteraction(UserProfile profile){
         updateUserProfileVariable(profile);

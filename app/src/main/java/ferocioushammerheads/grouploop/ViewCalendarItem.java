@@ -2,10 +2,16 @@ package ferocioushammerheads.grouploop;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.TextView;
 
 
 /**
@@ -26,7 +32,68 @@ public class ViewCalendarItem extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private View view;
+
     private OnFragmentInteractionListener mListener;
+
+    //calendar view
+    private DatePicker calendar;
+    private FloatingActionButton dateSelection;
+    //add description view
+    private EditText description;
+    private Button addDescription;
+    //checkbox view
+    private FloatingActionButton checkBoxSelection;
+    //... the checkboxes
+    private CheckBox cb12am; //C heck B ox 12am
+    private CheckBox cb1am;
+    private CheckBox cb2am;
+    private CheckBox cb3am;
+    private CheckBox cb4am;
+    private CheckBox cb5am;
+    private CheckBox cb6am;
+    private CheckBox cb7am;
+    private CheckBox cb8am;
+    private CheckBox cb9am;
+    private CheckBox cb10am;
+    private CheckBox cb11am;
+    private CheckBox cb12pm;
+    private CheckBox cb1pm;
+    private CheckBox cb2pm;
+    private CheckBox cb3pm;
+    private CheckBox cb4pm;
+    private CheckBox cb5pm;
+    private CheckBox cb6pm;
+    private CheckBox cb7pm;
+    private CheckBox cb8pm;
+    private CheckBox cb9pm;
+    private CheckBox cb10pm;
+    private CheckBox cb11pm;
+    //...  the textboxes
+    private TextView tv12am;
+    private TextView tv1am;
+    private TextView tv2am;
+    private TextView tv3am;
+    private TextView tv4am;
+    private TextView tv5am;
+    private TextView tv6am;
+    private TextView tv7am;
+    private TextView tv8am;
+    private TextView tv9am;
+    private TextView tv10am;
+    private TextView tv11am;
+    private TextView tv12pm;
+    private TextView tv1pm;
+    private TextView tv2pm;
+    private TextView tv3pm;
+    private TextView tv4pm;
+    private TextView tv5pm;
+    private TextView tv6pm;
+    private TextView tv7pm;
+    private TextView tv8pm;
+    private TextView tv9pm;
+    private TextView tv10pm;
+    private TextView tv11pm;
 
     public ViewCalendarItem() {
         // Required empty public constructor
@@ -63,7 +130,12 @@ public class ViewCalendarItem extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_view_calendar_item, container, false);
+        view = inflater.inflate(R.layout.fragment_view_calendar_item, container, false);
+        calendar = view.findViewById(R.id.datePicker);
+        dateSelection = view.findViewById(R.id.floatingActionButton1);
+
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

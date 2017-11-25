@@ -15,8 +15,11 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class UserAccount extends AppCompatActivity
         implements Login.OnFragmentInteractionListener,
@@ -31,9 +34,8 @@ public class UserAccount extends AppCompatActivity
     // Define the actual handler for the event.
     public void loggedInEvent ()
     {
-        // Wow!  Something really interesting must have occurred!
-        // Do something...
         System.out.println("logged in");
+        user = mAuth.getCurrentUser();
         fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
 
     }
@@ -47,8 +49,6 @@ public class UserAccount extends AppCompatActivity
     public static AccountTools firebaseTools;
 
     FirebaseUser user;
-
-//    private static final String TAG = "snapshotTest";
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -77,18 +77,14 @@ public class UserAccount extends AppCompatActivity
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         view = this.findViewById(android.R.id.content).getRootView();
-//        firebaseTools = new AccountTools(mAuth, mDatabase, view);
 
         firebaseTools = new AccountTools(this,mAuth, mDatabase, view);
-//        firebaseTools.setSomethingHappened(true);
-
 
         Bundle b = getIntent().getExtras();
         int value = -1; // or other values
-        if(b != null)
+        if(b != null) {
             value = b.getInt("key");
-
-        Log.d(TAG, "value: " + value);
+        }
 
 //        use bundle value to determine initial fragment
         if(value == 1) {
@@ -229,7 +225,7 @@ public class UserAccount extends AppCompatActivity
 
     }
 
-//    TODO: move most of this into UserAccoutnPreferences since thats where these exist
+//    TODO: move most of this into UserAccountPreferences since thats where these exist
     public void updateUserProfileVariable(UserProfile profile){
         MainActivity.userProfile = new UserProfile(profile);
 
@@ -247,4 +243,5 @@ public class UserAccount extends AppCompatActivity
         mEmail.setText(MainActivity.userProfile.getEmail());
 
     }
+
 }

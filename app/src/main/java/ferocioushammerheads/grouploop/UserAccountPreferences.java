@@ -21,32 +21,19 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class UserAccountPreferences extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-
     private OnFragmentInteractionListener mListener;
     private ButtonClickListener mButtonClickListener;
-    private Button mVerifyEmailButton;
-    private Button mLoginButton;
-    private Button mChangeGroupButton;
-    private Button mNotificationSettings;
+    private Button mVerifyEmailButton, mLoginButton, mChangeGroupButton, mNotificationSettings;
 
     private static final String TAG = "UserAccountPreferences";
 
     private View view;
-
+    private FirebaseUser user;
     // [START declare_auth]
     private FirebaseAuth mAuth;
     // [END declare_auth]
 
-    private FirebaseUser user;
+
 
     public UserAccountPreferences() {
         // Required empty public constructor
@@ -62,10 +49,6 @@ public class UserAccountPreferences extends Fragment {
         mListener.onFragmentInteraction(0);
 
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
 
         if(user!=null) {
             loadUserProfile();

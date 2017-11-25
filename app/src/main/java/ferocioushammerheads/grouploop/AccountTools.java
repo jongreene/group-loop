@@ -74,7 +74,7 @@ public class AccountTools {
 //        }
     }
 
-    private void createAccount(String email, String password) {
+    public void createAccount(String email, String password) {
         final String username = email;
         Log.d(TAG, "createAccount:" + email);
         if (!validateForm()) {
@@ -163,9 +163,6 @@ public class AccountTools {
     }
 
     public void sendEmailVerification() {
-        // Disable button
-//        view.findViewById(R.id.verify_email_button).setEnabled(false);
-
         // Send verification email
         // [START send_email_verification]
         final FirebaseUser user = mAuth.getCurrentUser();
@@ -174,20 +171,15 @@ public class AccountTools {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         // [START_EXCLUDE]
-                        // Re-enable button
-//                        view.findViewById(R.id.verify_email_button).setEnabled(true);
-
                         if (task.isSuccessful()) {
                             Toast.makeText(view.getContext(),
                                     "Verification email sent to " + user.getEmail(),
                                     Toast.LENGTH_SHORT).show();
-//                            hideProgressDialog();
                         } else {
                             Log.e(TAG, "sendEmailVerification", task.getException());
                             Toast.makeText(view.getContext(),
                                     "Failed to send verification email.",
                                     Toast.LENGTH_SHORT).show();
-//                            hideProgressDialog();
                         }
                         // [END_EXCLUDE]
                     }
@@ -222,7 +214,4 @@ public class AccountTools {
 
         mDatabase.child("users").child(userId).setValue(userProfile);
     }
-
-
-
 }

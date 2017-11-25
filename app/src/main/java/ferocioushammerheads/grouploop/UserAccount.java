@@ -29,7 +29,7 @@ public class UserAccount extends AppCompatActivity
 
     public TextView mUserName, mGroupList, mActiveGroup, mEmail;
 
-    AccountTools firebaseTools;
+    public static AccountTools firebaseTools;
 
     FirebaseUser user;
 
@@ -175,6 +175,8 @@ public class UserAccount extends AppCompatActivity
                 fragmentChanger(Login.class, R.id.user_account_frag_frame, "Login");
             } else{
                 firebaseTools.signOut();
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
             }
         } else if(view.getId() == R.id.pref_verify_email_button){
             if(user != null) {
@@ -202,6 +204,8 @@ public class UserAccount extends AppCompatActivity
             }
         } else if(operation==1){
 //            firebaseTools.signOut();
+//            Intent intent = new Intent(this, MainActivity.class);
+//            startActivity(intent);
         }
 
     }

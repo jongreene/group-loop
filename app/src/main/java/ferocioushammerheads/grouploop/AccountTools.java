@@ -15,11 +15,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
 
-/**
- * Created by uberslam on 11/20/17.
- */
-
 public class AccountTools {
+//    private OnSignInListener mSignIn;
 
     private static final String TAG = "EmailPassword";
     // [START declare_auth]
@@ -28,6 +25,7 @@ public class AccountTools {
     private DatabaseReference mDatabase;
 
     private View view;
+
 
     AccountTools(FirebaseAuth mAuth, DatabaseReference mDatabase){
         this.mAuth = mAuth;
@@ -38,6 +36,13 @@ public class AccountTools {
         this.mAuth = mAuth;
         this.mDatabase = mDatabase;
         this.view = view;
+
+//        if (this instanceof OnSignInListener) {
+//            mSignIn = (OnSignInListener) view.getContext();
+//        } else {
+//            throw new RuntimeException(view.getContext().toString()
+//                    + " must implement OnFragmentInteractionListener");
+//        }
     }
 
     private void createAccount(String email, String password) {
@@ -78,7 +83,7 @@ public class AccountTools {
 
     }
 
-    private void signIn(String email, String password) {
+    public void signIn(String email, String password) {
         Log.d(TAG, "signIn:" + email);
         if (!validateForm()) {
             return;
@@ -95,8 +100,8 @@ public class AccountTools {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-//                            updateUI(user);
 //                            hideProgressDialog();
+//                            mSignIn.onSignIn();
                             if(user.isEmailVerified()){
 //                                finish();
                             }

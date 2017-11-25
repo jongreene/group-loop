@@ -35,9 +35,13 @@ import static android.view.View.VISIBLE;
  * Use the {@link Login#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Login extends Fragment {
+public class Login extends Fragment{
 
-    private static final String TAG = "EmailPassword";
+    public void onSignIn() {
+        // callback code goes here
+    }
+
+    private static final String TAG = "LoginFragment";
 
     private TextView mStatusTextView;
     private EditText mEmailField;
@@ -53,6 +57,8 @@ public class Login extends Fragment {
     private ButtonClickListener mButtonClickListener;
 
     private DatabaseReference mDatabase;
+
+
 
     public Login() {
         // Required empty public constructor
@@ -93,6 +99,7 @@ public class Login extends Fragment {
         view = inflater.inflate(R.layout.fragment_login, container, false);
 
 
+
         if (mButtonClickListener == null) {
             mButtonClickListener = new ButtonClickListener();
         }
@@ -105,8 +112,6 @@ public class Login extends Fragment {
         // Buttons
         view.findViewById(R.id.email_sign_in_button).setOnClickListener(mButtonClickListener);
         view.findViewById(R.id.email_create_account_button).setOnClickListener(mButtonClickListener);
-        view.findViewById(R.id.sign_out_button).setOnClickListener(mButtonClickListener);
-        view.findViewById(R.id.verify_email_button).setOnClickListener(mButtonClickListener);
 
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
@@ -115,6 +120,7 @@ public class Login extends Fragment {
         mAuth.getCurrentUser();
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
 
         // Inflate the layout for this fragment
         return view;
@@ -162,151 +168,6 @@ public class Login extends Fragment {
     }
     // [END on_start_check_user]
 
-    private void createAccount(String email, String password) {
-        final String username = email;
-        Log.d(TAG, "createAccount:" + email);
-        if (!validateForm()) {
-            return;
-        }
-
-        showProgressDialog();
-
-        // [START create_user_with_email]
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-//                            generates a folder under users for the user
-//                            mDatabase.child("users").child(user.getUid()).child("username").setValue(username);
-                            writeNewUser(user.getUid(), username, username);
-                            updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(view.getContext(), "Authentication failed. Password not long enough.",Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
-
-                        // [START_EXCLUDE]
-                        hideProgressDialog();
-                        // [END_EXCLUDE]
-                    }
-                });
-        // [END create_user_with_email]
-
-
-    }
-
-    private void signIn(String email, String password) {
-        Log.d(TAG, "signIn:" + email);
-        if (!validateForm()) {
-            return;
-        }
-
-        showProgressDialog();
-
-        // [START sign_in_with_email]
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                            hideProgressDialog();
-                            if(user.isEmailVerified()){
-//                                finish();
-                            }
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(view.getContext(),"Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-                            hideProgressDialog();
-                        }
-
-                        // [START_EXCLUDE]
-                        if (!task.isSuccessful()) {
-                            mStatusTextView.setText(R.string.auth_failed);
-                        }
-                        // [END_EXCLUDE]
-
-
-                    }
-
-
-                });
-
-        // [END sign_in_with_email]
-    }
-
-    private void signOut() {
-        mAuth.signOut();
-        updateUI(null);
-    }
-
-    private void sendEmailVerification() {
-        // Disable button
-        view.findViewById(R.id.verify_email_button).setEnabled(false);
-
-        // Send verification email
-        // [START send_email_verification]
-        final FirebaseUser user = mAuth.getCurrentUser();
-        user.sendEmailVerification()
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        // [START_EXCLUDE]
-                        // Re-enable button
-                        view.findViewById(R.id.verify_email_button).setEnabled(true);
-
-                        if (task.isSuccessful()) {
-                            Toast.makeText(view.getContext(),
-                                    "Verification email sent to " + user.getEmail(),
-                                    Toast.LENGTH_SHORT).show();
-                            hideProgressDialog();
-                        } else {
-                            Log.e(TAG, "sendEmailVerification", task.getException());
-                            Toast.makeText(view.getContext(),
-                                    "Failed to send verification email.",
-                                    Toast.LENGTH_SHORT).show();
-                            hideProgressDialog();
-                        }
-                        // [END_EXCLUDE]
-                    }
-                });
-        // [END send_email_verification]
-    }
-
-    private boolean validateForm() {
-        boolean valid = true;
-
-        String email = mEmailField.getText().toString();
-        if (TextUtils.isEmpty(email)) {
-            mEmailField.setError("Required.");
-            valid = false;
-        } else {
-            mEmailField.setError(null);
-        }
-
-        String password = mPasswordField.getText().toString();
-        if (TextUtils.isEmpty(password)) {
-            mPasswordField.setError("Required.");
-            valid = false;
-        } else {
-            mPasswordField.setError(null);
-        }
-
-        return valid;
-    }
-
     private void updateUI(FirebaseUser user) {
         hideProgressDialog();
         if (user != null) {
@@ -315,16 +176,12 @@ public class Login extends Fragment {
 
             view.findViewById(R.id.email_password_buttons).setVisibility(View.GONE);
             view.findViewById(R.id.email_password_fields).setVisibility(View.GONE);
-            view.findViewById(R.id.signed_in_buttons).setVisibility(VISIBLE);
-
-            view.findViewById(R.id.verify_email_button).setEnabled(!user.isEmailVerified());
 
         } else {
             mStatusTextView.setText(R.string.signed_out);
 
             view.findViewById(R.id.email_password_buttons).setVisibility(VISIBLE);
             view.findViewById(R.id.email_password_fields).setVisibility(VISIBLE);
-            view.findViewById(R.id.signed_in_buttons).setVisibility(View.GONE);
         }
     }
 
@@ -350,22 +207,14 @@ public class Login extends Fragment {
 
                 int i = view.getId();
                 if (i == R.id.email_create_account_button) {
-                    createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
+//                    createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
+                    UserAccount.firebaseTools.sendEmailVerification();
                 } else if (i == R.id.email_sign_in_button) {
-                    signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
-                } else if (i == R.id.sign_out_button) {
-                    signOut();
-                } else if (i == R.id.verify_email_button) {
-                    sendEmailVerification();
+                    UserAccount.firebaseTools.signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
+//                    signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
                 }
 
             }
         }
-    }
-
-    private void writeNewUser(String userId, String name, String email) {
-        UserProfile userProfile = new UserProfile(userId, name, email);
-
-        mDatabase.child("users").child(userId).setValue(userProfile);
     }
 }

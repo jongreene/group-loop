@@ -30,12 +30,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "AccountTools";
 
-    private Button ChangeGroupItems;
-    private Button ChangeLogin;
-
-    private Button mScheduleDemoButton;
-    private Button mChipItemsButton;
-    private Button mPreferencesButton;
+    private Button ChangeLogin, ChangeGroupItems, mScheduleDemoButton, mChipItemsButton, mPreferencesButton;
 
     private ButtonClickListener mButtonClickListener;
 
@@ -57,8 +52,6 @@ public class MainActivity extends AppCompatActivity {
 //        set current user
         user = FirebaseAuth.getInstance().getCurrentUser();
 
-//        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-
         mScheduleDemoButton = this.findViewById(R.id.scheduleDemoButton);
         mChipItemsButton = this.findViewById(R.id.chipItemsButtons);
         mPreferencesButton = this.findViewById(R.id.preferencesButton);
@@ -72,14 +65,6 @@ public class MainActivity extends AppCompatActivity {
 
         updateUserEnvironment();
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.main, menu);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-//        return true;
-//    }
 
     private class ButtonClickListener implements View.OnClickListener {
         ButtonClickListener() {}

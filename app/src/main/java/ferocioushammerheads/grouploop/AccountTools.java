@@ -54,7 +54,7 @@ public class AccountTools {
         if (somethingHappened)
         {
             // Signal the even by invoking the interface's method.
-            ie.loggedInEvent ();
+            ie.loggedInEvent();
         }
         //...
     }
@@ -142,17 +142,12 @@ public class AccountTools {
 //                            updateUI(null);
 //                            hideProgressDialog();
                         }
-
                         // [START_EXCLUDE]
                         if (!task.isSuccessful()) {
 //                            mStatusTextView.setText(R.string.auth_failed);
                         }
                         // [END_EXCLUDE]
-
-
                     }
-
-
                 });
 
         // [END sign_in_with_email]

@@ -1,10 +1,12 @@
 package ferocioushammerheads.grouploop;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +31,9 @@ public class UserAccount extends AppCompatActivity
 
     AccountTools firebaseTools;
 
-    private static final String TAG = "snapshotTest";
+    FirebaseUser user;
+
+//    private static final String TAG = "snapshotTest";
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -37,6 +41,8 @@ public class UserAccount extends AppCompatActivity
     private DatabaseReference mDatabase;
 
     private View view;
+
+    private static final String TAG = "UserAccount";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,16 +64,28 @@ public class UserAccount extends AppCompatActivity
         view = this.findViewById(android.R.id.content).getRootView();
         firebaseTools = new AccountTools(mAuth, mDatabase, view);
 
+        Bundle b = getIntent().getExtras();
+        int value = -1; // or other values
+        if(b != null)
+            value = b.getInt("key");
 
+        Log.d(TAG, "value: " + value);
 
-//        fragmentChanger(Login.class,R.id.user_account_frag_frame, "Login");
-        fragmentChanger(UserAccountPreferences.class,R.id.user_account_frag_frame, "UserAccountPreferences");
+//        use bundle value to determine initial fragment
+        if(value == 1) {
+            fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
+        } else {
+            fragmentChanger(Login.class, R.id.user_account_frag_frame, "Login");
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+
+
+
         return true;
     }
 
@@ -78,10 +96,22 @@ public class UserAccount extends AppCompatActivity
         Fragment myFragment = fragmentManager.findFragmentByTag("UserAccountPreferences");
         if (myFragment != null && myFragment.isVisible()) {
             Toast.makeText(getApplicationContext(), "Default behavior", Toast.LENGTH_SHORT).show();
-            return super.onOptionsItemSelected(item);
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+//            return super.onOptionsItemSelected(item);
         }
         else {
+            user = mAuth.getCurrentUser();
             switch (item.getItemId()) {
+                case R.id.action_logout:
+                    if(user != null){
+                        firebaseTools.signOut();
+                        Intent intent = new Intent(this, MainActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Not logged in.", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
                 case android.R.id.home:
                     Toast.makeText(getApplicationContext(), "Overriding default", Toast.LENGTH_SHORT).show();
                     fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
@@ -98,8 +128,8 @@ public class UserAccount extends AppCompatActivity
         Fragment myFragment = fragmentManager.findFragmentByTag("UserAccountPreferences");
         if (myFragment != null && myFragment.isVisible()) {
             Toast.makeText(getApplicationContext(), "Default behavior", Toast.LENGTH_SHORT).show();
-//            finish();
-            super.onBackPressed();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         }
         else{
             Toast.makeText(getApplicationContext(), "Overriding default", Toast.LENGTH_SHORT).show();
@@ -138,7 +168,7 @@ public class UserAccount extends AppCompatActivity
     }
 
     public void onFragmentInteraction(View view){
-        FirebaseUser user = mAuth.getCurrentUser();
+        user = mAuth.getCurrentUser();
         if (view.getId() == R.id.pref_login_button) {
 //            switch to add chip item fragment
             if(user==null) {

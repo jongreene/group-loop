@@ -1,5 +1,6 @@
 package ferocioushammerheads.grouploop;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;

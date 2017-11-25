@@ -151,23 +151,26 @@ public class UserAccountPreferences extends Fragment {
 
     //    TODO: do a try catch incase the database doesnt have the correct structure
     public void loadUserProfile(){
-        String userRefString = "/users/" + MainActivity.user.getUid();
-        UserAccount.mDatabaseRef = FirebaseDatabase.getInstance().getReference(userRefString);
-        ValueEventListener postListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                UserProfile tmpProfile = dataSnapshot.getValue(UserProfile.class);
-                Log.d(TAG, "email from snapshot:" + tmpProfile.getEmail());
-                mListener.onFragmentInteraction(tmpProfile);
-            }
+        if(user != null && MainActivity.user != null) {
+//        TODO: fix issue when trying to load after login
+            String userRefString = "/users/" + MainActivity.user.getUid();
+            UserAccount.mDatabaseRef = FirebaseDatabase.getInstance().getReference(userRefString);
+            ValueEventListener postListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    UserProfile tmpProfile = dataSnapshot.getValue(UserProfile.class);
+                    Log.d(TAG, "email from snapshot:" + tmpProfile.getEmail());
+                    mListener.onFragmentInteraction(tmpProfile);
+                }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-            }
-        };
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                }
+            };
 
-        UserAccount.mDatabaseRef.addValueEventListener(postListener);
+            UserAccount.mDatabaseRef.addValueEventListener(postListener);
+        }
     }
 
     public void setupFragment(){

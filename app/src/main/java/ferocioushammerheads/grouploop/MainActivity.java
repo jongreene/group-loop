@@ -141,7 +141,18 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (view.getId() == R.id.preferencesButton) {
             Intent intent = new Intent(this, UserAccount.class);
-            startActivityForResult(intent, 1);
+
+            Bundle b = new Bundle();
+//            1: logged in. 2: otherwise
+            if(user!=null) {
+                b.putInt("key", 1); //Your id
+            } else {
+                b.putInt("key", 2); //Your id
+            }
+            intent.putExtras(b); //Put your id to your next Intent
+
+            startActivity(intent);
+            finish();
             updateUserEnvironment();
         }
     }

@@ -22,8 +22,23 @@ public class UserAccount extends AppCompatActivity
         implements Login.OnFragmentInteractionListener,
         UserAccountPreferences.OnFragmentInteractionListener,
         ChangeGroup.OnFragmentInteractionListener,
-        NotificationSettings.OnFragmentInteractionListener
+        NotificationSettings.OnFragmentInteractionListener,
+        AccountToolsHelper
+
 {
+
+
+    // Define the actual handler for the event.
+    public void loggedInEvent ()
+    {
+        // Wow!  Something really interesting must have occurred!
+        // Do something...
+        System.out.println("logged in");
+        fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
+
+    }
+
+
 
     public static DatabaseReference mDatabaseRef;
 
@@ -62,7 +77,11 @@ public class UserAccount extends AppCompatActivity
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         view = this.findViewById(android.R.id.content).getRootView();
-        firebaseTools = new AccountTools(mAuth, mDatabase, view);
+//        firebaseTools = new AccountTools(mAuth, mDatabase, view);
+
+        firebaseTools = new AccountTools(this,mAuth, mDatabase, view);
+//        firebaseTools.setSomethingHappened(true);
+
 
         Bundle b = getIntent().getExtras();
         int value = -1; // or other values

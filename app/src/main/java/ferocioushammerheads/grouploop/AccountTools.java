@@ -26,11 +26,40 @@ public class AccountTools {
 
     private View view;
 
+    ////////////////////////////////////////////////////////////////////////////////////
 
-    AccountTools(FirebaseAuth mAuth, DatabaseReference mDatabase){
+    AccountTools(UserAccount event,FirebaseAuth mAuth, DatabaseReference mDatabase, View view){
         this.mAuth = mAuth;
         this.mDatabase = mDatabase;
+        this.view = view;
+
+        // Save the event object for later use.
+        ie = event;
+        // Nothing to report yet.
+        somethingHappened = false;
+        System.out.println("EventNotifier created");
     }
+
+    private AccountToolsHelper ie;
+    private boolean somethingHappened;
+
+    public void setSomethingHappened(boolean somethingHappened){
+        this.somethingHappened = somethingHappened;
+        doWork();
+    }
+
+    public void doWork ()
+    {
+        // Check the predicate, which is set elsewhere.
+        if (somethingHappened)
+        {
+            // Signal the even by invoking the interface's method.
+            ie.loggedInEvent ();
+        }
+        //...
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////
 
     AccountTools(FirebaseAuth mAuth, DatabaseReference mDatabase, View view){
         this.mAuth = mAuth;
@@ -101,7 +130,7 @@ public class AccountTools {
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
 //                            hideProgressDialog();
-//                            mSignIn.onSignIn();
+                            setSomethingHappened(true);
                             if(user.isEmailVerified()){
 //                                finish();
                             }
@@ -193,4 +222,7 @@ public class AccountTools {
 
         mDatabase.child("users").child(userId).setValue(userProfile);
     }
+
+
+
 }

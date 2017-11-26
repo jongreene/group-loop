@@ -35,7 +35,6 @@ public class ChangeGroup extends Fragment {
 //        mAuth.getCurrentUser();
         FirebaseUser user = mAuth.getCurrentUser();
 
-
         mDatabase.child("users").child(user.getUid()).child("currentGroup").setValue("Moms");
 
         // Inflate the layout for this fragment

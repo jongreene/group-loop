@@ -134,9 +134,9 @@ public class UserAccountPreferences extends Fragment {
             ValueEventListener postListener = new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    UserProfile tmpProfile = dataSnapshot.getValue(UserProfile.class);
-                    Log.d(TAG, "email from snapshot:" + tmpProfile.getEmail());
-                    mListener.onFragmentInteraction(tmpProfile);
+                    MainActivity.userProfile = dataSnapshot.getValue(UserProfile.class);
+                    Log.d(TAG, "email from snapshot:" + MainActivity.userProfile.getEmail());
+                    mListener.onFragmentInteraction(MainActivity.userProfile);
                 }
 
                 @Override

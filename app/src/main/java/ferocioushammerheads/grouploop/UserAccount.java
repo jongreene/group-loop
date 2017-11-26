@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -32,14 +33,31 @@ public class UserAccount extends AppCompatActivity
 
 
     // Define the actual handler for the event.
-    public void loggedInEvent ()
-    {
+    public void loggedInEvent () {
         System.out.println("logged in");
-        user = mAuth.getCurrentUser();
+        MainActivity.user = mAuth.getCurrentUser();
         fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
 
     }
 
+    // Define the actual handler for the event.
+    public void loadProfileEvent() {
+        String userRefString = "/users/" + MainActivity.user.getUid();
+        UserAccount.mDatabaseRef = FirebaseDatabase.getInstance().getReference(userRefString);
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                UserProfile tmpProfile = dataSnapshot.getValue(UserProfile.class);
+                MainActivity.userProfile = tmpProfile;
+                Log.d(TAG, "email from snapshot:" + tmpProfile.getEmail());
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+            }
+        };
+        UserAccount.mDatabaseRef.addValueEventListener(postListener);
+    }
 
 
     public static DatabaseReference mDatabaseRef;
@@ -79,6 +97,7 @@ public class UserAccount extends AppCompatActivity
         view = this.findViewById(android.R.id.content).getRootView();
 
         firebaseTools = new AccountTools(this,mAuth, mDatabase, view);
+//        firebaseTools.signOut();
 
         Bundle b = getIntent().getExtras();
         int value = -1; // or other values
@@ -163,7 +182,35 @@ public class UserAccount extends AppCompatActivity
             e.printStackTrace();
         }
 
-        fragmentManager.beginTransaction().replace(containerName, fragment, fragName).commit();
+
+
+        Fragment UserAccountPreferencesFrag = fragmentManager.findFragmentByTag("UserAccountPreferences");
+        Fragment LoginFrag = fragmentManager.findFragmentByTag("Login");
+        Fragment ChangeGroupFrag = fragmentManager.findFragmentByTag("ChangeGroup");
+        Fragment NotificationSettingsFrag = fragmentManager.findFragmentByTag("NotificationSettings");
+        Fragment tmpFrag = fragmentManager.findFragmentByTag(fragName);
+
+        if (UserAccountPreferencesFrag != null && UserAccountPreferencesFrag.isVisible()) {
+            fragmentManager.beginTransaction().hide(UserAccountPreferencesFrag).commit();
+
+        } else if (LoginFrag != null && LoginFrag.isVisible()){
+            fragmentManager.beginTransaction().hide(LoginFrag).commit();
+
+        } else if (ChangeGroupFrag != null && ChangeGroupFrag.isVisible()){
+            fragmentManager.beginTransaction().hide(ChangeGroupFrag).commit();
+
+        } else if (NotificationSettingsFrag != null && NotificationSettingsFrag.isVisible()){
+            fragmentManager.beginTransaction().hide(NotificationSettingsFrag).commit();
+
+        }
+
+        if(tmpFrag == null){
+            fragmentManager.beginTransaction().add(containerName, fragment, fragName).commit();
+        } else {
+            fragmentManager.beginTransaction().show(tmpFrag).commit();
+        }
+
+
 
         if (fragName == "UserAccountPreferences") {
             getSupportActionBar().setTitle("Account Preferences");
@@ -227,9 +274,9 @@ public class UserAccount extends AppCompatActivity
 
 //    TODO: move most of this into UserAccountPreferences since thats where these exist
     public void updateUserProfileVariable(UserProfile profile){
-        MainActivity.userProfile = new UserProfile(profile);
-
-        MainActivity.userProfile.setCurrentGroup(0);
+//        MainActivity.userProfile = new UserProfile(profile);
+//
+//        MainActivity.userProfile.setCurrentGroup(0);
 
         // Views
         mUserName = this.findViewById(R.id.pref_username);

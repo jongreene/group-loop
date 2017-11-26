@@ -5,5 +5,6 @@ package ferocioushammerheads.grouploop;
  */
 
 public interface AccountToolsHelper {
-    public void loggedInEvent ();
+    void loggedInEvent ();
+    void loadProfileEvent();
 }

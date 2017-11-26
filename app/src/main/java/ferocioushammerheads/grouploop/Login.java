@@ -16,20 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import static android.view.View.VISIBLE;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link Login.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link Login#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class Login extends Fragment{
-
-    public void onSignIn() {
-        // callback code goes here
-    }
 
     private static final String TAG = "LoginFragment";
 

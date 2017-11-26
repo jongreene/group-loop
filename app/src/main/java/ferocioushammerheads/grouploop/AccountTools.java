@@ -25,8 +25,12 @@ public class AccountTools {
     private DatabaseReference mDatabase;
 
     private View view;
+    private UserProfile userProfile;
 
     ////////////////////////////////////////////////////////////////////////////////////
+
+    private AccountToolsHelper ie;
+    private boolean somethingHappened;
 
     AccountTools(UserAccount event,FirebaseAuth mAuth, DatabaseReference mDatabase, View view){
         this.mAuth = mAuth;
@@ -40,9 +44,6 @@ public class AccountTools {
         System.out.println("EventNotifier created");
     }
 
-    private AccountToolsHelper ie;
-    private boolean somethingHappened;
-
     public void setSomethingHappened(boolean somethingHappened){
         this.somethingHappened = somethingHappened;
         doWork();
@@ -55,6 +56,7 @@ public class AccountTools {
         {
             // Signal the even by invoking the interface's method.
             ie.loggedInEvent();
+            ie.loadProfileEvent();
         }
         //...
     }
@@ -94,7 +96,7 @@ public class AccountTools {
                             FirebaseUser user = mAuth.getCurrentUser();
 //                            generates a folder under users for the user
                             writeNewUser(user.getUid(), username, username);
-//                            updateUI(user);
+                            setSomethingHappened(true);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -205,7 +207,7 @@ public class AccountTools {
     }
 
     private void writeNewUser(String userId, String name, String email) {
-        UserProfile userProfile = new UserProfile(userId, name, email);
+        userProfile = new UserProfile(userId, name, email);
 
         mDatabase.child("users").child(userId).setValue(userProfile);
     }

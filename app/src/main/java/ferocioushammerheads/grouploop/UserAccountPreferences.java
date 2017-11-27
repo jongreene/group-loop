@@ -104,7 +104,6 @@ public class UserAccountPreferences extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        void onFragmentInteraction();
         void onFragmentInteraction(View view);
         void onFragmentInteraction(int operation);
         void onFragmentInteraction(UserProfile profile);
@@ -115,7 +114,6 @@ public class UserAccountPreferences extends Fragment {
 
         @Override
         public void onClick(View view) {
-            int clickedId = view.getId();
             if (mListener != null) {
                 mListener.onFragmentInteraction(view);
 
@@ -125,10 +123,8 @@ public class UserAccountPreferences extends Fragment {
         }
     }
 
-    //    TODO: do a try catch incase the database doesnt have the correct structure
     public void loadUserProfile(){
         if(user != null && MainActivity.user != null) {
-//        TODO: fix issue when trying to load after login
             String userRefString = "/users/" + MainActivity.user.getUid();
             UserAccount.mDatabaseRef = FirebaseDatabase.getInstance().getReference(userRefString);
             ValueEventListener postListener = new ValueEventListener() {

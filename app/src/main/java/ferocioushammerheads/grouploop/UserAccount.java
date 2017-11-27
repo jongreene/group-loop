@@ -30,8 +30,6 @@ public class UserAccount extends AppCompatActivity
         AccountToolsHelper
 
 {
-
-
     // Define the actual handler for the event.
     public void loggedInEvent () {
         System.out.println("logged in");
@@ -211,7 +209,6 @@ public class UserAccount extends AppCompatActivity
         }
 
 
-
         if (fragName == "UserAccountPreferences") {
             getSupportActionBar().setTitle("Account Preferences");
         } else if(fragName == "Login"){
@@ -274,10 +271,6 @@ public class UserAccount extends AppCompatActivity
 
 //    TODO: move most of this into UserAccountPreferences since thats where these exist
     public void updateUserProfileVariable(UserProfile profile){
-//        MainActivity.userProfile = new UserProfile(profile);
-//
-//        MainActivity.userProfile.setCurrentGroup(0);
-
         // Views
         mUserName = this.findViewById(R.id.pref_username);
         mGroupList = this.findViewById(R.id.pref_group_list);

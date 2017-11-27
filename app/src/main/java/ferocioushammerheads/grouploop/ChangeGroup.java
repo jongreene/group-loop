@@ -26,26 +26,15 @@ public class ChangeGroup extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-//        MainActivity.userProfile.setCurrentGroup(1);
-
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-//        mAuth.getCurrentUser();
         FirebaseUser user = mAuth.getCurrentUser();
 
         mDatabase.child("users").child(user.getUid()).child("currentGroup").setValue("Moms");
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_change_group, container, false);
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed() {
-        if (mListener != null) {
-            mListener.onFragmentInteraction();
-        }
     }
 
     @Override

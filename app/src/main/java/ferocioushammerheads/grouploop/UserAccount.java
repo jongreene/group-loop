@@ -29,37 +29,9 @@ public class UserAccount extends AppCompatActivity
         NotificationSettings.OnFragmentInteractionListener,
         AccountToolsHelper
 {
-    // Define the actual handler for the event.
-    public void loggedInEvent () {
-        System.out.println("logged in");
-        MainActivity.user = mAuth.getCurrentUser();
-        fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
-
-    }
-
-    // Define the actual handler for the event.
-    public void loadProfileEvent() {
-        String userRefString = "/users/" + MainActivity.user.getUid();
-        UserAccount.mDatabaseRef = FirebaseDatabase.getInstance().getReference(userRefString);
-        ValueEventListener postListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                UserProfile tmpProfile = dataSnapshot.getValue(UserProfile.class);
-                MainActivity.userProfile = tmpProfile;
-                Log.d(TAG, "email from snapshot:" + tmpProfile.getEmail());
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-            }
-        };
-        UserAccount.mDatabaseRef.addValueEventListener(postListener);
-    }
-
-
     public static DatabaseReference mDatabaseRef;
 
-    public TextView mUserName, mGroupList, mActiveGroup, mEmail;
+    private TextView mUserName, mGroupList, mActiveGroup, mEmail;
 
     public static AccountTools firebaseTools;
 
@@ -79,18 +51,19 @@ public class UserAccount extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_account);
 
+        // [START toolbar_setup]
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // [END toolbar_setup]
 
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
+        mAuth.getCurrentUser();
         // [END initialize_auth]
 
-        mAuth.getCurrentUser();
-
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
         view = this.findViewById(android.R.id.content).getRootView();
 
         firebaseTools = new AccountTools(this,mAuth, mDatabase, view);
@@ -129,7 +102,6 @@ public class UserAccount extends AppCompatActivity
             Toast.makeText(getApplicationContext(), "Default behavior", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
-//            return super.onOptionsItemSelected(item);
         }
         else {
             user = mAuth.getCurrentUser();
@@ -169,23 +141,22 @@ public class UserAccount extends AppCompatActivity
     }
 
     public void fragmentChanger(Class newFragment, int containerName, String fragName){
-        Fragment fragment = null;
-        Class fragmentClass = newFragment;
         FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment, UserAccountPreferencesFrag, LoginFrag, ChangeGroupFrag, NotificationSettingsFrag, tmpFrag;
+
+        fragment = null;
+        UserAccountPreferencesFrag = fragmentManager.findFragmentByTag("UserAccountPreferences");
+        LoginFrag = fragmentManager.findFragmentByTag("Login");
+        ChangeGroupFrag = fragmentManager.findFragmentByTag("ChangeGroup");
+        NotificationSettingsFrag = fragmentManager.findFragmentByTag("NotificationSettings");
+        tmpFrag = fragmentManager.findFragmentByTag(fragName);
 
         try {
-            fragment = (Fragment) fragmentClass.newInstance();
+            fragment = (Fragment) newFragment.newInstance();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-
-
-        Fragment UserAccountPreferencesFrag = fragmentManager.findFragmentByTag("UserAccountPreferences");
-        Fragment LoginFrag = fragmentManager.findFragmentByTag("Login");
-        Fragment ChangeGroupFrag = fragmentManager.findFragmentByTag("ChangeGroup");
-        Fragment NotificationSettingsFrag = fragmentManager.findFragmentByTag("NotificationSettings");
-        Fragment tmpFrag = fragmentManager.findFragmentByTag(fragName);
 
         if (UserAccountPreferencesFrag != null && UserAccountPreferencesFrag.isVisible()) {
             fragmentManager.beginTransaction().hide(UserAccountPreferencesFrag).commit();
@@ -221,8 +192,7 @@ public class UserAccount extends AppCompatActivity
 
     public void onFragmentInteraction(){}
 
-    public void onFragmentInteraction(UserProfile profile){
-    }
+    public void onFragmentInteraction(UserProfile profile){}
 
     public void onFragmentInteraction(View view){
         user = mAuth.getCurrentUser();
@@ -265,5 +235,31 @@ public class UserAccount extends AppCompatActivity
 //            startActivity(intent);
         }
 
+    }
+
+    // Define the actual handler for the event.
+    public void loggedInEvent () {
+        MainActivity.user = mAuth.getCurrentUser();
+        fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
+
+    }
+
+    // Define the actual handler for the event.
+    public void loadProfileEvent() {
+        String userRefString = "/users/" + MainActivity.user.getUid();
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference(userRefString);
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                UserProfile tmpProfile = dataSnapshot.getValue(UserProfile.class);
+                MainActivity.userProfile = tmpProfile;
+                Log.d(TAG, "email from snapshot:" + tmpProfile.getEmail());
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+            }
+        };
+        mDatabaseRef.addValueEventListener(postListener);
     }
 }

@@ -30,7 +30,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class MainActivity extends AppCompatActivity{
     private static final String TAG = "AccountTools";
 
-    private Button ChangeLogin, ChangeGroupItems, mScheduleDemoButton, mChipItemsButton, mPreferencesButton;
+    private Button mScheduleDemoButton, mChipItemsButton, mPreferencesButton;
 
     private ButtonClickListener mButtonClickListener;
 
@@ -40,14 +40,11 @@ public class MainActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        userProfile = new UserProfile();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 //        set current user
         user = FirebaseAuth.getInstance().getCurrentUser();

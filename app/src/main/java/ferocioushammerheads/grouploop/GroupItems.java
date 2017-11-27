@@ -29,12 +29,12 @@ public class GroupItems extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_items);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mSendData = (Button) findViewById(R.id.sendButton);
+        mSendData = findViewById(R.id.sendButton);
         mSendData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){

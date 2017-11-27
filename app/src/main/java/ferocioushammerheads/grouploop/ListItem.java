@@ -52,7 +52,7 @@ public class ListItem extends AppCompatActivity {
          * Assigning the list view
          * Binding the Adapter
          */
-        final ListView listView = (ListView) findViewById(R.id.List);
+        final ListView listView = findViewById(R.id.List);
         adapter=new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1,
                 listItems); //found at source 1
@@ -118,14 +118,14 @@ public class ListItem extends AppCompatActivity {
      * @param v
      */
     public void addItems(View v) {
-        EditText tempname   = (EditText)findViewById(R.id.itemEdit);
+        EditText tempname   = findViewById(R.id.itemEdit);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("items");
         myRef = myRef.push();
         myRef.setValue(tempname.getText().toString());
         String key = myRef.getKey().toString();
         Log.d(TAG, "objectID " +key);
-        TextView editText = (TextView)findViewById(R.id.itemEdit);
+        TextView editText = findViewById(R.id.itemEdit);
         editText.setText("");
         findViewById(R.id.add_menu_item).setVisibility(View.GONE);
         findViewById(R.id.listLayout).setVisibility(View.VISIBLE);

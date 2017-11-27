@@ -22,18 +22,22 @@ import com.google.firebase.database.ValueEventListener;
 
 public class UserAccountPreferences extends Fragment {
     private OnFragmentInteractionListener mListener;
+
     private ButtonClickListener mButtonClickListener;
+
     private Button mVerifyEmailButton, mLoginButton, mChangeGroupButton, mNotificationSettings;
 
     private static final String TAG = "UserAccountPreferences";
 
     private View view;
+
     private FirebaseUser user;
+
     // [START declare_auth]
     private FirebaseAuth mAuth;
     // [END declare_auth]
 
-
+    public TextView mUserName, mGroupList, mActiveGroup, mEmail;
 
     public UserAccountPreferences() {
         // Required empty public constructor
@@ -132,7 +136,8 @@ public class UserAccountPreferences extends Fragment {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     MainActivity.userProfile = dataSnapshot.getValue(UserProfile.class);
                     Log.d(TAG, "email from snapshot:" + MainActivity.userProfile.getEmail());
-                    mListener.onFragmentInteraction(MainActivity.userProfile);
+//                    mListener.onFragmentInteraction(MainActivity.userProfile);
+                    updateUserProfileVariable();
                 }
 
                 @Override
@@ -156,5 +161,19 @@ public class UserAccountPreferences extends Fragment {
         else{
             mLoginButton.setText(R.string.button_login_logout_logged_out);
         }
+    }
+
+    public void updateUserProfileVariable(){
+        // Views
+        mUserName = view.findViewById(R.id.pref_username);
+        mGroupList = view.findViewById(R.id.pref_group_list);
+        mActiveGroup = view.findViewById(R.id.pref_active_group);
+        mEmail = view.findViewById(R.id.pref_email);
+
+        mUserName.setText(MainActivity.userProfile.getUsername());
+        mGroupList.setText(MainActivity.userProfile.getGroupList().toString());
+        mActiveGroup.setText(MainActivity.userProfile.getCurrentGroup());
+        mEmail.setText(MainActivity.userProfile.getEmail());
+
     }
 }

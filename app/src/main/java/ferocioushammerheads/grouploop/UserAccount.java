@@ -28,7 +28,6 @@ public class UserAccount extends AppCompatActivity
         ChangeGroup.OnFragmentInteractionListener,
         NotificationSettings.OnFragmentInteractionListener,
         AccountToolsHelper
-
 {
     // Define the actual handler for the event.
     public void loggedInEvent () {
@@ -223,7 +222,6 @@ public class UserAccount extends AppCompatActivity
     public void onFragmentInteraction(){}
 
     public void onFragmentInteraction(UserProfile profile){
-        updateUserProfileVariable(profile);
     }
 
     public void onFragmentInteraction(View view){
@@ -268,20 +266,4 @@ public class UserAccount extends AppCompatActivity
         }
 
     }
-
-//    TODO: move most of this into UserAccountPreferences since thats where these exist
-    public void updateUserProfileVariable(UserProfile profile){
-        // Views
-        mUserName = this.findViewById(R.id.pref_username);
-        mGroupList = this.findViewById(R.id.pref_group_list);
-        mActiveGroup = this.findViewById(R.id.pref_active_group);
-        mEmail = this.findViewById(R.id.pref_email);
-
-        mUserName.setText(MainActivity.userProfile.getUsername());
-        mGroupList.setText(MainActivity.userProfile.getGroupList().toString());
-        mActiveGroup.setText(MainActivity.userProfile.getCurrentGroup());
-        mEmail.setText(MainActivity.userProfile.getEmail());
-
-    }
-
 }

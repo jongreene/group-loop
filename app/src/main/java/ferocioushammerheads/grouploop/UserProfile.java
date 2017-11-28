@@ -3,6 +3,11 @@ package ferocioushammerheads.grouploop;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class used to create the users profile.
+ *
+ * The object is serialized and written to firebase and constructed vice versa.
+ */
 public class UserProfile {
 
     private String userId;
@@ -60,6 +65,14 @@ public class UserProfile {
     public Boolean setCurrentGroup(int index) {
         if (groupList.size() >= index && index >= 0) {
             currentGroup = groupList.get(index);
+            return true;
+        }
+        return false;
+    }
+
+    public Boolean addNewGroup(String newGroup){
+        if(newGroup.length()>0) {
+            groupList.add(newGroup);
             return true;
         }
         return false;

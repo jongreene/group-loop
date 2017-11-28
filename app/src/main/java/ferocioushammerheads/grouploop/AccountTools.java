@@ -211,4 +211,8 @@ public class AccountTools {
 
         mDatabase.child("users").child(userId).setValue(userProfile);
     }
+
+    public void updateUser(UserProfile userProfile){
+        mDatabase.child("users").child(userProfile.getUserId()).setValue(userProfile);
+    }
 }

@@ -47,11 +47,12 @@ public class UserAccountPreferences extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
         // [END initialize_auth]
 
-        user = mAuth.getCurrentUser();
         mListener.onFragmentInteraction(0);
 
+//
         super.onCreate(savedInstanceState);
 
         if(user!=null) {

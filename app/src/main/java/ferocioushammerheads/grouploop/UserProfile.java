@@ -37,28 +37,28 @@ public class UserProfile {
         groupList = c.groupList;
     }
 
-    public String getUserId(){
+    public String getUserId() {
         return userId;
     }
 
-    public String getUsername(){
+    public String getUsername() {
         return username;
     }
 
-    public String getEmail(){
+    public String getEmail() {
         return email;
     }
 
-    public String getCurrentGroup(){
+    public String getCurrentGroup() {
         return currentGroup;
     }
 
-    public List<String> getGroupList(){
+    public List<String> getGroupList() {
         return groupList;
     }
 
     public Boolean setCurrentGroup(int index) {
-        if(groupList.size() >= index && index >= 0){
+        if (groupList.size() >= index && index >= 0) {
             currentGroup = groupList.get(index);
             return true;
         }

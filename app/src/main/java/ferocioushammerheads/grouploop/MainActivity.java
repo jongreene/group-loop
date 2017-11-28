@@ -49,13 +49,16 @@ public class MainActivity extends AppCompatActivity{
 //        set current user
         user = FirebaseAuth.getInstance().getCurrentUser();
 
+        if (mButtonClickListener == null) {
+            mButtonClickListener = new ButtonClickListener();
+        }
+
+//        set button id's
         mScheduleDemoButton = this.findViewById(R.id.scheduleDemoButton);
         mChipItemsButton = this.findViewById(R.id.chipItemsButtons);
         mPreferencesButton = this.findViewById(R.id.preferencesButton);
 
-        if (mButtonClickListener == null) {
-            mButtonClickListener = new ButtonClickListener();
-        }
+//        attach listeners to buttons
         mScheduleDemoButton.setOnClickListener(mButtonClickListener);
         mChipItemsButton.setOnClickListener(mButtonClickListener);
         mPreferencesButton.setOnClickListener(mButtonClickListener);
@@ -78,7 +81,6 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public void updateUserEnvironment(){
-
         Button login_button = findViewById(R.id.preferencesButton);
 
         if (user != null) {
@@ -90,26 +92,16 @@ public class MainActivity extends AppCompatActivity{
             else{
                 login_button.setText(R.string.button_login_logout_logged_in_no_email);
             }
-
             findViewById(R.id.chipItemsButtons).setVisibility(View.VISIBLE);
             findViewById(R.id.scheduleDemoButton).setVisibility(View.VISIBLE);
-
-
-        } else {
+        }
+        else {
             Log.d(TAG, "onAuthStateChanged:signed_out");
 
             findViewById(R.id.chipItemsButtons).setVisibility(View.GONE);
             findViewById(R.id.scheduleDemoButton).setVisibility(View.GONE);
 
             login_button.setText(R.string.button_login_logout_logged_out);
-        }
-
-
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1) {
-            updateUserEnvironment();
         }
     }
 
@@ -127,11 +119,12 @@ public class MainActivity extends AppCompatActivity{
             Bundle b = new Bundle();
 //            1: logged in. 2: otherwise
             if(user!=null) {
-                b.putInt("key", 1); //Your id
+                b.putInt("key", 1);
             } else {
-                b.putInt("key", 2); //Your id
+                b.putInt("key", 2);
             }
-            intent.putExtras(b); //Put your id to your next Intent
+//            Put your key in your next Intent
+            intent.putExtras(b);
 
             startActivity(intent);
             finish();

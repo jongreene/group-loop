@@ -23,18 +23,6 @@
         app:srcCompat="@mipmap/logo_foreground" />
 
     <Button
-        android:id="@+id/scheduleDemoButton"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:text="@string/button_schedule_items"
-        app:layout_constraintBottom_toTopOf="@+id/chipItemsButtons"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
         android:id="@+id/chipItemsButtons"
         android:layout_width="150dp"
         android:layout_height="wrap_content"

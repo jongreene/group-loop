@@ -30,7 +30,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class MainActivity extends AppCompatActivity{
     private static final String TAG = "AccountTools";
 
-    private Button mScheduleDemoButton, mChipItemsButton, mPreferencesButton;
+    private Button mChipItemsButton, mPreferencesButton;
 
     private ButtonClickListener mButtonClickListener;
 
@@ -54,12 +54,10 @@ public class MainActivity extends AppCompatActivity{
         }
 
 //        set button id's
-        mScheduleDemoButton = this.findViewById(R.id.scheduleDemoButton);
         mChipItemsButton = this.findViewById(R.id.chipItemsButtons);
         mPreferencesButton = this.findViewById(R.id.preferencesButton);
 
 //        attach listeners to buttons
-        mScheduleDemoButton.setOnClickListener(mButtonClickListener);
         mChipItemsButton.setOnClickListener(mButtonClickListener);
         mPreferencesButton.setOnClickListener(mButtonClickListener);
 
@@ -72,7 +70,7 @@ public class MainActivity extends AppCompatActivity{
         @Override
         public void onClick(View view) {
             int clickedId = view.getId();
-            if (clickedId == R.id.scheduleDemoButton || clickedId == R.id.chipItemsButtons || clickedId == R.id.preferencesButton) {
+            if (clickedId == R.id.chipItemsButtons || clickedId == R.id.preferencesButton) {
                 changeActivity(view);
             } else {
 
@@ -93,23 +91,18 @@ public class MainActivity extends AppCompatActivity{
                 login_button.setText(R.string.button_login_logout_logged_in_no_email);
             }
             findViewById(R.id.chipItemsButtons).setVisibility(View.VISIBLE);
-            findViewById(R.id.scheduleDemoButton).setVisibility(View.VISIBLE);
         }
         else {
             Log.d(TAG, "onAuthStateChanged:signed_out");
 
             findViewById(R.id.chipItemsButtons).setVisibility(View.GONE);
-            findViewById(R.id.scheduleDemoButton).setVisibility(View.GONE);
 
             login_button.setText(R.string.button_login_logout_logged_out);
         }
     }
 
     public void changeActivity(View view){
-        if (view.getId() == R.id.scheduleDemoButton) {
-            Intent intent = new Intent(this, ScheduleItem.class);
-            startActivity(intent);        }
-        else if (view.getId() == R.id.chipItemsButtons) {
+        if (view.getId() == R.id.chipItemsButtons) {
             Intent intent = new Intent(this, ChipItems.class);
             startActivity(intent);
         }

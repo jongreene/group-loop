@@ -37,7 +37,7 @@ public class ChipItems extends AppCompatActivity
 
 
 //        fragmentChanger(ViewAllChipItems.class,R.id.ChipItemInterfaceFrame, "ViewAllChipItems");
-        fragmentChanger(ViewListItem.class,R.id.ChipItemInterfaceFrame, "ViewAllChipItems");
+        fragmentChanger(ViewAllChipItems.class,R.id.ChipItemInterfaceFrame, "ViewAllChipItems");
     }
 
     @Override

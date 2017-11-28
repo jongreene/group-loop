@@ -15,14 +15,17 @@
             android:id="@+id/newChipItemType"
             android:layout_width="207dp"
             android:layout_height="32dp"
-            android:layout_marginBottom="364dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:entryValues="List"
+            android:layout_marginTop="8dp"
+            android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.658"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.317" />
 
         <Button
             android:id="@+id/createChipItem"

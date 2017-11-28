@@ -6,7 +6,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -68,12 +73,33 @@ public class CreateChipItem extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_create_chip_item, container, false);
+        mAddNewChipItem = view.findViewById(R.id.createChipItem);
         if (mButtonClickListener == null) {
             mButtonClickListener = new ButtonClickListener();
         }
         mAddNewChipItem.setOnClickListener(mButtonClickListener);
         return view;
     }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        Spinner spinner = view.findViewById(R.id.newChipItemType);
+        // Spinner Drop down elements
+        List<String> categories = new ArrayList<String>();
+        categories.add("List");
+        categories.add("Schedule");
+
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(view.getContext(),
+                android.R.layout.simple_spinner_item, categories);
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        spinner.setAdapter(dataAdapter);
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed() {
@@ -112,13 +138,15 @@ public class CreateChipItem extends Fragment {
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction();
     }
-    private class ButtonClickListener implements View.OnClickListener{
-        ButtonClickListener(){}
+
+    private class ButtonClickListener implements View.OnClickListener {
+        ButtonClickListener() {
+        }
 
         @Override
-        public void onClick(View view){
+        public void onClick(View view) {
             int clickedId = view.getId();
-            if(clickedId == R.id.createChipItem) {
+            if (clickedId == R.id.createChipItem) {
                 //TODO: send info from newChipItemType and newChipItemName
             }
         }

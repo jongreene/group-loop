@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 
 /**
@@ -25,6 +26,9 @@ public class CreateChipItem extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private View view;
+    private Button mAddNewChipItem;
+    private ButtonClickListener mButtonClickListener;
 
     private OnFragmentInteractionListener mListener;
 
@@ -63,7 +67,12 @@ public class CreateChipItem extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_chip_item, container, false);
+        view = inflater.inflate(R.layout.fragment_create_chip_item, container, false);
+        if (mButtonClickListener == null) {
+            mButtonClickListener = new ButtonClickListener();
+        }
+        mAddNewChipItem.setOnClickListener(mButtonClickListener);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -102,5 +111,16 @@ public class CreateChipItem extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction();
+    }
+    private class ButtonClickListener implements View.OnClickListener{
+        ButtonClickListener(){}
+
+        @Override
+        public void onClick(View view){
+            int clickedId = view.getId();
+            if(clickedId == R.id.createChipItem) {
+                //TODO: send info from newChipItemType and newChipItemName
+            }
+        }
     }
 }

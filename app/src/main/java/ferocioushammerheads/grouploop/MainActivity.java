@@ -124,26 +124,4 @@ public class MainActivity extends AppCompatActivity{
             updateUserEnvironment();
         }
     }
-
-
-    /** Called when the user taps the LoginLogout button */
-    public void loginPage(View view) {
-        Intent intent = new Intent(this, LoginLogout.class);
-        startActivityForResult(intent, 1);
-        updateUserEnvironment();
-    }
-
-    /** Called when the user taps the GroupItems button */
-    public void groupItemsPage(View view) {
-//        Intent intent = new Intent(this, GroupItems.class);
-        Intent intent = new Intent(this, ListItem.class);
-        startActivity(intent);
-    }
-
-    /** Called when the user taps the GroupItems button */
-    public void scheduleItemPage(View view) {
-        Intent intent = new Intent(this, ScheduleItem.class);
-        startActivity(intent);
-    }
-
 }

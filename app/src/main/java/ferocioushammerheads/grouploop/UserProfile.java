@@ -70,9 +70,25 @@ public class UserProfile {
         return false;
     }
 
-    public Boolean addNewGroup(String newGroup){
+    public boolean addNewGroup(String newGroup){
         if(newGroup.length()>0) {
             groupList.add(newGroup);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeGroup(int index){
+        if (groupList.size() >= index && index >= 0) {
+            groupList.remove(index);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeGroup(String groupName){
+        if(groupList.contains(groupName)){
+            groupList.indexOf(groupName);
             return true;
         }
         return false;

@@ -164,6 +164,7 @@ public class UserAccountPreferences extends Fragment {
         }
     }
 
+//    TODO: make sure database has the correct structure or modify UserProfile to handle
     public void updateUserProfileVariable(){
         // Views
         mUserName = view.findViewById(R.id.pref_username);

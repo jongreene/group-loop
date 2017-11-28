@@ -209,16 +209,178 @@ public class ViewCalendarItem extends Fragment {
         return view;
     }
 
-    public void onCalendarView(View v) {
+    public void toCalendarView(View v) {
+        view.findViewById(R.id.datePicker).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.floatingActionButton1).setVisibility(View.VISIBLE);
 
+        view.findViewById(R.id.editTextUserDescription).setVisibility(View.GONE);
+        view.findViewById(R.id.button).setVisibility(View.GONE);
+
+        view.findViewById(R.id.floatingActionButton2).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox12am).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox01am).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox02am).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox03am).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox04am).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox05am).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox06am).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox07am).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox08am).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox09am).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox10am).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox11am).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox12pm).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox01pm).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox02pm).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox03pm).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox04pm).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox05pm).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox06pm).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox07pm).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox08pm).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox09pm).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox10pm).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox11pm).setVisibility(View.GONE);
+        view.findViewById(R.id.textView12am).setVisibility(View.GONE);
+        view.findViewById(R.id.textView01am).setVisibility(View.GONE);
+        view.findViewById(R.id.textView02am).setVisibility(View.GONE);
+        view.findViewById(R.id.textView03am).setVisibility(View.GONE);
+        view.findViewById(R.id.textView04am).setVisibility(View.GONE);
+        view.findViewById(R.id.textView05am).setVisibility(View.GONE);
+        view.findViewById(R.id.textView06am).setVisibility(View.GONE);
+        view.findViewById(R.id.textView07am).setVisibility(View.GONE);
+        view.findViewById(R.id.textView08am).setVisibility(View.GONE);
+        view.findViewById(R.id.textView09am).setVisibility(View.GONE);
+        view.findViewById(R.id.textView10am).setVisibility(View.GONE);
+        view.findViewById(R.id.textView11am).setVisibility(View.GONE);
+        view.findViewById(R.id.textView12pm).setVisibility(View.GONE);
+        view.findViewById(R.id.textView01pm).setVisibility(View.GONE);
+        view.findViewById(R.id.textView02pm).setVisibility(View.GONE);
+        view.findViewById(R.id.textView03pm).setVisibility(View.GONE);
+        view.findViewById(R.id.textView04pm).setVisibility(View.GONE);
+        view.findViewById(R.id.textView05pm).setVisibility(View.GONE);
+        view.findViewById(R.id.textView06pm).setVisibility(View.GONE);
+        view.findViewById(R.id.textView07pm).setVisibility(View.GONE);
+        view.findViewById(R.id.textView08pm).setVisibility(View.GONE);
+        view.findViewById(R.id.textView09pm).setVisibility(View.GONE);
+        view.findViewById(R.id.textView10pm).setVisibility(View.GONE);
+        view.findViewById(R.id.textView11pm).setVisibility(View.GONE);
     }
 
-    public void onCheckboxView(View v) {
+    public void toCheckboxView(View v) {
+        view.findViewById(R.id.datePicker).setVisibility(View.GONE);
+        view.findViewById(R.id.floatingActionButton1).setVisibility(View.GONE);
 
+        view.findViewById(R.id.editTextUserDescription).setVisibility(View.GONE);
+        view.findViewById(R.id.button).setVisibility(View.GONE);
+
+        view.findViewById(R.id.floatingActionButton2).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.checkBox12am).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.checkBox01am).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.checkBox02am).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.checkBox03am).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.checkBox04am).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.checkBox05am).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.checkBox06am).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.checkBox07am).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.checkBox08am).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.checkBox09am).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.checkBox10am).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.checkBox11am).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.checkBox12pm).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.checkBox01pm).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.checkBox02pm).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.checkBox03pm).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.checkBox04pm).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.checkBox05pm).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.checkBox06pm).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.checkBox07pm).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.checkBox08pm).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.checkBox09pm).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.checkBox10pm).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.checkBox11pm).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.textView12am).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.textView01am).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.textView02am).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.textView03am).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.textView04am).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.textView05am).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.textView06am).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.textView07am).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.textView08am).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.textView09am).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.textView10am).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.textView11am).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.textView12pm).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.textView01pm).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.textView02pm).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.textView03pm).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.textView04pm).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.textView05pm).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.textView06pm).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.textView07pm).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.textView08pm).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.textView09pm).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.textView10pm).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.textView11pm).setVisibility(View.VISIBLE);
     }
 
-    public void onDescriptionView(View v) {
+    public void toDescriptionView(View v) {
+        view.findViewById(R.id.datePicker).setVisibility(View.GONE);
+        view.findViewById(R.id.floatingActionButton1).setVisibility(View.GONE);
 
+        view.findViewById(R.id.editTextUserDescription).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.button).setVisibility(View.VISIBLE);
+
+        view.findViewById(R.id.floatingActionButton2).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox12am).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox01am).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox02am).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox03am).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox04am).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox05am).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox06am).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox07am).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox08am).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox09am).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox10am).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox11am).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox12pm).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox01pm).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox02pm).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox03pm).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox04pm).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox05pm).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox06pm).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox07pm).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox08pm).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox09pm).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox10pm).setVisibility(View.GONE);
+        view.findViewById(R.id.checkBox11pm).setVisibility(View.GONE);
+        view.findViewById(R.id.textView12am).setVisibility(View.GONE);
+        view.findViewById(R.id.textView01am).setVisibility(View.GONE);
+        view.findViewById(R.id.textView02am).setVisibility(View.GONE);
+        view.findViewById(R.id.textView03am).setVisibility(View.GONE);
+        view.findViewById(R.id.textView04am).setVisibility(View.GONE);
+        view.findViewById(R.id.textView05am).setVisibility(View.GONE);
+        view.findViewById(R.id.textView06am).setVisibility(View.GONE);
+        view.findViewById(R.id.textView07am).setVisibility(View.GONE);
+        view.findViewById(R.id.textView08am).setVisibility(View.GONE);
+        view.findViewById(R.id.textView09am).setVisibility(View.GONE);
+        view.findViewById(R.id.textView10am).setVisibility(View.GONE);
+        view.findViewById(R.id.textView11am).setVisibility(View.GONE);
+        view.findViewById(R.id.textView12pm).setVisibility(View.GONE);
+        view.findViewById(R.id.textView01pm).setVisibility(View.GONE);
+        view.findViewById(R.id.textView02pm).setVisibility(View.GONE);
+        view.findViewById(R.id.textView03pm).setVisibility(View.GONE);
+        view.findViewById(R.id.textView04pm).setVisibility(View.GONE);
+        view.findViewById(R.id.textView05pm).setVisibility(View.GONE);
+        view.findViewById(R.id.textView06pm).setVisibility(View.GONE);
+        view.findViewById(R.id.textView07pm).setVisibility(View.GONE);
+        view.findViewById(R.id.textView08pm).setVisibility(View.GONE);
+        view.findViewById(R.id.textView09pm).setVisibility(View.GONE);
+        view.findViewById(R.id.textView10pm).setVisibility(View.GONE);
+        view.findViewById(R.id.textView11pm).setVisibility(View.GONE);
     }
 
 
@@ -266,13 +428,13 @@ public class ViewCalendarItem extends Fragment {
             if(mListener != null) {
                 int buttonID = view.getId();
                 if(buttonID == R.id.floatingActionButton1) {
-
+                    toCheckboxView(view);
                 }
                 else if(buttonID == R.id.floatingActionButton2) {
-
+                    toDescriptionView(view);
                 }
                 else if(buttonID == R.id.button) {
-
+                    toCheckboxView(view);
                 }
             }
         }

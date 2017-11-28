@@ -12,6 +12,13 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.util.Log;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 /**
@@ -95,6 +102,8 @@ public class ViewCalendarItem extends Fragment {
     private TextView tv10pm;
     private TextView tv11pm;
 
+    private ButtonClickListener myBCL;
+
     public ViewCalendarItem() {
         // Required empty public constructor
     }
@@ -131,12 +140,87 @@ public class ViewCalendarItem extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_view_calendar_item, container, false);
+        //calendar view
         calendar = view.findViewById(R.id.datePicker);
         dateSelection = view.findViewById(R.id.floatingActionButton1);
-
-
+        //checkbox view
+        checkBoxSelection = view.findViewById(R.id.floatingActionButton2);
+        cb12am = view.findViewById(R.id.checkBox12am);
+        cb1am = view.findViewById(R.id.checkBox01am);
+        cb2pm = view.findViewById(R.id.checkBox02am);
+        cb3am = view.findViewById(R.id.checkBox03am);
+        cb4am = view.findViewById(R.id.checkBox04am);
+        cb5am = view.findViewById(R.id.checkBox05am);
+        cb6am = view.findViewById(R.id.checkBox06am);
+        cb7am = view.findViewById(R.id.checkBox07am);
+        cb8am = view.findViewById(R.id.checkBox08am);
+        cb9am = view.findViewById(R.id.checkBox09am);
+        cb10am = view.findViewById(R.id.checkBox10am);
+        cb11am = view.findViewById(R.id.checkBox11am);
+        cb12pm = view.findViewById(R.id.checkBox12pm);
+        cb1pm = view.findViewById(R.id.checkBox01pm);
+        cb2pm = view.findViewById(R.id.checkBox02pm);
+        cb3pm = view.findViewById(R.id.checkBox03pm);
+        cb4pm = view.findViewById(R.id.checkBox04pm);
+        cb5pm = view.findViewById(R.id.checkBox05pm);
+        cb6pm = view.findViewById(R.id.checkBox06pm);
+        cb7pm = view.findViewById(R.id.checkBox07pm);
+        cb8pm = view.findViewById(R.id.checkBox08pm);
+        cb9pm = view.findViewById(R.id.checkBox09pm);
+        cb10pm = view.findViewById(R.id.checkBox10pm);
+        cb11pm = view.findViewById(R.id.checkBox11pm);
+        tv12am = view.findViewById(R.id.textView12am);
+        tv1am = view.findViewById(R.id.textView01am);
+        tv2am = view.findViewById(R.id.textView02am);
+        tv3am = view.findViewById(R.id.textView03am);
+        tv4am = view.findViewById(R.id.textView04am);
+        tv5am = view.findViewById(R.id.textView05am);
+        tv6am = view.findViewById(R.id.textView06am);
+        tv7am = view.findViewById(R.id.textView07am);
+        tv8am = view.findViewById(R.id.textView08am);
+        tv9am = view.findViewById(R.id.textView09am);
+        tv10am = view.findViewById(R.id.textView10am);
+        tv11am = view.findViewById(R.id.textView11am);
+        tv12pm = view.findViewById(R.id.textView12pm);
+        tv1pm = view.findViewById(R.id.textView01pm);
+        tv2pm = view.findViewById(R.id.textView02pm);
+        tv3pm = view.findViewById(R.id.textView03pm);
+        tv4pm = view.findViewById(R.id.textView04pm);
+        tv5pm = view.findViewById(R.id.textView05pm);
+        tv6pm = view.findViewById(R.id.textView06pm);
+        tv7pm = view.findViewById(R.id.textView07pm);
+        tv8pm = view.findViewById(R.id.textView08pm);
+        tv9pm = view.findViewById(R.id.textView09pm);
+        tv10pm = view.findViewById(R.id.textView10pm);
+        tv11pm = view.findViewById(R.id.textView11pm);
+        //description view
+        description = view.findViewById(R.id.editTextUserDescription);
+        addDescription = view.findViewById(R.id.button);
+        //buttons
+        if(myBCL == null) {
+            myBCL = new ButtonClickListener();
+        }
+        dateSelection.setOnClickListener(myBCL);
+        checkBoxSelection.setOnClickListener(myBCL);
+        addDescription.setOnClickListener(myBCL);
+        /*
+         * TODO: Firebase stuff
+         */
         return view;
     }
+
+    public void onCalendarView(View v) {
+
+    }
+
+    public void onCheckboxView(View v) {
+
+    }
+
+    public void onDescriptionView(View v) {
+
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed() {
@@ -174,5 +258,23 @@ public class ViewCalendarItem extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction();
+    }
+
+    private class ButtonClickListener implements View.OnClickListener { ButtonClickListener(){}
+        @Override
+        public void onClick(View view) {
+            if(mListener != null) {
+                int buttonID = view.getId();
+                if(buttonID == R.id.floatingActionButton1) {
+
+                }
+                else if(buttonID == R.id.floatingActionButton2) {
+
+                }
+                else if(buttonID == R.id.button) {
+
+                }
+            }
+        }
     }
 }

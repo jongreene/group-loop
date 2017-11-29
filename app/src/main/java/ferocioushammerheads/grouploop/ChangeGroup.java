@@ -148,7 +148,7 @@ public class ChangeGroup extends Fragment {
                     MainActivity.userProfile.addNewGroup(mGroupName.getText().toString());
                     UserAccount.firebaseTools.updateUser(MainActivity.userProfile);
 
-//                    groupList = (ArrayList<String>) MainActivity.userProfile.getGroupList();
+//                    workaround for listAdapter getting out of sync with groupList
                     if(groupList.size() != listAdapter.getCount())
                         listAdapter.add(mGroupName.getText().toString());
 
@@ -158,14 +158,11 @@ public class ChangeGroup extends Fragment {
                     showGroupOptionsMenu(false, null, 0, 0);
 
                 } else if(view.getId() == R.id.change_group_set_active){
-                    String tmp = "" + itemSelected;
-                    Toast.makeText(view.getContext(),tmp,Toast.LENGTH_SHORT).show();
                     MainActivity.userProfile.setCurrentGroup(itemSelected);
                     UserAccount.firebaseTools.updateUser(MainActivity.userProfile);
-
-//                    groupList = (ArrayList<String>) MainActivity.userProfile.getGroupList();
-
                     showGroupOptionsMenu(false, null, 0, 0);
+
+//                    TODO: implement a method to generate a new group object for the current group
 
                 } else if(view.getId() == R.id.change_group_remove_group){
                     String tmp = "" + itemSelected;

@@ -27,6 +27,7 @@ public class UserAccount extends AppCompatActivity
         UserAccountPreferences.OnFragmentInteractionListener,
         ChangeGroup.OnFragmentInteractionListener,
         NotificationSettings.OnFragmentInteractionListener,
+        CreateGroup.OnFragmentInteractionListener,
         AccountToolsHelper {
     public static DatabaseReference mDatabaseRef;
 
@@ -139,13 +140,14 @@ public class UserAccount extends AppCompatActivity
 
     public void fragmentChanger(Class newFragment, int containerName, String fragName) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment, UserAccountPreferencesFrag, LoginFrag, ChangeGroupFrag, NotificationSettingsFrag, tmpFrag;
+        Fragment fragment, UserAccountPreferencesFrag, LoginFrag, ChangeGroupFrag, NotificationSettingsFrag, CreateGroupFrag, tmpFrag;
 
         fragment = null;
         UserAccountPreferencesFrag = fragmentManager.findFragmentByTag("UserAccountPreferences");
         LoginFrag = fragmentManager.findFragmentByTag("Login");
         ChangeGroupFrag = fragmentManager.findFragmentByTag("ChangeGroup");
         NotificationSettingsFrag = fragmentManager.findFragmentByTag("NotificationSettings");
+        CreateGroupFrag = fragmentManager.findFragmentByTag("CreateGroup");
         tmpFrag = fragmentManager.findFragmentByTag(fragName);
 
         try {
@@ -167,6 +169,10 @@ public class UserAccount extends AppCompatActivity
         } else if (NotificationSettingsFrag != null && NotificationSettingsFrag.isVisible()) {
             fragmentManager.beginTransaction().hide(NotificationSettingsFrag).commit();
 
+        } else if (CreateGroupFrag != null && CreateGroupFrag.isVisible()) {
+//            TODO: go back to change groups page rather than UserProfile?
+            fragmentManager.beginTransaction().hide(CreateGroupFrag).commit();
+
         }
 
         if (tmpFrag == null) {
@@ -184,14 +190,16 @@ public class UserAccount extends AppCompatActivity
             getSupportActionBar().setTitle("Change Group");
         } else if (fragName == "NotificationSettings") {
             getSupportActionBar().setTitle("Notification Settings");
+        } else if (fragName == "CreateGroup") {
+            getSupportActionBar().setTitle("Create Group");
         }
     }
 
     public void onFragmentInteraction() {
     }
 
-    public void onFragmentInteraction(UserProfile profile) {
-    }
+//    TODO: check where this is being called
+    public void onFragmentInteraction(UserProfile profile) {}
 
     public void onFragmentInteraction(View view) {
         user = mAuth.getCurrentUser();
@@ -215,6 +223,10 @@ public class UserAccount extends AppCompatActivity
         } else if (view.getId() == R.id.pref_notification_settings_button) {
             if (user != null) {
                 fragmentChanger(NotificationSettings.class, R.id.user_account_frag_frame, "NotificationSettings");
+            }
+        } else if (view.getId() == R.id.create_new_group) {
+            if (user != null) {
+                fragmentChanger(CreateGroup.class, R.id.user_account_frag_frame, "CreateGroup");
             }
         }
 

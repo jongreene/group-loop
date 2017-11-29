@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.text.Layout;
 import android.view.LayoutInflater;
@@ -35,6 +36,9 @@ public class ChangeGroup extends Fragment {
     private DatabaseReference mDatabase;
 
     private Button mAddGroupButton, mChangeGroupSetActive, mChangeGroupRemoveGroup;
+
+    private FloatingActionButton mCreateGroup;
+
     private ImageButton mChangeGroupCancelSelect;
     private TextView mGroupName;
 
@@ -78,6 +82,7 @@ public class ChangeGroup extends Fragment {
         mChangeGroupCancelSelect = view.findViewById(R.id.change_group_cancel_select);
         mChangeGroupSetActive = view.findViewById(R.id.change_group_set_active);
         mChangeGroupRemoveGroup = view.findViewById(R.id.change_group_remove_group);
+        mCreateGroup = view.findViewById(R.id.create_new_group);
 
         if (mButtonClickListener == null) {
             mButtonClickListener = new ButtonClickListener();
@@ -88,6 +93,7 @@ public class ChangeGroup extends Fragment {
         mChangeGroupCancelSelect.setOnClickListener(mButtonClickListener);
         mChangeGroupSetActive.setOnClickListener(mButtonClickListener);
         mChangeGroupRemoveGroup.setOnClickListener(mButtonClickListener);
+        mCreateGroup.setOnClickListener(mButtonClickListener);
 
         mGroupList = (ListView) view.findViewById( R.id.change_group_list );
         groupList = (ArrayList<String>) MainActivity.userProfile.getGroupList();
@@ -177,6 +183,8 @@ public class ChangeGroup extends Fragment {
 
                     showGroupOptionsMenu(false, null, 0, 0);
 
+                } else if(view.getId() == R.id.create_new_group){
+                    mListener.onFragmentInteraction(view);
                 }
             }
         }

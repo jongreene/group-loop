@@ -1,35 +1,57 @@
 package ferocioushammerheads.grouploop;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserGroup {
-    private String m_name;
-    private String m_ID;
-    private List<String> m_users;
-    private List<ChipItems> m_chipItems;
+    private String creator;
+    private String userId;
+    private String groupId;
+    private ArrayList<String> users;
+    private ArrayList<ChipItems> chipItems;
 
-    public void setName(String name) {
-        m_name = name;
+//    TODO: constructor should require at minimum
+//    String creator, String groupId
+    public UserGroup(){
+
     }
-    public void setID(String ID) {
-        m_ID = ID;
+//    Setters
+
+    public void setUserId(String userId){ this.userId = userId; }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
-    public void setUsers(List<String> users) {
-        m_users = users;
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
     }
-    public void setChipItems(List<ChipItems> chipItems) {
-        m_chipItems = chipItems;
+
+    public void setUsers(ArrayList<String> users) {
+        this.users = users;
     }
-    public String getName(){
-       return(m_name);
+
+    public void setChipItems(ArrayList<ChipItems> chipItems) {
+        this.chipItems = chipItems;
     }
-    public String getID(){
-        return(m_ID);
+
+//    Getters
+
+    public String getUserId() { return(userId); }
+
+    public String getCreator(){
+       return(creator);
     }
+
+    public String getGroupId(){
+        return(groupId);
+    }
+
     public List<String> getUsers(){
-        return(m_users);
+        return(users);
     }
+
     public List<ChipItems> getChipItems(){
-        return(m_chipItems);
+        return(chipItems);
     }
 }

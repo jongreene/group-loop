@@ -34,6 +34,8 @@ public class CreateGroup extends Fragment {
         if (mButtonClickListener == null) {
             mButtonClickListener = new ButtonClickListener();
         }
+
+        MainActivity.currentGroup = new UserGroup();
     }
 
     @Override

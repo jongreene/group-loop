@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity{
 
     public static UserProfile userProfile;
 
+    public static UserGroup currentGroup;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

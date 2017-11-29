@@ -170,6 +170,9 @@ public class ChangeGroup extends Fragment {
                     MainActivity.userProfile.removeGroup(itemSelected);
                     UserAccount.firebaseTools.updateUser(MainActivity.userProfile);
 
+//                    workaround for listAdapter getting out of sync with groupList
+                    if(groupList.size() != listAdapter.getCount())
+                        listAdapter.remove(listAdapter.getItem(itemSelected));
 //                    groupList = (ArrayList<String>) MainActivity.userProfile.getGroupList();
 
                     showGroupOptionsMenu(false, null, 0, 0);

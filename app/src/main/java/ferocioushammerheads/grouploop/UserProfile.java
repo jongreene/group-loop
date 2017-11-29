@@ -79,7 +79,7 @@ public class UserProfile {
     }
 
     public boolean removeGroup(int index){
-        if (groupList.size() >= index && index >= 0) {
+        if (groupList.size() > index && index >= 0) {
             groupList.remove(index);
             return true;
         }

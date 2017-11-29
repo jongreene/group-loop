@@ -8,11 +8,13 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.text.Layout;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,15 +34,19 @@ public class ChangeGroup extends Fragment {
     private OnFragmentInteractionListener mListener;
     private DatabaseReference mDatabase;
 
-    private Button mAddGroupButton;
+    private Button mAddGroupButton, mChangeGroupSetActive, mChangeGroupRemoveGroup;
+    private ImageButton mChangeGroupCancelSelect;
     private TextView mGroupName;
 
     private ListView mGroupList;
     private ArrayAdapter<String> listAdapter;
+    private ArrayList<String> groupList;
 
     private ConstraintLayout mChangeGroupOptionsLayout, mChangeGroupMainLayout;
 
     private View view;
+
+    private int itemSelected;
 
     public ChangeGroup() {
         // Required empty public constructor
@@ -68,36 +74,47 @@ public class ChangeGroup extends Fragment {
         mAddGroupButton = view.findViewById(R.id.add_group_button);
         mGroupName = view.findViewById(R.id.new_group_name);
 
+//        menu buttons
+        mChangeGroupCancelSelect = view.findViewById(R.id.change_group_cancel_select);
+        mChangeGroupSetActive = view.findViewById(R.id.change_group_set_active);
+        mChangeGroupRemoveGroup = view.findViewById(R.id.change_group_remove_group);
+
         if (mButtonClickListener == null) {
             mButtonClickListener = new ButtonClickListener();
         }
 
         mAddGroupButton.setOnClickListener(mButtonClickListener);
 
+        mChangeGroupCancelSelect.setOnClickListener(mButtonClickListener);
+        mChangeGroupSetActive.setOnClickListener(mButtonClickListener);
+        mChangeGroupRemoveGroup.setOnClickListener(mButtonClickListener);
+
         mGroupList = (ListView) view.findViewById( R.id.change_group_list );
-        ArrayList<String> groupList;// = new ArrayList<String>();
         groupList = (ArrayList<String>) MainActivity.userProfile.getGroupList();
 
         // Create ArrayAdapter using the planet list.
         listAdapter = new ArrayAdapter<String>(view.getContext(),android.R.layout.simple_list_item_1, groupList);
 
+
+
         // Set the ArrayAdapter as the ListView's adapter.
         mGroupList.setAdapter( listAdapter );
 
+
         mGroupList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Object o = prestListView.getItemAtPosition(position);
-//                String tmp = "" + position;
-//                Toast.makeText(view.getContext(),tmp,Toast.LENGTH_SHORT).show();
-//                change_group_option_layout
-                groupOptionsMenu(view, position, id);
+                if(mChangeGroupOptionsLayout.getVisibility() != View.VISIBLE){
+                    groupOptionsMenu(view, position, id);
+                } else{
+                    mChangeGroupOptionsLayout.setVisibility(View.GONE);
+                    enableDisableView(mChangeGroupMainLayout, true);
+                }
+
             }
         });
 
         mChangeGroupOptionsLayout = (ConstraintLayout) view.findViewById(R.id.change_group_option_layout);
         mChangeGroupMainLayout = (ConstraintLayout) view.findViewById(R.id.change_group_main_layout);
-
-        mChangeGroupMainLayout.setOnClickListener(mButtonClickListener);
     }
 
     @Override
@@ -131,7 +148,7 @@ public class ChangeGroup extends Fragment {
 
     private class ButtonClickListener implements View.OnClickListener {
         ButtonClickListener() {}
-
+//        mChangeGroupSetActive, mChangeGroupRemoveGroup
         @Override
         public void onClick(View view) {
             if (mListener != null) {
@@ -140,38 +157,49 @@ public class ChangeGroup extends Fragment {
                     addGroup( tmp );
                     UserAccount.firebaseTools.updateUser(MainActivity.userProfile);
                     mGroupName.setText("");
-                } else if(view.getId() == R.id.change_group_main_layout){
+
+                } else if(view.getId() == R.id.change_group_cancel_select){
                     mChangeGroupOptionsLayout.setVisibility(View.GONE);
+                    enableDisableView(mChangeGroupMainLayout,true);
+
+                } else if(view.getId() == R.id.change_group_set_active){
+                    String tmp = "" + itemSelected;
+                    Toast.makeText(view.getContext(),tmp,Toast.LENGTH_SHORT).show();
+                    MainActivity.userProfile.setCurrentGroup(itemSelected);
+                    UserAccount.firebaseTools.updateUser(MainActivity.userProfile);
+
+                } else if(view.getId() == R.id.change_group_remove_group){
+                    String tmp = "" + itemSelected;
+                    Toast.makeText(view.getContext(),tmp,Toast.LENGTH_SHORT).show();
+                    MainActivity.userProfile.removeGroup(itemSelected);
+//                    UserAccount.firebaseTools.updateUser(MainActivity.userProfile);
+
+//                    new array list
+                    groupList.remove(itemSelected);
+//                    adapter
+                    listAdapter.notifyDataSetChanged();
+
                 }
             }
         }
     }
 
     public void groupOptionsMenu(View view, int position, long id){
-        String tmp = "" + position;
-//        Toast.makeText(view.getContext(),tmp,Toast.LENGTH_SHORT).show();
+        itemSelected = position;
+
         mChangeGroupOptionsLayout.setVisibility(View.VISIBLE);
 
-        mChangeGroupMainLayout.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if (hasFocus) {
-                    Toast.makeText(view.getContext(), "Got the focus", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(view.getContext(), "Lost the focus", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-        mChangeGroupOptionsLayout.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if (hasFocus) {
-                    Toast.makeText(view.getContext(), "Got the focus", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(view.getContext(), "Lost the focus", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+        enableDisableView(mChangeGroupMainLayout, false);
+    }
 
+    public void enableDisableView(View view, boolean enabled) {
+        view.setEnabled(enabled);
+        if ( view instanceof ViewGroup ) {
+            ViewGroup group = (ViewGroup)view;
+
+            for ( int idx = 0 ; idx < group.getChildCount() ; idx++ ) {
+                enableDisableView(group.getChildAt(idx), enabled);
+            }
+        }
     }
 }

@@ -5,8 +5,6 @@
     android:layout_height="match_parent"
     tools:context="ferocioushammerheads.grouploop.ChangeGroup">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <android.support.constraint.ConstraintLayout
         android:id="@+id/change_group_main_layout"
         android:layout_width="match_parent"
@@ -26,7 +24,6 @@
             android:id="@+id/new_group_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="12dp"
             android:ems="10"
             android:hint="Group Name"
@@ -51,11 +48,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|center"
+        android:elevation="10dp"
         android:paddingBottom="50dp"
         android:paddingTop="50dp"
         android:visibility="gone">
 
+        <ImageButton
+            android:id="@+id/change_group_cancel_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:elevation="1dp"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+            app:layout_constraintEnd_toEndOf="parent" />
+
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:alpha=".9"
@@ -68,6 +77,7 @@
         </android.support.constraint.ConstraintLayout>
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -83,14 +93,14 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <Button
-                android:id="@+id/button10"
+                android:id="@+id/change_group_set_active"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Set Active" />
 
             <Button
-                android:id="@+id/button11"
+                android:id="@+id/change_group_remove_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

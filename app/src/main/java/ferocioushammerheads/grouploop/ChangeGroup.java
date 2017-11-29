@@ -95,8 +95,6 @@ public class ChangeGroup extends Fragment {
         // Create ArrayAdapter using the planet list.
         listAdapter = new ArrayAdapter<String>(view.getContext(),android.R.layout.simple_list_item_1, groupList);
 
-
-
         // Set the ArrayAdapter as the ListView's adapter.
         mGroupList.setAdapter( listAdapter );
 
@@ -104,7 +102,7 @@ public class ChangeGroup extends Fragment {
         mGroupList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(mChangeGroupOptionsLayout.getVisibility() != View.VISIBLE){
-                    groupOptionsMenu(view, position, id);
+                    showGroupOptionsMenu(true, view, position, id);
                 } else{
                     mChangeGroupOptionsLayout.setVisibility(View.GONE);
                     enableDisableView(mChangeGroupMainLayout, true);
@@ -139,28 +137,21 @@ public class ChangeGroup extends Fragment {
         void onFragmentInteraction(View view);
     }
 
-//    TODO: add user to group
-    public void addGroup(String newGroup){
-        MainActivity.userProfile.addNewGroup(newGroup);
-//        listAdapter.add( "Ceres" );
-
-    }
-
     private class ButtonClickListener implements View.OnClickListener {
         ButtonClickListener() {}
-//        mChangeGroupSetActive, mChangeGroupRemoveGroup
+
         @Override
         public void onClick(View view) {
             if (mListener != null) {
                 if(view.getId() == R.id.add_group_button){
-                    String tmp = mGroupName.getText().toString();
-                    addGroup( tmp );
+                    MainActivity.userProfile.addNewGroup(mGroupName.getText().toString());
                     UserAccount.firebaseTools.updateUser(MainActivity.userProfile);
+
+                    listAdapter.notifyDataSetChanged();
                     mGroupName.setText("");
 
                 } else if(view.getId() == R.id.change_group_cancel_select){
-                    mChangeGroupOptionsLayout.setVisibility(View.GONE);
-                    enableDisableView(mChangeGroupMainLayout,true);
+                    showGroupOptionsMenu(false, null, 0, 0);
 
                 } else if(view.getId() == R.id.change_group_set_active){
                     String tmp = "" + itemSelected;
@@ -168,28 +159,31 @@ public class ChangeGroup extends Fragment {
                     MainActivity.userProfile.setCurrentGroup(itemSelected);
                     UserAccount.firebaseTools.updateUser(MainActivity.userProfile);
 
+                    showGroupOptionsMenu(false, null, 0, 0);
+
                 } else if(view.getId() == R.id.change_group_remove_group){
                     String tmp = "" + itemSelected;
                     Toast.makeText(view.getContext(),tmp,Toast.LENGTH_SHORT).show();
                     MainActivity.userProfile.removeGroup(itemSelected);
-//                    UserAccount.firebaseTools.updateUser(MainActivity.userProfile);
-
-//                    new array list
-                    groupList.remove(itemSelected);
-//                    adapter
-                    listAdapter.notifyDataSetChanged();
+                    UserAccount.firebaseTools.updateUser(MainActivity.userProfile);
+                    showGroupOptionsMenu(false, null, 0, 0);
 
                 }
             }
         }
     }
 
-    public void groupOptionsMenu(View view, int position, long id){
-        itemSelected = position;
+    public void showGroupOptionsMenu(boolean enabled, View view, int position, long id){
+        if(enabled) {
+            itemSelected = position;
+            mChangeGroupOptionsLayout.setVisibility(View.VISIBLE);
+            enableDisableView(mChangeGroupMainLayout, false);
 
-        mChangeGroupOptionsLayout.setVisibility(View.VISIBLE);
-
-        enableDisableView(mChangeGroupMainLayout, false);
+        } else {
+            mChangeGroupOptionsLayout.setVisibility(View.GONE);
+            enableDisableView(mChangeGroupMainLayout, true);
+            listAdapter.notifyDataSetChanged();
+        }
     }
 
     public void enableDisableView(View view, boolean enabled) {

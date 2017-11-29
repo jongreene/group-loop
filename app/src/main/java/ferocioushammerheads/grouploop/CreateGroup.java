@@ -35,7 +35,13 @@ public class CreateGroup extends Fragment {
             mButtonClickListener = new ButtonClickListener();
         }
 
-        MainActivity.currentGroup = new UserGroup();
+        MainActivity.currentGroup = new UserGroup(MainActivity.user.getUid(),"testGroup1");
+        UserAccount.mDatabase.child("groups").child("testGroup1").setValue(MainActivity.currentGroup);
+
+        MainActivity.currentGroup = new UserGroup(MainActivity.user.getUid(),"testGroup2");
+        UserAccount.mDatabase.child("groups").child("testGroup2").setValue(MainActivity.currentGroup);
+
+//        MainActivity.currentGroup = new UserGroup(MainActivity.user.getUid(),"testGroup2");
     }
 
     @Override

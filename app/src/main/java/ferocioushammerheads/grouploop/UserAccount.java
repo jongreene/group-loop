@@ -40,7 +40,7 @@ public class UserAccount extends AppCompatActivity
     // [START declare_auth]
     private FirebaseAuth mAuth;
     // [END declare_auth]
-    private DatabaseReference mDatabase;
+    public static DatabaseReference mDatabase;
 
     private View view;
 

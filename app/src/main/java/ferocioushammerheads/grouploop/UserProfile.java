@@ -14,7 +14,7 @@ public class UserProfile {
     private String username;
     private String email;
     private String currentGroup;
-    private List<String> groupList;
+    private ArrayList<String> groupList;
 
 
     public UserProfile() {
@@ -58,7 +58,7 @@ public class UserProfile {
         return currentGroup;
     }
 
-    public List<String> getGroupList() {
+    public ArrayList<String> getGroupList() {
         return groupList;
     }
 

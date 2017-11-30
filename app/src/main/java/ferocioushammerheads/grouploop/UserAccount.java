@@ -210,7 +210,6 @@ public class UserAccount extends AppCompatActivity
     public void onFragmentInteraction() {
     }
 
-//    TODO: check where this is being called
     public void onFragmentInteraction(UserProfile profile) {}
 
     public void onFragmentInteraction(View view) {
@@ -242,21 +241,6 @@ public class UserAccount extends AppCompatActivity
             if (user != null) {
                 fragmentChanger(CreateGroup.class, R.id.user_account_frag_frame, "CreateGroup");
             }
-        }
-
-    }
-
-    //    call back functionality for fragments
-    public void onFragmentInteraction(int operation) {
-        if (operation == 0) {
-            //        check if user is logged in and load profile if they are
-            if (MainActivity.user != null) {
-//                loadUserProfile();
-            }
-        } else if (operation == 1) {
-//            firebaseTools.signOut();
-//            Intent intent = new Intent(this, MainActivity.class);
-//            startActivity(intent);
         }
 
     }

@@ -32,15 +32,19 @@ public class UserGroup {
     }
 
     public void addMember(String member){
+        members = nullMembersCheck(members);
         members.add(member);
     }
 
     public void addChipItem(ChipItem_TextList chipItem_textList){
+        chipItems = nullChipItemsCheck(chipItems);
+
         ChipItem_TextList tmp = new ChipItem_TextList("poop");
         chipItems.add(tmp);
     }
 
     public boolean removeMember(int index){
+        members = nullMembersCheck(members);
         if (members.size() > index && index >= 0) {
             members.remove(index);
             return true;
@@ -61,11 +65,14 @@ public class UserGroup {
     }
 
     public void setMembers(ArrayList<String> users) {
+        members = nullMembersCheck(members);
+
         this.members = users;
     }
 
     public void setChipItems(ArrayList<ChipItem_TextList> chipItems) {
-        this.chipItems = chipItems;
+
+        this.chipItems = nullChipItemsCheck(chipItems);
     }
 
 //    Getters
@@ -81,10 +88,25 @@ public class UserGroup {
     }
 
     public List<String> getMembers(){
-        return(members);
+        return(nullMembersCheck(members));
     }
 
     public List<ChipItem_TextList> getChipItems(){
-        return(chipItems);
+        return(nullChipItemsCheck(chipItems));
     }
+
+    private ArrayList<String> nullMembersCheck(ArrayList<String> membersIn){
+        if(membersIn == null){
+            membersIn = new ArrayList<String>();
+        }
+        return membersIn;
+    }
+
+    private ArrayList<ChipItem_TextList> nullChipItemsCheck(ArrayList<ChipItem_TextList> chipItemsIn){
+        if(chipItemsIn == null){
+            chipItemsIn = new ArrayList<ChipItem_TextList>();
+        }
+        return chipItemsIn;
+    }
+
 }

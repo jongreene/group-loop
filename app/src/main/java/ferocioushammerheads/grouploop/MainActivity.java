@@ -84,8 +84,7 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
         
         AccountTools tmpTools = AccountTools.getInstance();
         tmpTools.setupTools(this, mAuth, mDatabase);
-
-        loadProfileEvent();
+        tmpTools.loadProfile();
 
         updateUserEnvironment();
     }
@@ -156,24 +155,5 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
 
     // Define the actual handler for the event.
     public static DatabaseReference mDatabaseRef;
-    public void loadProfileEvent() {
-        String userRefString = "/users/" + MainActivity.user.getUid();
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference(userRefString);
-        ValueEventListener postListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                UserProfile tmpProfile = dataSnapshot.getValue(UserProfile.class);
-                MainActivity.userProfile = tmpProfile;
-                Log.d(TAG, "email from snapshot:" + tmpProfile.getEmail());
-                AccountTools tmpTools = AccountTools.getInstance();
-                tmpTools.loadGroup(userProfile.getCurrentGroup());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-            }
-        };
-        mDatabaseRef.addValueEventListener(postListener);
-    }
+    public void loadProfileEvent() {}
 }

@@ -284,4 +284,23 @@ public class AccountTools {
         mDatabaseRef.addValueEventListener(postListener);
     }
 
+    public void loadProfile() {
+        String userRefString = "/users/" + MainActivity.user.getUid();
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference(userRefString);
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                UserProfile tmpProfile = dataSnapshot.getValue(UserProfile.class);
+                MainActivity.userProfile = tmpProfile;
+                Log.d(TAG, "email from snapshot:" + tmpProfile.getEmail());
+                loadGroup(tmpProfile.getCurrentGroup());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+            }
+        };
+        mDatabaseRef.addValueEventListener(postListener);
+    }
 }

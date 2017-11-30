@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,17 +20,21 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class ChangeGroup extends Fragment {
 
+    private static final String TAG = "ChangeGroup";
 
     private ButtonClickListener mButtonClickListener;
     private OnFragmentInteractionListener mListener;
-    private DatabaseReference mDatabase;
+    private DatabaseReference mDatabaseRef;
 
     private Button mAddGroupButton, mChangeGroupSetActive, mChangeGroupRemoveGroup;
 
@@ -55,7 +60,7 @@ public class ChangeGroup extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference();
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
@@ -146,14 +151,34 @@ public class ChangeGroup extends Fragment {
             if (mListener != null) {
                 AccountTools tmpTools = AccountTools.getInstance();
                 if(view.getId() == R.id.add_group_button){
-                    MainActivity.userProfile.addNewGroup(mGroupName.getText().toString());
-                    tmpTools.updateUser(MainActivity.userProfile);
+//                    TODO: check if a group with that id exists before adding
+                    String userRefString = "/groups/";
+                    mDatabaseRef = FirebaseDatabase.getInstance().getReference(userRefString);
 
-//                    workaround for listAdapter getting out of sync with groupList
-                    if(groupList.size() != listAdapter.getCount())
-                        listAdapter.add(mGroupName.getText().toString());
+                    mDatabaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            if (snapshot.hasChild(mGroupName.getText().toString())) {
+                                AccountTools tmpTools = AccountTools.getInstance();
+                                MainActivity.userProfile.addNewGroup(mGroupName.getText().toString());
+                                tmpTools.updateUser(MainActivity.userProfile);
 
-                    mGroupName.setText("");
+                                // workaround for listAdapter getting out of sync with groupList
+                                if(groupList.size() != listAdapter.getCount())
+                                    listAdapter.add(mGroupName.getText().toString());
+
+                                Log.w(TAG, "Group exists");
+                            }
+                            else {
+                                Log.w(TAG, "Group doesn't exist");
+                            }
+                            mGroupName.setText("");
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
 
                 } else if(view.getId() == R.id.change_group_cancel_select){
                     showGroupOptionsMenu(false, null, 0, 0);
@@ -164,6 +189,8 @@ public class ChangeGroup extends Fragment {
                     showGroupOptionsMenu(false, null, 0, 0);
 
 //                    TODO: implement a method to generate a new group object for the current group
+//                    loadGroup(MainActivity.userProfile.getCurrentGroup());
+                    loadGroup("testGroup1");
 
                 } else if(view.getId() == R.id.change_group_remove_group){
                     String tmp = "" + itemSelected;
@@ -208,5 +235,25 @@ public class ChangeGroup extends Fragment {
                 enableDisableView(group.getChildAt(idx), enabled);
             }
         }
+    }
+
+    // Define the actual handler for the event.
+    public void loadGroup(String groupName) {
+        String userRefString = "/groups/" + groupName;
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference(userRefString);
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                UserGroup tmpGroup = dataSnapshot.getValue(UserGroup.class);
+                MainActivity.userGroup = tmpGroup;
+                Log.d(TAG, "group creator:" + tmpGroup.getCreator());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+            }
+        };
+        mDatabaseRef.addValueEventListener(postListener);
     }
 }

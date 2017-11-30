@@ -11,6 +11,7 @@ public class UserGroup {
 //    private ArrayList<ChipItems> chipItems;
     private ArrayList< Tuple <ChipItems, ChipItems>> chipItems;
 
+    public UserGroup(){}
 
 //    String creator, String groupId
     public UserGroup(String creator, String groupId){

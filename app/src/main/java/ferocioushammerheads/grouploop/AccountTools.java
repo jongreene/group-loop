@@ -273,7 +273,7 @@ public class AccountTools {
                 UserGroup tmpGroup = dataSnapshot.getValue(UserGroup.class);
                 MainActivity.currentGroup = tmpGroup;
                 Log.d(TAG, "group creator:" + tmpGroup.getCreator());
-                setSomethingHappened(true,2);
+//                setSomethingHappened(true,2);
             }
 
             @Override

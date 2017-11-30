@@ -30,15 +30,13 @@ import com.google.firebase.auth.FirebaseUser;
 public class MainActivity extends AppCompatActivity{
     private static final String TAG = "AccountTools";
 
+
     private Button mChipItemsButton, mPreferencesButton;
 
     private ButtonClickListener mButtonClickListener;
 
     public static FirebaseUser user;
-
     public static UserProfile userProfile;
-
-    public static UserGroup userGroup;
 
     public static UserGroup currentGroup;
 

@@ -243,7 +243,7 @@ public class ChangeGroup extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 UserGroup tmpGroup = dataSnapshot.getValue(UserGroup.class);
-                MainActivity.userGroup = tmpGroup;
+                MainActivity.currentGroup = tmpGroup;
                 Log.d(TAG, "group creator:" + tmpGroup.getCreator());
             }
 

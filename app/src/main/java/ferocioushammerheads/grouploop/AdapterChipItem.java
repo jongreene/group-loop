@@ -8,17 +8,17 @@ public class AdapterChipItem {
     private String name;
     private String ID;
     private String creatorName;
-    private Boolean isTextList;
+    private String type;
 
     public AdapterChipItem(){
 
     }
 
-    public AdapterChipItem(String name, String ID, String creatorName, Boolean isTextList){
+    public AdapterChipItem(String name, String ID){
         this.name = name;
         this.ID = ID;
-        this.creatorName = creatorName;
-        this.isTextList = isTextList;
+//        this.creatorName = creatorName;
+//        this.type = type;
     }
 
     public String getName(){
@@ -33,8 +33,8 @@ public class AdapterChipItem {
         return creatorName;
     }
 
-    public Boolean getIsTextList(){
-        return isTextList;
+    public String getType(){
+        return type;
     }
 
 

@@ -3,11 +3,14 @@ package ferocioushammerheads.grouploop;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -22,7 +25,7 @@ import java.util.List;
  * Use the {@link CreateChipItem#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CreateChipItem extends Fragment {
+public class CreateChipItem extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -33,7 +36,10 @@ public class CreateChipItem extends Fragment {
     private String mParam2;
     private View view;
     private Button mAddNewChipItem;
-    private ButtonClickListener mButtonClickListener;
+    private EditText editText;
+    private Spinner spinner;
+
+//    private ButtonClickListener mButtonClickListener;
 
     private OnFragmentInteractionListener mListener;
 
@@ -61,6 +67,7 @@ public class CreateChipItem extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -73,17 +80,18 @@ public class CreateChipItem extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_create_chip_item, container, false);
-        mAddNewChipItem = view.findViewById(R.id.createChipItem);
-        if (mButtonClickListener == null) {
-            mButtonClickListener = new ButtonClickListener();
-        }
-        mAddNewChipItem.setOnClickListener(mButtonClickListener);
+        this.mAddNewChipItem = view.findViewById(R.id.createChipItem);
+//        if (mButtonClickListener == null) {
+//            mButtonClickListener = new ButtonClickListener();
+//        }
+        mAddNewChipItem.setOnClickListener(this);
         return view;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        Spinner spinner = view.findViewById(R.id.newChipItemType);
+        this.editText = view.findViewById(R.id.newChipItemName);
+        this.spinner = view.findViewById(R.id.newChipItemType);
         // Spinner Drop down elements
         List<String> categories = new ArrayList<String>();
         categories.add("List");
@@ -106,6 +114,10 @@ public class CreateChipItem extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction();
         }
+
+
+
+
     }
 
     @Override
@@ -139,16 +151,33 @@ public class CreateChipItem extends Fragment {
         void onFragmentInteraction();
     }
 
-    private class ButtonClickListener implements View.OnClickListener {
-        ButtonClickListener() {
-        }
+    public void onClick(View v){
+//        Spinner spinner = view.findViewById(R.id.newChipItemType);
+//        EditText editText = view.findViewById(R.id.newChipItemName);
+        String itemType = spinner.getSelectedItem().toString();
+        String itemName = editText.getText().toString();
+        Log.d("Adding user", itemName);
 
-        @Override
-        public void onClick(View view) {
-            int clickedId = view.getId();
-            if (clickedId == R.id.createChipItem) {
-                //TODO: send info from newChipItemType and newChipItemName
-            }
-        }
+
     }
+
+//    private class ButtonClickListener implements View.OnClickListener {
+//        ButtonClickListener() {
+//        }
+//
+//        @Override
+//        public void onClick(View view) {
+//            int clickedId = view.getId();
+//            if (clickedId == R.id.createChipItem) {
+//                //TODO: send info from newChipItemType and newChipItemName
+//                Spinner spinner = findViewById(R.id.newChipItemType);
+//                EditText editText = findViewById(R.id.newChipItemName);
+//                String itemType = spinner.getSelectedItem().toString();
+//                String itemName = editText.getText().toString();
+//                Log.d("Adding user", itemName+" "+itemType);
+//
+//
+//            }
+//        }
+//    }
 }

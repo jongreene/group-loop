@@ -33,7 +33,7 @@ public class ListAdapter extends ArrayAdapter<AdapterChipItem> {
         // Populate the data into the template view using the data object
 //        chipitem.setText(chipitemname);
         firstText.setText(chipitem.getName());
-        secondText.setText(chipitem.getCreatorName());
+        secondText.setText(chipitem.getID());
         // Return the completed view to render on screen
         return convertView;
     }

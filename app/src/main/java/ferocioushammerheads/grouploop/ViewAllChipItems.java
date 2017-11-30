@@ -129,9 +129,12 @@ public class ViewAllChipItems extends Fragment {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Log.d("Tag", "==============");
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            String someitem = (String) snapshot.getValue();
-                            Log.d("Snapshot", someitem);
+                            String itemName = (String) snapshot.getValue();
+                            String itemKey = (String) snapshot.getKey();
+                            Log.d("Snapshot", itemName);
 //                            list.add(someitem);
+                            AdapterChipItem tempItem = new AdapterChipItem(itemName, itemKey);
+                            list.add(tempItem);
                         }
                         listAdapter.notifyDataSetChanged();
                     }

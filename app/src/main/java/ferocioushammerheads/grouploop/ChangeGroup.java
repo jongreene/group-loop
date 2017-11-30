@@ -26,7 +26,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class ChangeGroup extends Fragment {
 
@@ -150,9 +149,10 @@ public class ChangeGroup extends Fragment {
         public void onClick(View view) {
             groupList = MainActivity.userProfile.getGroupList();
             if (mListener != null) {
+                AccountTools tmpTools = AccountTools.getInstance();
                 if(view.getId() == R.id.add_group_button){
                     MainActivity.userProfile.addNewGroup(mGroupName.getText().toString());
-                    UserAccount.firebaseTools.updateUser(MainActivity.userProfile);
+                    tmpTools.updateUser(MainActivity.userProfile);
 
 //                    workaround for listAdapter getting out of sync with groupList
                     if(groupList.size() != listAdapter.getCount())
@@ -165,7 +165,7 @@ public class ChangeGroup extends Fragment {
 
                 } else if(view.getId() == R.id.change_group_set_active){
                     MainActivity.userProfile.setCurrentGroup(itemSelected);
-                    UserAccount.firebaseTools.updateUser(MainActivity.userProfile);
+                    tmpTools.updateUser(MainActivity.userProfile);
                     showGroupOptionsMenu(false, null, 0, 0);
 
 //                    TODO: implement a method to generate a new group object for the current group
@@ -174,7 +174,7 @@ public class ChangeGroup extends Fragment {
                     String tmp = "" + itemSelected;
                     Toast.makeText(view.getContext(),tmp,Toast.LENGTH_SHORT).show();
                     MainActivity.userProfile.removeGroup(itemSelected);
-                    UserAccount.firebaseTools.updateUser(MainActivity.userProfile);
+                    tmpTools.updateUser(MainActivity.userProfile);
 
 //                    workaround for listAdapter getting out of sync with groupList
                     if(groupList.size() != listAdapter.getCount())

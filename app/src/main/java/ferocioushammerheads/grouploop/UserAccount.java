@@ -67,7 +67,11 @@ public class UserAccount extends AppCompatActivity
 
         view = this.findViewById(android.R.id.content).getRootView();
 
-        firebaseTools = new AccountTools(this, mAuth, mDatabase, view);
+//        firebaseTools = new AccountTools(this, mAuth, mDatabase, view);
+
+//        firebaseTools.getInstance();
+        firebaseTools.getInstance().setupTools(this, mAuth, mDatabase);
+
 //        firebaseTools.signOut();
 
         Bundle b = getIntent().getExtras();
@@ -208,13 +212,15 @@ public class UserAccount extends AppCompatActivity
             if (user == null) {
                 fragmentChanger(Login.class, R.id.user_account_frag_frame, "Login");
             } else {
-                firebaseTools.signOut();
+                AccountTools tmpTools = AccountTools.getInstance();
+                tmpTools.signOut();
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
             }
         } else if (view.getId() == R.id.pref_verify_email_button) {
             if (user != null) {
-                firebaseTools.sendEmailVerification();
+                AccountTools tmpTools = AccountTools.getInstance();
+                tmpTools.sendEmailVerification();
             }
         } else if (view.getId() == R.id.pref_change_add_group_button) {
             if (user != null) {

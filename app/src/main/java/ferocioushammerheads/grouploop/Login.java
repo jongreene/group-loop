@@ -189,9 +189,11 @@ public class Login extends Fragment{
                 mLoadingBar.setVisibility(View.VISIBLE);
                 int i = view.getId();
                 if (i == R.id.email_create_account_button) {
-                    UserAccount.firebaseTools.createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
+                    AccountTools tmpTools = AccountTools.getInstance();
+                    tmpTools.createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
                 } else if (i == R.id.email_sign_in_button) {
-                    UserAccount.firebaseTools.signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
+                    AccountTools tmpTools = AccountTools.getInstance();
+                    tmpTools.signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
                 }
 
             }

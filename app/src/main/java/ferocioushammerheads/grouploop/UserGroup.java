@@ -8,9 +8,10 @@ public class UserGroup {
     private String userId;
     private String groupId;
     private ArrayList<String> members;
-    private ArrayList<ChipItems> chipItems;
+//    private ArrayList<ChipItems> chipItems;
+    private ArrayList< Tuple <ChipItems, ChipItems>> chipItems;
 
-//    TODO: constructor should require at minimum
+
 //    String creator, String groupId
     public UserGroup(String creator, String groupId){
         this.creator = creator;
@@ -25,7 +26,7 @@ public class UserGroup {
     public void addMember(String member){
         members.add(member);
     }
-    
+
     public boolean removeMember(int index){
         if (members.size() > index && index >= 0) {
             members.remove(index);
@@ -50,7 +51,7 @@ public class UserGroup {
         this.members = users;
     }
 
-    public void setChipItems(ArrayList<ChipItems> chipItems) {
+    public void setChipItems(ArrayList< Tuple <ChipItems, ChipItems>> chipItems) {
         this.chipItems = chipItems;
     }
 
@@ -70,7 +71,13 @@ public class UserGroup {
         return(members);
     }
 
-    public List<ChipItems> getChipItems(){
+    public List< Tuple <ChipItems, ChipItems>> getChipItems(){
         return(chipItems);
+    }
+
+//    means of having a list with two types
+    public class Tuple<A, B> {
+        public A First;
+        public B Second;
     }
 }

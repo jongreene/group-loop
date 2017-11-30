@@ -41,7 +41,7 @@ public class CreateGroup extends Fragment {
         MainActivity.currentGroup = new UserGroup(MainActivity.user.getUid(),"testGroup2");
         UserAccount.mDatabase.child("groups").child("testGroup2").setValue(MainActivity.currentGroup);
 
-//        MainActivity.currentGroup = new UserGroup(MainActivity.user.getUid(),"testGroup2");
+
     }
 
     @Override

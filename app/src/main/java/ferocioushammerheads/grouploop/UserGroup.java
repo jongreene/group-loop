@@ -10,10 +10,10 @@ public class UserGroup {
     private String groupId;
     private ArrayList<String> members;
 //    private ArrayList<ChipItems> chipItems;
-    private ArrayList<ChipItem_TextList> chipItems;
+    private ArrayList<ChipItem_TextList> chipItemsTextList;
+    private ArrayList<ChipItemSchedule> chipItemsSchedule;
 
     public UserGroup(){}
-
 //    String creator, String groupId
     public UserGroup(String creator, String groupId){
         this.creator = creator;
@@ -23,12 +23,16 @@ public class UserGroup {
         members = new ArrayList<String>();
         members.add(creator);
 
-        ChipItem_TextList tmp = new ChipItem_TextList("testtest");
+        ChipItem_TextList tmp1 = new ChipItem_TextList("testtest");
+        ChipItemSchedule tmp2 = new ChipItemSchedule("lalal");
 
-        chipItems = new ArrayList<ChipItem_TextList>();
-        chipItems.add(tmp);
+        chipItemsTextList = new ArrayList<ChipItem_TextList>();
+        chipItemsSchedule = new ArrayList<ChipItemSchedule>();
 
-        addChipItem(tmp);
+        chipItemsTextList.add(tmp1);
+
+        addChipItemTextList(tmp1);
+        addChipItemSchedule(tmp2);
 
     }
 
@@ -36,10 +40,16 @@ public class UserGroup {
         members.add(member);
     }
 
-    public void addChipItem(ChipItem_TextList chipItem_textList){
+    public void addChipItemTextList(ChipItem_TextList chipItem_textList){
         ChipItem_TextList tmp = new ChipItem_TextList("poop");
-        chipItems.add(tmp);
+        chipItemsTextList.add(tmp);
     }
+
+    public void addChipItemSchedule(ChipItemSchedule chipitem){
+        ChipItemSchedule tmp = new ChipItemSchedule("poop");
+        chipItemsSchedule.add(tmp);
+    }
+
 
     public boolean removeMember(int index){
         if (members.size() > index && index >= 0) {
@@ -65,9 +75,14 @@ public class UserGroup {
         this.members = users;
     }
 
-    public void setChipItems(ArrayList<ChipItem_TextList> chipItems) {
-        this.chipItems = chipItems;
+    public void setChipItemsTextList(ArrayList<ChipItem_TextList> chipItems) {
+        this.chipItemsTextList = chipItems;
     }
+    public void setChipItemsSchedule(ArrayList<ChipItemSchedule> chipItems) {
+        this.chipItemsSchedule = chipItems;
+    }
+
+
 
 //    Getters
 
@@ -85,7 +100,11 @@ public class UserGroup {
         return(members);
     }
 
-    public List<ChipItem_TextList> getChipItems(){
-        return(chipItems);
+    public List<ChipItem_TextList> getChipItemsTextList(){
+        return(chipItemsTextList);
     }
+    public List<ChipItemSchedule> getChipItemsSchedule(){
+        return(chipItemsSchedule);
+    }
+
 }

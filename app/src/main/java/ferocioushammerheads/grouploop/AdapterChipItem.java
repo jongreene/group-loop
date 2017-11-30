@@ -7,18 +7,18 @@ package ferocioushammerheads.grouploop;
 public class AdapterChipItem {
     private String name;
     private String ID;
-    private String creatorName="boo";
+//    private String creatorName="boo";
     private String type;
 
     public AdapterChipItem(){
 
     }
 
-    public AdapterChipItem(String name, String ID){
+    public AdapterChipItem(String name, String ID, String type){
         this.name = name;
         this.ID = ID;
 //        this.creatorName = creatorName;
-//        this.type = type;
+        this.type = type;
     }
 
     public String getName(){
@@ -29,9 +29,9 @@ public class AdapterChipItem {
         return ID;
     }
 
-    public String getCreatorName(){
-        return creatorName;
-    }
+//    public String getCreatorName(){
+//        return creatorName;
+//    }
 
     public String getType(){
         return type;

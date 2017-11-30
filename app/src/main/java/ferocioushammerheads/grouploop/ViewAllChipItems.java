@@ -17,10 +17,13 @@ import android.widget.ListView;
 import com.google.android.gms.plus.PlusOneButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+
+import static ferocioushammerheads.grouploop.MainActivity.currentGroup;
 
 /**
  * A fragment with a Google +1 button.
@@ -118,30 +121,48 @@ public class ViewAllChipItems extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
         chipItems = (ListView) view.findViewById(R.id.chipItems);
-//        list = new ArrayList<String>();
-//        list.add("Hello, World");
-//        listAdapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1, list);
         listAdapter = new ListAdapter(view.getContext(), list);
         chipItems.setAdapter(listAdapter);
-        FirebaseDatabase.getInstance().getReference().child("items")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        Log.d("Tag", "==============");
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            String itemName = (String) snapshot.getValue();
-                            String itemKey = (String) snapshot.getKey();
-                            Log.d("Snapshot", itemName);
-//                            list.add(someitem);
-                            AdapterChipItem tempItem = new AdapterChipItem(itemName, itemKey);
-                            list.add(tempItem);
-                        }
-                        listAdapter.notifyDataSetChanged();
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
+//        FirebaseDatabase.getInstance().getReference().child("items")
+//                .addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        Log.d("Tag", "==============");
+//                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                            String itemName = (String) snapshot.getValue();
+//                            String itemKey = (String) snapshot.getKey();
+//                            Log.d("Snapshot", itemName);
+////                            list.add(someitem);
+//                            AdapterChipItem tempItem = new AdapterChipItem(itemName, itemKey);
+//                            list.add(tempItem);
+//                        }
+//                        listAdapter.notifyDataSetChanged();
+//                    }
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//                    }
+//                });
+
+        DatabaseReference textList = FirebaseDatabase.getInstance().getReference().child("groups").child(MainActivity.currentGroup.getGroupId()).child("chipItemsTextList");
+        DatabaseReference schedules = FirebaseDatabase.getInstance().getReference().child("groups").child(MainActivity.currentGroup.getGroupId()).child("chipItemsSchedule");
+
+        textList.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String tempKey = dataSnapshot.getKey();
+                ChipItem_TextList temp = dataSnapshot.getValue(ChipItem_TextList.class);
+                AdapterChipItem tempItem = new AdapterChipItem(temp.getName(), tempKey, "List");
+                list.add(tempItem);
+                listAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
 
     }
 

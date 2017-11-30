@@ -8,7 +8,6 @@ public class UserGroup {
     private String userId;
     private String groupId;
     private ArrayList<String> members;
-//    private ArrayList<ChipItems> chipItems;
     private ArrayList<ChipItem_TextList> chipItems;
 
     public UserGroup(){}
@@ -21,30 +20,22 @@ public class UserGroup {
 //        add creator to the list of users
         members = new ArrayList<String>();
         members.add(creator);
-
-        ChipItem_TextList tmp = new ChipItem_TextList("testtest");
-
-        chipItems = new ArrayList<ChipItem_TextList>();
-        chipItems.add(tmp);
-
-        addChipItem(tmp);
-
     }
 
     public void addMember(String member){
-        members = nullMembersCheck(members);
+        members = nullArrayListCheck(members);
         members.add(member);
     }
 
     public void addChipItem(ChipItem_TextList chipItem_textList){
-        chipItems = nullChipItemsCheck(chipItems);
+        chipItems = nullArrayListCheck(chipItems);
 
         ChipItem_TextList tmp = new ChipItem_TextList("poop");
         chipItems.add(tmp);
     }
 
     public boolean removeMember(int index){
-        members = nullMembersCheck(members);
+        members = nullArrayListCheck(members);
         if (members.size() > index && index >= 0) {
             members.remove(index);
             return true;
@@ -65,14 +56,14 @@ public class UserGroup {
     }
 
     public void setMembers(ArrayList<String> users) {
-        members = nullMembersCheck(members);
+        members = nullArrayListCheck(members);
 
         this.members = users;
     }
 
     public void setChipItems(ArrayList<ChipItem_TextList> chipItems) {
 
-        this.chipItems = nullChipItemsCheck(chipItems);
+        this.chipItems = nullArrayListCheck(chipItems);
     }
 
 //    Getters
@@ -88,25 +79,20 @@ public class UserGroup {
     }
 
     public List<String> getMembers(){
-        return(nullMembersCheck(members));
+        return(nullArrayListCheck(members));
     }
 
     public List<ChipItem_TextList> getChipItems(){
-        return(nullChipItemsCheck(chipItems));
+        return(nullArrayListCheck(chipItems));
     }
 
-    private ArrayList<String> nullMembersCheck(ArrayList<String> membersIn){
-        if(membersIn == null){
-            membersIn = new ArrayList<String>();
+    //    used to initialize any ArrayList that isn't already
+    private ArrayList nullArrayListCheck(ArrayList arrayIn){
+        if(arrayIn == null){
+            arrayIn = new ArrayList();
         }
-        return membersIn;
+        return arrayIn;
     }
 
-    private ArrayList<ChipItem_TextList> nullChipItemsCheck(ArrayList<ChipItem_TextList> chipItemsIn){
-        if(chipItemsIn == null){
-            chipItemsIn = new ArrayList<ChipItem_TextList>();
-        }
-        return chipItemsIn;
-    }
 
 }

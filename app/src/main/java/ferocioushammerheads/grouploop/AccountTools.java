@@ -224,6 +224,10 @@ public class AccountTools {
         mDatabase.child("users").child(userProfile.getUserId()).setValue(userProfile);
     }
 
+    public void updateGroup(UserGroup userGroup){
+        mDatabase.child("groups").child(userProfile.getUserId()).setValue(userProfile);
+    }
+
     //eventually provides setters and getters
     public float x;
     public float y;

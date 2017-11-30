@@ -27,10 +27,17 @@ public class UserGroup {
         chipItems = new ArrayList<ChipItem_TextList>();
         chipItems.add(tmp);
 
+        addChipItem(tmp);
+
     }
 
     public void addMember(String member){
         members.add(member);
+    }
+
+    public void addChipItem(ChipItem_TextList chipItem_textList){
+        ChipItem_TextList tmp = new ChipItem_TextList("poop");
+        chipItems.add(tmp);
     }
 
     public boolean removeMember(int index){

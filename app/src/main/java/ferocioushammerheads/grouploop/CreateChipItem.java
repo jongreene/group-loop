@@ -16,6 +16,8 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ferocioushammerheads.grouploop.MainActivity.currentGroup;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -157,6 +159,15 @@ public class CreateChipItem extends Fragment implements View.OnClickListener {
         String itemType = spinner.getSelectedItem().toString();
         String itemName = editText.getText().toString();
         Log.d("Adding user", itemName);
+
+
+
+
+        ChipItem_TextList tmp = new ChipItem_TextList("testtest");
+
+        MainActivity.currentGroup.addChipItem(tmp);
+
+        UserAccount.mDatabase.child("groups").child(currentGroup.getGroupId()).child("chipItems").setValue(currentGroup.getChipItems());
 
 
     }

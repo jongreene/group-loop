@@ -21,7 +21,7 @@ public class ChipItem_TextList {
     }
 
     public ChipItem_TextList(String w){
-        this.name = "groceries";
+        this.name = w;
         this.creatorName = "bish";
         this.creatorID = "12345";
         this.itemID = w;

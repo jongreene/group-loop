@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -154,14 +156,6 @@ public class CreateChipItem extends Fragment implements View.OnClickListener {
     }
 
     public void onClick(View v){
-//        Spinner spinner = view.findViewById(R.id.newChipItemType);
-//        EditText editText = view.findViewById(R.id.newChipItemName);
-        String itemType = spinner.getSelectedItem().toString();
-        String itemName = editText.getText().toString();
-        Log.d("Adding user", itemName);
-
-
-
 
         ChipItem_TextList tmp = new ChipItem_TextList("testtest");
 

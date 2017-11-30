@@ -7,7 +7,7 @@ package ferocioushammerheads.grouploop;
 public class AdapterChipItem {
     private String name;
     private String ID;
-    private String creatorName;
+    private String creatorName="boo";
     private String type;
 
     public AdapterChipItem(){
@@ -35,6 +35,10 @@ public class AdapterChipItem {
 
     public String getType(){
         return type;
+    }
+
+    public void setType(String type){
+        this.type = type;
     }
 
 

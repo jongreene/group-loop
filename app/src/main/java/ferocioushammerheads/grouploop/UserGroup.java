@@ -2,6 +2,7 @@ package ferocioushammerheads.grouploop;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class UserGroup {
     private String creator;

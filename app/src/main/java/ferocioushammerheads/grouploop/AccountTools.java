@@ -12,7 +12,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class AccountTools {
@@ -53,19 +57,35 @@ public class AccountTools {
         somethingHappened = false;
     }
 
-    public void setSomethingHappened(boolean somethingHappened){
-        this.somethingHappened = somethingHappened;
-        doWork();
+    public void setupTools(MainActivity event,FirebaseAuth mAuth, DatabaseReference mDatabase){
+        this.mAuth = mAuth;
+        this.mDatabase = mDatabase;
+
+        // Save the event object for later use.
+        ie = event;
+        // Nothing to report yet.
+        somethingHappened = false;
     }
 
-    public void doWork ()
+    public void setSomethingHappened(boolean somethingHappened, int option){
+        this.somethingHappened = somethingHappened;
+        doWork(option);
+    }
+
+    public void doWork (int option)
     {
         // Check the predicate, which is set elsewhere.
         if (somethingHappened)
         {
-            // Signal the even by invoking the interface's method.
-            ie.loggedInEvent();
-            ie.loadProfileEvent();
+            if(option == 1) {
+                // Signal the even by invoking the interface's method.
+                ie.loggedInEvent();
+                ie.loadProfileEvent();
+            } else if(option == 2){
+                ie.loadProfileEvent();
+            }
+
+            somethingHappened = false;
         }
         //...
     }
@@ -104,7 +124,7 @@ public class AccountTools {
                             FirebaseUser user = mAuth.getCurrentUser();
 //                            generates a folder under users for the user
                             writeNewUser(user.getUid(), username, username);
-                            setSomethingHappened(true);
+                            setSomethingHappened(true,1);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -140,7 +160,7 @@ public class AccountTools {
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
 //                            hideProgressDialog();
-                            setSomethingHappened(true);
+                            setSomethingHappened(true,1);
                             if(user.isEmailVerified()){
 //                                finish();
                             }
@@ -228,11 +248,6 @@ public class AccountTools {
         mDatabase.child("groups").child(userProfile.getUserId()).setValue(userProfile);
     }
 
-    //eventually provides setters and getters
-    public float x;
-    public float y;
-    //------------
-
     private static AccountTools instance = null;
 
     private void AccountTools(){
@@ -244,6 +259,29 @@ public class AccountTools {
             instance = new AccountTools();
         }
         return instance;
+    }
+
+    private DatabaseReference mDatabaseRef;
+    // Define the actual handler for the event.
+    public void loadGroup(String groupName) {
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference();
+        String userRefString = "/groups/" + groupName;
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference(userRefString);
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                UserGroup tmpGroup = dataSnapshot.getValue(UserGroup.class);
+                MainActivity.currentGroup = tmpGroup;
+                Log.d(TAG, "group creator:" + tmpGroup.getCreator());
+                setSomethingHappened(true,2);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+            }
+        };
+        mDatabaseRef.addValueEventListener(postListener);
     }
 
 }

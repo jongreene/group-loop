@@ -105,7 +105,7 @@ public class CreateGroup extends Fragment {
                     public void onDataChange(DataSnapshot snapshot) {
                         if (!snapshot.hasChild(mGroupUID.getText().toString())) {
                             AccountTools tmpTools = AccountTools.getInstance();
-                            UserAccount.mDatabase.child("groups").child(currentGroup.getGroupId()).setValue(MainActivity.currentGroup);
+                            MainActivity.mDatabase.child("groups").child(currentGroup.getGroupId()).setValue(MainActivity.currentGroup);
                             MainActivity.userProfile.addNewGroup(currentGroup.getGroupId());
                             tmpTools.updateUser(MainActivity.userProfile);
 

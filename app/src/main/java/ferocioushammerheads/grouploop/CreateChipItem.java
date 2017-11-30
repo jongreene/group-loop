@@ -156,28 +156,20 @@ public class CreateChipItem extends Fragment implements View.OnClickListener {
     }
 
     public void onClick(View v){
+//        Spinner spinner = view.findViewById(R.id.newChipItemType);
+//        EditText editText = view.findViewById(R.id.newChipItemName);
         String itemType = spinner.getSelectedItem().toString();
         String itemName = editText.getText().toString();
+        Log.d("Adding user", itemName);
 
-        switch (itemType){
-            case "List":
-                ChipItem_TextList tmp = new ChipItem_TextList(itemName);
 
-                MainActivity.currentGroup.addChipItemTextList(tmp);
 
-                UserAccount.mDatabase.child("groups").child(currentGroup.getGroupId()).child("chipItemsTextList").setValue(currentGroup.getChipItemsTextList());
-                break;
 
-            case "Schedule":
-                ChipItemSchedule atmp = new ChipItemSchedule(itemName);
+        ChipItem_TextList tmp = new ChipItem_TextList("testtest");
 
-                MainActivity.currentGroup.addChipItemSchedule(atmp);
+        MainActivity.currentGroup.addChipItem(tmp);
 
-                UserAccount.mDatabase.child("groups").child(currentGroup.getGroupId()).child("chipItemsSchedule").setValue(currentGroup.getChipItemsSchedule());
-                break;
-
-        }
-
+        UserAccount.mDatabase.child("groups").child(currentGroup.getGroupId()).child("chipItems").setValue(currentGroup.getChipItems());
 
 
     }

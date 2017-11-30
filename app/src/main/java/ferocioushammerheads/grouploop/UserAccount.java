@@ -33,14 +33,14 @@ public class UserAccount extends AppCompatActivity
 
     private TextView mUserName, mGroupList, mActiveGroup, mEmail;
 
-    public static AccountTools firebaseTools;
+//    moved to MainActivity
+//    public static AccountTools firebaseTools;
 
     FirebaseUser user;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
     // [END declare_auth]
-    public static DatabaseReference mDatabase;
 
     private View view;
 
@@ -64,11 +64,9 @@ public class UserAccount extends AppCompatActivity
         mAuth.getCurrentUser();
         // [END initialize_auth]
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-
         view = this.findViewById(android.R.id.content).getRootView();
 
-        firebaseTools.getInstance().setupTools(this, mAuth, mDatabase);
+//        MainActivity.firebaseTools.getInstance().setupTools(this, mAuth, mDatabase);
 
 //        firebaseTools.signOut();
 
@@ -109,7 +107,7 @@ public class UserAccount extends AppCompatActivity
             switch (item.getItemId()) {
                 case R.id.action_logout:
                     if (user != null) {
-                        firebaseTools.signOut();
+                        MainActivity.firebaseTools.signOut();
                         Intent intent = new Intent(this, MainActivity.class);
                         startActivity(intent);
                     } else {

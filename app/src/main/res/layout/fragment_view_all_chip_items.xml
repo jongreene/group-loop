@@ -17,7 +17,6 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:layout_marginRight="16dp"
-            android:layout_marginEnd="16dp"
             android:src="@android:drawable/ic_input_add"
             android:tint="@android:color/background_light"
             android:visibility="visible"
@@ -62,26 +61,21 @@
 
         </android.support.constraint.ConstraintLayout>
 
-        <android.support.constraint.ConstraintLayout
+        <LinearLayout
             android:id="@+id/linearLayout3"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
             <ListView
-                android:id="@+id/chipItems"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </android.support.constraint.ConstraintLayout>
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
     </android.support.constraint.ConstraintLayout>
 
 </FrameLayout>

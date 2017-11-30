@@ -33,6 +33,7 @@ public class ChipItems extends AppCompatActivity
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         fragmentChanger(ViewAllChipItems.class,R.id.ChipItemInterfaceFrame, "ViewAllChipItems");
     }
 
@@ -90,6 +91,10 @@ public class ChipItems extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        // Insert the fragment by replacing any existing fragment
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+
 
         fragmentManager.beginTransaction().replace(containerName, fragment, fragName).commit();
     }

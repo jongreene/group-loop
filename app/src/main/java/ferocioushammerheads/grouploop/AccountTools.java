@@ -24,7 +24,6 @@ public class AccountTools {
     // [END declare_auth]
     private DatabaseReference mDatabase;
 
-    private View view;
     private UserProfile userProfile;
 
     ////////////////////////////////////////////////////////////////////////////////////
@@ -32,16 +31,26 @@ public class AccountTools {
     private AccountToolsHelper ie;
     private boolean somethingHappened;
 
-    AccountTools(UserAccount event,FirebaseAuth mAuth, DatabaseReference mDatabase, View view){
+    AccountTools(){}
+
+    AccountTools(AccountTools accountTools){
+        this.mAuth = accountTools.mAuth;
+        this.mDatabase = accountTools.mDatabase;
+
+        // Save the event object for later use.
+        ie = accountTools.ie;
+        // Nothing to report yet.
+        somethingHappened = accountTools.somethingHappened;
+    }
+
+    public void setupTools(UserAccount event,FirebaseAuth mAuth, DatabaseReference mDatabase){
         this.mAuth = mAuth;
         this.mDatabase = mDatabase;
-        this.view = view;
 
         // Save the event object for later use.
         ie = event;
         // Nothing to report yet.
         somethingHappened = false;
-        System.out.println("EventNotifier created");
     }
 
     public void setSomethingHappened(boolean somethingHappened){
@@ -63,10 +72,9 @@ public class AccountTools {
 
     ////////////////////////////////////////////////////////////////////////////////////
 
-    AccountTools(FirebaseAuth mAuth, DatabaseReference mDatabase, View view){
+    AccountTools(FirebaseAuth mAuth, DatabaseReference mDatabase){
         this.mAuth = mAuth;
         this.mDatabase = mDatabase;
-        this.view = view;
 
 //        if (this instanceof OnSignInListener) {
 //            mSignIn = (OnSignInListener) view.getContext();
@@ -100,7 +108,7 @@ public class AccountTools {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(view.getContext(), "Authentication failed. Password not long enough.",Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(view.getCon, "Authentication failed. Password not long enough.",Toast.LENGTH_SHORT).show();
 //                            updateUI(null);
                         }
 
@@ -139,8 +147,8 @@ public class AccountTools {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(view.getContext(),"Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(view.getContext(),"Authentication failed.",
+//                                    Toast.LENGTH_SHORT).show();
 //                            updateUI(null);
 //                            hideProgressDialog();
                         }
@@ -169,14 +177,14 @@ public class AccountTools {
                     public void onComplete(@NonNull Task<Void> task) {
                         // [START_EXCLUDE]
                         if (task.isSuccessful()) {
-                            Toast.makeText(view.getContext(),
-                                    "Verification email sent to " + user.getEmail(),
-                                    Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(view.getContext(),
+//                                    "Verification email sent to " + user.getEmail(),
+//                                    Toast.LENGTH_SHORT).show();
                         } else {
                             Log.e(TAG, "sendEmailVerification", task.getException());
-                            Toast.makeText(view.getContext(),
-                                    "Failed to send verification email.",
-                                    Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(view.getContext(),
+//                                    "Failed to send verification email.",
+//                                    Toast.LENGTH_SHORT).show();
                         }
                         // [END_EXCLUDE]
                     }
@@ -211,4 +219,27 @@ public class AccountTools {
 
         mDatabase.child("users").child(userId).setValue(userProfile);
     }
+
+    public void updateUser(UserProfile userProfile){
+        mDatabase.child("users").child(userProfile.getUserId()).setValue(userProfile);
+    }
+
+    //eventually provides setters and getters
+    public float x;
+    public float y;
+    //------------
+
+    private static AccountTools instance = null;
+
+    private void AccountTools(){
+
+    }
+
+    public static AccountTools getInstance(){
+        if(instance==null){
+            instance = new AccountTools();
+        }
+        return instance;
+    }
+
 }

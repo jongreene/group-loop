@@ -3,9 +3,25 @@ package ferocioushammerheads.grouploop;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.support.design.widget.FloatingActionButton;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 
 /**
@@ -26,7 +42,19 @@ public class ViewListItem extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private View view;
+
     private OnFragmentInteractionListener mListener;
+
+    ArrayList<String> listItems=new ArrayList<String>(); //found at source 1
+    ArrayAdapter<String> adapter; //found at source 1
+    private EditText temp;
+    private static final String TAG = "List items";
+    private Boolean createdOnce = false;
+
+    private FloatingActionButton mAddItemMenu;
+    private Button mAddNewItem;
+    private ButtonClickListener mButtonClickListener;
 
     public ViewListItem() {
         // Required empty public constructor
@@ -57,13 +85,80 @@ public class ViewListItem extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_view_list_item, container, false);
+        mAddItemMenu = view.findViewById(R.id.addItem);
+        mAddNewItem = view.findViewById(R.id.newItem);
+        if (mButtonClickListener == null) {
+            mButtonClickListener = new ButtonClickListener();
+        }
+        mAddItemMenu.setOnClickListener(mButtonClickListener);
+        mAddNewItem.setOnClickListener(mButtonClickListener);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_view_list_item, container, false);
+        /**
+         * Assigning the list view
+         * Binding the Adapter
+         */
+        final ListView listView = (ListView) view.findViewById(R.id.List);
+        adapter = new ArrayAdapter<String>(view.getContext(),
+                android.R.layout.simple_list_item_1,
+                listItems); //found at source 1
+        listView.setAdapter(adapter);
+
+        /**
+         * Event listener for children of items (currently only single group functionality works 11/5/2017)
+         * Other onChild methods not defined for now, When child is added to the database it gets added to the listview
+         */
+        FirebaseDatabase.getInstance().getReference("items").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                Log.d(TAG, "ListView item clicked." + dataSnapshot.getKey());
+                listItems.add(dataSnapshot.getValue().toString());
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+
+        /**
+         * sample listener function
+         */
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(TAG, "ListView item clicked.");
+                Log.d(TAG, "LIST ID: " + listView.getItemIdAtPosition(position));
+            }
+        });
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                listItems.remove(i);
+                adapter.notifyDataSetChanged();
+                return true;
+            }
+        });
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -102,5 +197,53 @@ public class ViewListItem extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction();
+    }
+    /**
+     * display menu when add item button is clicked
+     * @param v
+     */
+    public void addItemMenu(View v){
+        view.findViewById(R.id.listLayout).setVisibility(View.GONE);
+        view.findViewById(R.id.addItem).setVisibility(View.GONE);
+        view.findViewById(R.id.add_menu_item).setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * When an item is submitted, it retrieves the text name from the textview
+     * Create a reference to the database and push the value
+     * The textview was is reset to empty string
+     * Return view to original list of of objects
+     * @param v
+     */
+    public void addItems(View v) {
+        EditText tempname   = (EditText)view.findViewById(R.id.itemEdit);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("items");
+        myRef = myRef.push();
+        myRef.setValue(tempname.getText().toString());
+        String key = myRef.getKey().toString();
+        Log.d(TAG, "objectID " +key);
+        TextView editText = (TextView)view.findViewById(R.id.itemEdit);
+        editText.setText("");
+        view.findViewById(R.id.add_menu_item).setVisibility(View.GONE);
+        view.findViewById(R.id.listLayout).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.addItem).setVisibility(View.VISIBLE);
+    }
+    private class ButtonClickListener implements View.OnClickListener{
+        ButtonClickListener(){}
+
+        @Override
+        public void onClick(View view){
+//            if (mListener != null) {
+                int clickedId = view.getId();
+                if(clickedId == R.id.addItem){
+                    addItemMenu(view);
+                }
+                else if(clickedId == R.id.newItem){
+                    addItems(view);
+                }
+//            }
+
+        }
     }
 }

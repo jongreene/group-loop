@@ -9,7 +9,7 @@ public class UserGroup {
     private String groupId;
     private ArrayList<String> members;
 //    private ArrayList<ChipItems> chipItems;
-    private ArrayList< Tuple <ChipItems, ChipItems>> chipItems;
+    private ArrayList<ChipItem_TextList> chipItems;
 
     public UserGroup(){}
 
@@ -21,6 +21,11 @@ public class UserGroup {
 //        add creator to the list of users
         members = new ArrayList<String>();
         members.add(creator);
+
+        ChipItem_TextList tmp = new ChipItem_TextList("testtest");
+
+        chipItems = new ArrayList<ChipItem_TextList>();
+        chipItems.add(tmp);
 
     }
 
@@ -52,7 +57,7 @@ public class UserGroup {
         this.members = users;
     }
 
-    public void setChipItems(ArrayList< Tuple <ChipItems, ChipItems>> chipItems) {
+    public void setChipItems(ArrayList<ChipItem_TextList> chipItems) {
         this.chipItems = chipItems;
     }
 
@@ -72,13 +77,7 @@ public class UserGroup {
         return(members);
     }
 
-    public List< Tuple <ChipItems, ChipItems>> getChipItems(){
+    public List<ChipItem_TextList> getChipItems(){
         return(chipItems);
-    }
-
-//    means of having a list with two types
-    public class Tuple<A, B> {
-        public A First;
-        public B Second;
     }
 }

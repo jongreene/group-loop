@@ -123,7 +123,7 @@ public class CreateGroup extends Fragment {
                     }
                 });
 
-
+                getActivity().onBackPressed();
                 //todo swap fragment changeGroup
             }
         }

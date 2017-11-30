@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.util.Log;
 
@@ -51,8 +52,9 @@ public class ViewCalendarItem extends Fragment {
     private Button addDescription;
     //checkbox view
     private FloatingActionButton checkBoxSelection;
+    private ScrollView checkboxStuff;
     //... the checkboxes
-    private CheckBox cb12am; //C heck B ox 12am
+    /*private CheckBox cb12am; //C heck B ox 12am
     private CheckBox cb1am;
     private CheckBox cb2am;
     private CheckBox cb3am;
@@ -100,9 +102,10 @@ public class ViewCalendarItem extends Fragment {
     private TextView tv8pm;
     private TextView tv9pm;
     private TextView tv10pm;
-    private TextView tv11pm;
+    private TextView tv11pm;*/
 
     private ButtonClickListener myBCL;
+    //private ButtonClickListener myBCL2;
 
     public ViewCalendarItem() {
         // Required empty public constructor
@@ -142,10 +145,11 @@ public class ViewCalendarItem extends Fragment {
         view = inflater.inflate(R.layout.fragment_view_calendar_item, container, false);
         //calendar view
         calendar = view.findViewById(R.id.datePicker);
-        dateSelection = view.findViewById(R.id.floatingActionButton1);
+        dateSelection = view.findViewById(R.id.FABdateAdd);
         //checkbox view
-        checkBoxSelection = view.findViewById(R.id.floatingActionButton2);
-        cb12am = view.findViewById(R.id.checkBox12am);
+        checkBoxSelection = view.findViewById(R.id.FABcheckbox);
+        checkboxStuff = view.findViewById(R.id.scrollCheckBox);
+        /*cb12am = view.findViewById(R.id.checkBox12am);
         cb1am = view.findViewById(R.id.checkBox01am);
         cb2pm = view.findViewById(R.id.checkBox02am);
         cb3am = view.findViewById(R.id.checkBox03am);
@@ -192,7 +196,7 @@ public class ViewCalendarItem extends Fragment {
         tv8pm = view.findViewById(R.id.textView08pm);
         tv9pm = view.findViewById(R.id.textView09pm);
         tv10pm = view.findViewById(R.id.textView10pm);
-        tv11pm = view.findViewById(R.id.textView11pm);
+        tv11pm = view.findViewById(R.id.textView11pm);*/
         //description view
         description = view.findViewById(R.id.editTextUserDescription);
         addDescription = view.findViewById(R.id.button);
@@ -200,6 +204,9 @@ public class ViewCalendarItem extends Fragment {
         if(myBCL == null) {
             myBCL = new ButtonClickListener();
         }
+        /*if(myBCL2 == null) {
+            myBCL2 = new ButtonClickListener();
+        }*/
         dateSelection.setOnClickListener(myBCL);
         checkBoxSelection.setOnClickListener(myBCL);
         addDescription.setOnClickListener(myBCL);
@@ -211,13 +218,14 @@ public class ViewCalendarItem extends Fragment {
 
     public void toCalendarView(View v) {
         view.findViewById(R.id.datePicker).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.floatingActionButton1).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.FABdateAdd).setVisibility(View.VISIBLE);
 
         view.findViewById(R.id.editTextUserDescription).setVisibility(View.GONE);
         view.findViewById(R.id.button).setVisibility(View.GONE);
 
-        view.findViewById(R.id.floatingActionButton2).setVisibility(View.GONE);
-        view.findViewById(R.id.checkBox12am).setVisibility(View.GONE);
+        view.findViewById(R.id.FABcheckbox).setVisibility(View.GONE);
+        view.findViewById(R.id.scrollCheckBox).setVisibility(View.GONE);
+        /*view.findViewById(R.id.checkBox12am).setVisibility(View.GONE);
         view.findViewById(R.id.checkBox01am).setVisibility(View.GONE);
         view.findViewById(R.id.checkBox02am).setVisibility(View.GONE);
         view.findViewById(R.id.checkBox03am).setVisibility(View.GONE);
@@ -264,18 +272,19 @@ public class ViewCalendarItem extends Fragment {
         view.findViewById(R.id.textView08pm).setVisibility(View.GONE);
         view.findViewById(R.id.textView09pm).setVisibility(View.GONE);
         view.findViewById(R.id.textView10pm).setVisibility(View.GONE);
-        view.findViewById(R.id.textView11pm).setVisibility(View.GONE);
+        view.findViewById(R.id.textView11pm).setVisibility(View.GONE);*/
     }
 
     public void toCheckboxView(View v) {
         view.findViewById(R.id.datePicker).setVisibility(View.GONE);
-        view.findViewById(R.id.floatingActionButton1).setVisibility(View.GONE);
+        view.findViewById(R.id.FABdateAdd).setVisibility(View.GONE);
 
         view.findViewById(R.id.editTextUserDescription).setVisibility(View.GONE);
         view.findViewById(R.id.button).setVisibility(View.GONE);
 
-        view.findViewById(R.id.floatingActionButton2).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.checkBox12am).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.FABcheckbox).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.scrollCheckBox).setVisibility(View.VISIBLE);
+        /*view.findViewById(R.id.checkBox12am).setVisibility(View.VISIBLE);
         view.findViewById(R.id.checkBox01am).setVisibility(View.VISIBLE);
         view.findViewById(R.id.checkBox02am).setVisibility(View.VISIBLE);
         view.findViewById(R.id.checkBox03am).setVisibility(View.VISIBLE);
@@ -322,18 +331,19 @@ public class ViewCalendarItem extends Fragment {
         view.findViewById(R.id.textView08pm).setVisibility(View.VISIBLE);
         view.findViewById(R.id.textView09pm).setVisibility(View.VISIBLE);
         view.findViewById(R.id.textView10pm).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.textView11pm).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.textView11pm).setVisibility(View.VISIBLE);*/
     }
 
     public void toDescriptionView(View v) {
         view.findViewById(R.id.datePicker).setVisibility(View.GONE);
-        view.findViewById(R.id.floatingActionButton1).setVisibility(View.GONE);
+        view.findViewById(R.id.FABdateAdd).setVisibility(View.GONE);
 
         view.findViewById(R.id.editTextUserDescription).setVisibility(View.VISIBLE);
         view.findViewById(R.id.button).setVisibility(View.VISIBLE);
 
-        view.findViewById(R.id.floatingActionButton2).setVisibility(View.GONE);
-        view.findViewById(R.id.checkBox12am).setVisibility(View.GONE);
+        view.findViewById(R.id.FABcheckbox).setVisibility(View.GONE);
+        view.findViewById(R.id.scrollCheckBox).setVisibility(View.GONE);
+        /*view.findViewById(R.id.checkBox12am).setVisibility(View.GONE);
         view.findViewById(R.id.checkBox01am).setVisibility(View.GONE);
         view.findViewById(R.id.checkBox02am).setVisibility(View.GONE);
         view.findViewById(R.id.checkBox03am).setVisibility(View.GONE);
@@ -380,7 +390,7 @@ public class ViewCalendarItem extends Fragment {
         view.findViewById(R.id.textView08pm).setVisibility(View.GONE);
         view.findViewById(R.id.textView09pm).setVisibility(View.GONE);
         view.findViewById(R.id.textView10pm).setVisibility(View.GONE);
-        view.findViewById(R.id.textView11pm).setVisibility(View.GONE);
+        view.findViewById(R.id.textView11pm).setVisibility(View.GONE);*/
     }
 
 
@@ -427,10 +437,10 @@ public class ViewCalendarItem extends Fragment {
         public void onClick(View view) {
             if(mListener != null) {
                 int buttonID = view.getId();
-                if(buttonID == R.id.floatingActionButton1) {
+                if(buttonID == R.id.FABdateAdd) {
                     toCheckboxView(view);
                 }
-                else if(buttonID == R.id.floatingActionButton2) {
+                else if(buttonID == R.id.FABcheckbox) {
                     toDescriptionView(view);
                 }
                 else if(buttonID == R.id.button) {

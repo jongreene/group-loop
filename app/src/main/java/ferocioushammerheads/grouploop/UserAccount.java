@@ -118,7 +118,12 @@ public class UserAccount extends AppCompatActivity
                     break;
                 case android.R.id.home:
                     Toast.makeText(getApplicationContext(), "Overriding default", Toast.LENGTH_SHORT).show();
-                    fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
+//                    fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
+                    if(fragmentManager.findFragmentByTag("CreateGroup") != null && !fragmentManager.findFragmentByTag("CreateGroup").isVisible()) {
+                        fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
+                    } else {
+                        fragmentChanger(ChangeGroup.class, R.id.user_account_frag_frame, "ChangeGroup");
+                    }
                     break;
             }
         }
@@ -136,7 +141,11 @@ public class UserAccount extends AppCompatActivity
             startActivity(intent);
         } else {
             Toast.makeText(getApplicationContext(), "Overriding default", Toast.LENGTH_SHORT).show();
-            fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
+            if(fragmentManager.findFragmentByTag("CreateGroup") != null && !fragmentManager.findFragmentByTag("CreateGroup").isVisible()) {
+                fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
+            } else {
+                fragmentChanger(ChangeGroup.class, R.id.user_account_frag_frame, "ChangeGroup");
+            }
         }
     }
 
@@ -150,7 +159,7 @@ public class UserAccount extends AppCompatActivity
         ChangeGroupFrag = fragmentManager.findFragmentByTag("ChangeGroup");
         NotificationSettingsFrag = fragmentManager.findFragmentByTag("NotificationSettings");
         CreateGroupFrag = fragmentManager.findFragmentByTag("CreateGroup");
-        tmpFrag = fragmentManager.findFragmentByTag(fragName);
+
 
         try {
             fragment = (Fragment) newFragment.newInstance();
@@ -176,6 +185,9 @@ public class UserAccount extends AppCompatActivity
             fragmentManager.beginTransaction().hide(CreateGroupFrag).commit();
 
         }
+
+        tmpFrag = fragmentManager.findFragmentByTag(fragName);
+
 
         if (tmpFrag == null) {
             fragmentManager.beginTransaction().add(containerName, fragment, fragName).commit();

@@ -151,7 +151,6 @@ public class ChangeGroup extends Fragment {
             if (mListener != null) {
                 AccountTools tmpTools = AccountTools.getInstance();
                 if(view.getId() == R.id.add_group_button){
-//                    TODO: check if a group with that id exists before adding
                     String userRefString = "/groups/";
                     mDatabaseRef = FirebaseDatabase.getInstance().getReference(userRefString);
 

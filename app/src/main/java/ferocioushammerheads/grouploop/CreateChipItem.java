@@ -3,9 +3,20 @@ package ferocioushammerheads.grouploop;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static ferocioushammerheads.grouploop.MainActivity.currentGroup;
 
 
 /**
@@ -16,7 +27,7 @@ import android.view.ViewGroup;
  * Use the {@link CreateChipItem#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CreateChipItem extends Fragment {
+public class CreateChipItem extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -25,6 +36,12 @@ public class CreateChipItem extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private View view;
+    private Button mAddNewChipItem;
+    private EditText editText;
+    private Spinner spinner;
+
+//    private ButtonClickListener mButtonClickListener;
 
     private OnFragmentInteractionListener mListener;
 
@@ -52,6 +69,7 @@ public class CreateChipItem extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -63,14 +81,45 @@ public class CreateChipItem extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_chip_item, container, false);
+        view = inflater.inflate(R.layout.fragment_create_chip_item, container, false);
+        this.mAddNewChipItem = view.findViewById(R.id.createChipItem);
+//        if (mButtonClickListener == null) {
+//            mButtonClickListener = new ButtonClickListener();
+//        }
+        mAddNewChipItem.setOnClickListener(this);
+        return view;
     }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        this.editText = view.findViewById(R.id.newChipItemName);
+        this.spinner = view.findViewById(R.id.newChipItemType);
+        // Spinner Drop down elements
+        List<String> categories = new ArrayList<String>();
+        categories.add("List");
+        categories.add("Schedule");
+
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(view.getContext(),
+                android.R.layout.simple_spinner_item, categories);
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        spinner.setAdapter(dataAdapter);
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed() {
         if (mListener != null) {
             mListener.onFragmentInteraction();
         }
+
+
+
+
     }
 
     @Override
@@ -103,4 +152,43 @@ public class CreateChipItem extends Fragment {
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction();
     }
+
+    public void onClick(View v){
+//        Spinner spinner = view.findViewById(R.id.newChipItemType);
+//        EditText editText = view.findViewById(R.id.newChipItemName);
+        String itemType = spinner.getSelectedItem().toString();
+        String itemName = editText.getText().toString();
+        Log.d("Adding user", itemName);
+
+
+
+
+        ChipItem_TextList tmp = new ChipItem_TextList("this is new");
+
+        MainActivity.currentGroup.addChipItem(tmp);
+
+        MainActivity.mDatabase.child("groups").child(currentGroup.getGroupId()).child("chipItems").setValue(currentGroup.getChipItems());
+
+
+    }
+
+//    private class ButtonClickListener implements View.OnClickListener {
+//        ButtonClickListener() {
+//        }
+//
+//        @Override
+//        public void onClick(View view) {
+//            int clickedId = view.getId();
+//            if (clickedId == R.id.createChipItem) {
+//                //TODO: send info from newChipItemType and newChipItemName
+//                Spinner spinner = findViewById(R.id.newChipItemType);
+//                EditText editText = findViewById(R.id.newChipItemName);
+//                String itemType = spinner.getSelectedItem().toString();
+//                String itemName = editText.getText().toString();
+//                Log.d("Adding user", itemName+" "+itemType);
+//
+//
+//            }
+//        }
+//    }
 }

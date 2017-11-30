@@ -47,11 +47,15 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <GridLayout
+            android:id="@+id/gridLayout"
             android:layout_width="368dp"
-            android:layout_height="375dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
             android:padding="10dp"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp">
+            app:layout_constraintBottom_toTopOf="@+id/pref_verify_email"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="8dp">
 
             <TextView
                 android:id="@+id/textView26"
@@ -92,7 +96,7 @@
                 android:textSize="18dp" />
 
             <TextView
-                android:id="@+id/textView32"
+                android:id="@+id/pref_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
@@ -103,7 +107,7 @@
                 android:textSize="18dp" />
 
             <TextView
-                android:id="@+id/textView33"
+                android:id="@+id/pref_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
@@ -114,7 +118,7 @@
                 android:textSize="18dp" />
 
             <TextView
-                android:id="@+id/textView34"
+                android:id="@+id/pref_group_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
@@ -125,7 +129,7 @@
                 android:textSize="18dp" />
 
             <TextView
-                android:id="@+id/textView35"
+                android:id="@+id/pref_active_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
@@ -135,6 +139,55 @@
                 android:text="group1"
                 android:textSize="18dp" />
         </GridLayout>
+
+        <Button
+            android:id="@+id/pref_verify_email_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/button_verify_email"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/pref_notification_settings_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/pref_notification_settings_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/button_notification_settings"
+            app:layout_constraintBottom_toTopOf="@+id/pref_change_add_group_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/pref_change_add_group_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/button_change_group"
+            app:layout_constraintBottom_toTopOf="@+id/pref_login_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/pref_login_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/button_login_logout_logged_out"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>

@@ -27,18 +27,33 @@ import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "FirebaseSession";
+public class MainActivity extends AppCompatActivity implements AccountToolsHelper{
+    private static final String TAG = "AccountTools";
 
     private Button ChangeGroupItems;
     private Button ChangeLogin;
 
-    // Write a message to the database
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("message");
+    private Button mChipItemsButton, mPreferencesButton;
+
+    private ButtonClickListener mButtonClickListener;
+
+    public static FirebaseUser user;
+    public static UserProfile userProfile;
+
+    public static UserGroup currentGroup;
+
+    public static AccountTools firebaseTools;
+
+    // [START declare_auth]
+    private FirebaseAuth mAuth;
+    // [END declare_auth]
+    public static DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +63,36 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        set current user
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (mButtonClickListener == null) {
+            mButtonClickListener = new ButtonClickListener();
+        }
 
-        Intent intent = new Intent(this, ChipItems.class);
-//        Intent intent = new Intent(this, UserAccount.class);
-        startActivity(intent);
+//        set button id's
+        mChipItemsButton = this.findViewById(R.id.chipItemsButtons);
+        mPreferencesButton = this.findViewById(R.id.preferencesButton);
+
+//        attach listeners to buttons
+        mChipItemsButton.setOnClickListener(mButtonClickListener);
+        mPreferencesButton.setOnClickListener(mButtonClickListener);
+
+        // [START initialize_auth]
+        mAuth = FirebaseAuth.getInstance();
+        mAuth.getCurrentUser();
+        // [END initialize_auth]
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        
+        AccountTools tmpTools = AccountTools.getInstance();
+        tmpTools.setupTools(this, mAuth, mDatabase);
+
+        loadProfileEvent();
+
+//        load current group
+
+//        tmpTools.loadGroup(userProfile.getCurrentGroup());
 
         updateUserEnvironment();
     }

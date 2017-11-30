@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import static ferocioushammerheads.grouploop.MainActivity.userProfile;
+
 public class ChipItems extends AppCompatActivity
         implements ViewAllChipItems.OnFragmentInteractionListener,
             ViewCalendarItem.OnFragmentInteractionListener,
@@ -34,10 +36,14 @@ public class ChipItems extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        fragmentChanger(ViewAllChipItems.class,R.id.ChipItemInterfaceFrame, "ViewAllChipItems");
 
+//        AccountTools tmpTools = AccountTools.getInstance();
+//        tmpTools.loadProfileEvent();
+////        load current group
+//        tmpTools.loadGroup(userProfile.getCurrentGroup());
 
-//        fragmentChanger(ViewAllChipItems.class,R.id.ChipItemInterfaceFrame, "ViewAllChipItems");
-        fragmentChanger(ViewCalendarItem.class,R.id.ChipItemInterfaceFrame, "ViewAllChipItems");
+     
     }
 
     @Override

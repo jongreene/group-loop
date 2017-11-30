@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/GroupLoop.iml" filepath="$PROJECT_DIR$/GroupLoop.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/group-loop.iml" filepath="$PROJECT_DIR$/group-loop.iml" />
     </modules>
   </component>
 </project>

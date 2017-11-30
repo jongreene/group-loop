@@ -21,6 +21,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,59 +56,9 @@ public class ViewCalendarItem extends Fragment {
     //checkbox view
     private FloatingActionButton checkBoxSelection;
     private ScrollView checkboxStuff;
-    //... the checkboxes
-    /*private CheckBox cb12am; //C heck B ox 12am
-    private CheckBox cb1am;
-    private CheckBox cb2am;
-    private CheckBox cb3am;
-    private CheckBox cb4am;
-    private CheckBox cb5am;
-    private CheckBox cb6am;
-    private CheckBox cb7am;
-    private CheckBox cb8am;
-    private CheckBox cb9am;
-    private CheckBox cb10am;
-    private CheckBox cb11am;
-    private CheckBox cb12pm;
-    private CheckBox cb1pm;
-    private CheckBox cb2pm;
-    private CheckBox cb3pm;
-    private CheckBox cb4pm;
-    private CheckBox cb5pm;
-    private CheckBox cb6pm;
-    private CheckBox cb7pm;
-    private CheckBox cb8pm;
-    private CheckBox cb9pm;
-    private CheckBox cb10pm;
-    private CheckBox cb11pm;
-    //...  the textboxes
-    private TextView tv12am;
-    private TextView tv1am;
-    private TextView tv2am;
-    private TextView tv3am;
-    private TextView tv4am;
-    private TextView tv5am;
-    private TextView tv6am;
-    private TextView tv7am;
-    private TextView tv8am;
-    private TextView tv9am;
-    private TextView tv10am;
-    private TextView tv11am;
-    private TextView tv12pm;
-    private TextView tv1pm;
-    private TextView tv2pm;
-    private TextView tv3pm;
-    private TextView tv4pm;
-    private TextView tv5pm;
-    private TextView tv6pm;
-    private TextView tv7pm;
-    private TextView tv8pm;
-    private TextView tv9pm;
-    private TextView tv10pm;
-    private TextView tv11pm;*/
+    private Map<String, String> myMap = new HashMap<>();
 
     private ButtonClickListener myBCL;
-    //private ButtonClickListener myBCL2;
 
     public ViewCalendarItem() {
         // Required empty public constructor
@@ -149,54 +102,26 @@ public class ViewCalendarItem extends Fragment {
         //checkbox view
         checkBoxSelection = view.findViewById(R.id.FABcheckbox);
         checkboxStuff = view.findViewById(R.id.scrollCheckBox);
-        /*cb12am = view.findViewById(R.id.checkBox12am);
-        cb1am = view.findViewById(R.id.checkBox01am);
-        cb2pm = view.findViewById(R.id.checkBox02am);
-        cb3am = view.findViewById(R.id.checkBox03am);
-        cb4am = view.findViewById(R.id.checkBox04am);
-        cb5am = view.findViewById(R.id.checkBox05am);
-        cb6am = view.findViewById(R.id.checkBox06am);
-        cb7am = view.findViewById(R.id.checkBox07am);
-        cb8am = view.findViewById(R.id.checkBox08am);
-        cb9am = view.findViewById(R.id.checkBox09am);
-        cb10am = view.findViewById(R.id.checkBox10am);
-        cb11am = view.findViewById(R.id.checkBox11am);
-        cb12pm = view.findViewById(R.id.checkBox12pm);
-        cb1pm = view.findViewById(R.id.checkBox01pm);
-        cb2pm = view.findViewById(R.id.checkBox02pm);
-        cb3pm = view.findViewById(R.id.checkBox03pm);
-        cb4pm = view.findViewById(R.id.checkBox04pm);
-        cb5pm = view.findViewById(R.id.checkBox05pm);
-        cb6pm = view.findViewById(R.id.checkBox06pm);
-        cb7pm = view.findViewById(R.id.checkBox07pm);
-        cb8pm = view.findViewById(R.id.checkBox08pm);
-        cb9pm = view.findViewById(R.id.checkBox09pm);
-        cb10pm = view.findViewById(R.id.checkBox10pm);
-        cb11pm = view.findViewById(R.id.checkBox11pm);
-        tv12am = view.findViewById(R.id.textView12am);
-        tv1am = view.findViewById(R.id.textView01am);
-        tv2am = view.findViewById(R.id.textView02am);
-        tv3am = view.findViewById(R.id.textView03am);
-        tv4am = view.findViewById(R.id.textView04am);
-        tv5am = view.findViewById(R.id.textView05am);
-        tv6am = view.findViewById(R.id.textView06am);
-        tv7am = view.findViewById(R.id.textView07am);
-        tv8am = view.findViewById(R.id.textView08am);
-        tv9am = view.findViewById(R.id.textView09am);
-        tv10am = view.findViewById(R.id.textView10am);
-        tv11am = view.findViewById(R.id.textView11am);
-        tv12pm = view.findViewById(R.id.textView12pm);
-        tv1pm = view.findViewById(R.id.textView01pm);
-        tv2pm = view.findViewById(R.id.textView02pm);
-        tv3pm = view.findViewById(R.id.textView03pm);
-        tv4pm = view.findViewById(R.id.textView04pm);
-        tv5pm = view.findViewById(R.id.textView05pm);
-        tv6pm = view.findViewById(R.id.textView06pm);
-        tv7pm = view.findViewById(R.id.textView07pm);
-        tv8pm = view.findViewById(R.id.textView08pm);
-        tv9pm = view.findViewById(R.id.textView09pm);
-        tv10pm = view.findViewById(R.id.textView10pm);
-        tv11pm = view.findViewById(R.id.textView11pm);*/
+        String keyTemp;
+        //https://stackoverflow.com/questions/25714520/filling-hashmap-within-loop
+        for(int i=0; i<24; i++) {
+            if(i==0) {
+                myMap.put("12am", "not scheduled");
+            }
+            else if(i<12) {
+                keyTemp = ""+i+"am";
+                myMap.put(keyTemp, "not scheduled");
+            }
+            else if(i==12) {
+                myMap.put("12pm", "not scheduled");
+            }
+            else {
+                int temp = i-12;
+                keyTemp = ""+temp+"pm";
+                myMap.put(keyTemp, "not scheduled");
+            }
+        }
+
         //description view
         description = view.findViewById(R.id.editTextUserDescription);
         addDescription = view.findViewById(R.id.button);
@@ -273,7 +198,7 @@ public class ViewCalendarItem extends Fragment {
         view.findViewById(R.id.textView11pm).setVisibility(View.VISIBLE);*/
     }
 
-    public void toDescriptionView(View v) {
+    /*public void toDescriptionView(View v) {
         view.findViewById(R.id.datePicker).setVisibility(View.GONE);
         view.findViewById(R.id.FABdateAdd).setVisibility(View.GONE);
 
@@ -283,48 +208,65 @@ public class ViewCalendarItem extends Fragment {
         view.findViewById(R.id.FABcheckbox).setVisibility(View.GONE);
         view.findViewById(R.id.scrollCheckBox).setVisibility(View.GONE);
 
-    }
+    }*/
 
     private void checkBoxtoDatabase(View view) {
         //From: https://stackoverflow.com/questions/9411540/android-get-checked-checkbox-values
-        boolean time12AM = ((CheckBox)view.findViewById(R.id.checkBox12am)).isChecked();
-        boolean time01AM = ((CheckBox)view.findViewById(R.id.checkBox01am)).isChecked();
-        boolean time02AM = ((CheckBox)view.findViewById(R.id.checkBox02am)).isChecked();
-        boolean time03AM = ((CheckBox)view.findViewById(R.id.checkBox03am)).isChecked();
-        boolean time04AM = ((CheckBox)view.findViewById(R.id.checkBox04am)).isChecked();
-        boolean time05AM = ((CheckBox)view.findViewById(R.id.checkBox05am)).isChecked();
-        boolean time06AM = ((CheckBox)view.findViewById(R.id.checkBox06am)).isChecked();
-        boolean time07AM = ((CheckBox)view.findViewById(R.id.checkBox07am)).isChecked();
-        boolean time08AM = ((CheckBox)view.findViewById(R.id.checkBox08am)).isChecked();
-        boolean time09AM = ((CheckBox)view.findViewById(R.id.checkBox09am)).isChecked();
-        boolean time10AM = ((CheckBox)view.findViewById(R.id.checkBox10am)).isChecked();
-        boolean time11AM = ((CheckBox)view.findViewById(R.id.checkBox11am)).isChecked();
-        boolean time12PM = ((CheckBox)view.findViewById(R.id.checkBox12pm)).isChecked();
-        boolean time01PM = ((CheckBox)view.findViewById(R.id.checkBox01pm)).isChecked();
-        boolean time02PM = ((CheckBox)view.findViewById(R.id.checkBox02pm)).isChecked();
-        boolean time03PM = ((CheckBox)view.findViewById(R.id.checkBox03pm)).isChecked();
-        boolean time04PM = ((CheckBox)view.findViewById(R.id.checkBox04pm)).isChecked();
-        boolean time05PM = ((CheckBox)view.findViewById(R.id.checkBox05pm)).isChecked();
-        boolean time06PM = ((CheckBox)view.findViewById(R.id.checkBox06pm)).isChecked();
-        boolean time07PM = ((CheckBox)view.findViewById(R.id.checkBox07pm)).isChecked();
-        boolean time08PM = ((CheckBox)view.findViewById(R.id.checkBox08pm)).isChecked();
-        boolean time09PM = ((CheckBox)view.findViewById(R.id.checkBox09pm)).isChecked();
-        boolean time10PM = ((CheckBox)view.findViewById(R.id.checkBox10pm)).isChecked();
-        boolean time11PM = ((CheckBox)view.findViewById(R.id.checkBox11pm)).isChecked();
+        boolean[] checkedBoxes = new boolean[24];
+        checkedBoxes[0] = ((CheckBox)view.findViewById(R.id.checkBox12am)).isChecked();
+        checkedBoxes[1] = ((CheckBox)view.findViewById(R.id.checkBox01am)).isChecked();
+        checkedBoxes[2] = ((CheckBox)view.findViewById(R.id.checkBox02am)).isChecked();
+        checkedBoxes[3] = ((CheckBox)view.findViewById(R.id.checkBox03am)).isChecked();
+        checkedBoxes[4] = ((CheckBox)view.findViewById(R.id.checkBox04am)).isChecked();
+        checkedBoxes[5] = ((CheckBox)view.findViewById(R.id.checkBox05am)).isChecked();
+        checkedBoxes[6] = ((CheckBox)view.findViewById(R.id.checkBox06am)).isChecked();
+        checkedBoxes[7] = ((CheckBox)view.findViewById(R.id.checkBox07am)).isChecked();
+        checkedBoxes[8] = ((CheckBox)view.findViewById(R.id.checkBox08am)).isChecked();
+        checkedBoxes[9] = ((CheckBox)view.findViewById(R.id.checkBox09am)).isChecked();
+        checkedBoxes[10] = ((CheckBox)view.findViewById(R.id.checkBox10am)).isChecked();
+        checkedBoxes[11] = ((CheckBox)view.findViewById(R.id.checkBox11am)).isChecked();
+        checkedBoxes[12] = ((CheckBox)view.findViewById(R.id.checkBox12pm)).isChecked();
+        checkedBoxes[13] = ((CheckBox)view.findViewById(R.id.checkBox01pm)).isChecked();
+        checkedBoxes[14] = ((CheckBox)view.findViewById(R.id.checkBox02pm)).isChecked();
+        checkedBoxes[15] = ((CheckBox)view.findViewById(R.id.checkBox03pm)).isChecked();
+        checkedBoxes[16] = ((CheckBox)view.findViewById(R.id.checkBox04pm)).isChecked();
+        checkedBoxes[17] = ((CheckBox)view.findViewById(R.id.checkBox05pm)).isChecked();
+        checkedBoxes[18] = ((CheckBox)view.findViewById(R.id.checkBox06pm)).isChecked();
+        checkedBoxes[19] = ((CheckBox)view.findViewById(R.id.checkBox07pm)).isChecked();
+        checkedBoxes[20] = ((CheckBox)view.findViewById(R.id.checkBox08pm)).isChecked();
+        checkedBoxes[21] = ((CheckBox)view.findViewById(R.id.checkBox09pm)).isChecked();
+        checkedBoxes[22] = ((CheckBox)view.findViewById(R.id.checkBox10pm)).isChecked();
+        checkedBoxes[23] = ((CheckBox)view.findViewById(R.id.checkBox11pm)).isChecked();
+        String keyTemp;
+        for(int i=0; i<24; i++) {
+            if(checkedBoxes[i]==true) {
+                if(i==0) {
+                    keyTemp = "12am";
+                }
+                else if(i<12) {
+                    keyTemp = i+"am";
+                }
+                else if(i==12) {
+                    keyTemp = "12pm";
+                }
+                else {
+                    keyTemp = (i-12)+"pm";
+                }
+                //https://stackoverflow.com/questions/4157972/how-to-update-a-value-given-a-key-in-a-java-hashmap
+                //myMap.put(keyTemp, UserProfile.getUid());
+            }
+        }
         /*
         TODO:
         database stuff
          */
     }
 
-    private void descriptionToDatabase(View view) {
+    /*private void descriptionToDatabase(View view) {
         //From: https://stackoverflow.com/questions/15301157/how-to-set-the-text-entered-in-android-studio-edittext-to-a-variable
         String description = ((EditText)view.findViewById(R.id.editTextUserDescription)).getText().toString();
-        /*
-        TODO:
-        database stuff
-         */
-    }
+
+    }*/
 
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -374,7 +316,8 @@ public class ViewCalendarItem extends Fragment {
                     toCheckboxView(view);
                 }
                 else if(buttonID == R.id.FABcheckbox) {
-                    toDescriptionView(view);
+                    //toDescriptionView(view);
+                    /*TODO user id stuff*/
                 }
                 else if(buttonID == R.id.button) {
                     toCheckboxView(view);

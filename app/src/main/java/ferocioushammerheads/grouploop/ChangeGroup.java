@@ -188,9 +188,7 @@ public class ChangeGroup extends Fragment {
                     tmpTools.updateUser(MainActivity.userProfile);
                     showGroupOptionsMenu(false, null, 0, 0);
 
-//                    TODO: implement a method to generate a new group object for the current group
-//                    loadGroup(MainActivity.userProfile.getCurrentGroup());
-                    loadGroup("testGroup1");
+                    loadGroup(MainActivity.userProfile.getCurrentGroup());
 
                 } else if(view.getId() == R.id.change_group_remove_group){
                     String tmp = "" + itemSelected;

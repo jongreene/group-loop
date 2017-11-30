@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity{
 
     public static UserProfile userProfile;
 
+    public static UserGroup userGroup;
+
     public static UserGroup currentGroup;
 
     @Override

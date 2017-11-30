@@ -46,6 +46,7 @@ public class UserAccount extends AppCompatActivity
 
     private static final String TAG = "UserAccount";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,9 +68,6 @@ public class UserAccount extends AppCompatActivity
 
         view = this.findViewById(android.R.id.content).getRootView();
 
-//        firebaseTools = new AccountTools(this, mAuth, mDatabase, view);
-
-//        firebaseTools.getInstance();
         firebaseTools.getInstance().setupTools(this, mAuth, mDatabase);
 
 //        firebaseTools.signOut();

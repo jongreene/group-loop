@@ -143,24 +143,24 @@ public class ViewAllChipItems extends Fragment {
 //                    }
 //                });
 
-        DatabaseReference textList = FirebaseDatabase.getInstance().getReference().child("groups").child(MainActivity.currentGroup.getGroupId()).child("chipItemsTextList");
-        DatabaseReference schedules = FirebaseDatabase.getInstance().getReference().child("groups").child(MainActivity.currentGroup.getGroupId()).child("chipItemsSchedule");
-
-        textList.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String tempKey = dataSnapshot.getKey();
-                ChipItem_TextList temp = dataSnapshot.getValue(ChipItem_TextList.class);
-                AdapterChipItem tempItem = new AdapterChipItem(temp.getName(), tempKey, "List");
-                list.add(tempItem);
-                listAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+//        DatabaseReference textList = FirebaseDatabase.getInstance().getReference().child("groups").child(MainActivity.currentGroup.getGroupId()).child("chipItemsTextList");
+//        DatabaseReference schedules = FirebaseDatabase.getInstance().getReference().child("groups").child(MainActivity.currentGroup.getGroupId()).child("chipItemsSchedule");
+//
+//        textList.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                String tempKey = dataSnapshot.getKey();
+//                ChipItem_TextList temp = dataSnapshot.getValue(ChipItem_TextList.class);
+//                AdapterChipItem tempItem = new AdapterChipItem(temp.getName(), tempKey, "List");
+//                list.add(tempItem);
+//                listAdapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
 
 
 

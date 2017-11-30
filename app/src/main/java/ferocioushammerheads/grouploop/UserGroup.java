@@ -10,8 +10,8 @@ public class UserGroup {
     private String groupId;
     private ArrayList<String> members;
 //    private ArrayList<ChipItems> chipItems;
-    private ArrayList<ChipItem_TextList> chipItemsTextList;
-    private ArrayList<ChipItemSchedule> chipItemsSchedule;
+    private ArrayList<ChipItem_TextList> chipItemsTextList = new ArrayList<ChipItem_TextList>();
+    private ArrayList<ChipItemSchedule> chipItemsSchedule = new ArrayList<ChipItemSchedule>();
 
     public UserGroup(){}
 //    String creator, String groupId
@@ -26,9 +26,9 @@ public class UserGroup {
         ChipItem_TextList tmp1 = new ChipItem_TextList("testtest");
         ChipItemSchedule tmp2 = new ChipItemSchedule("lalal");
 
-        chipItemsTextList = new ArrayList<ChipItem_TextList>();
-        chipItemsSchedule = new ArrayList<ChipItemSchedule>();
-
+//        chipItemsTextList = new ArrayList<ChipItem_TextList>();
+//        chipItemsSchedule = new ArrayList<ChipItemSchedule>();
+//
         chipItemsTextList.add(tmp1);
 
         addChipItemTextList(tmp1);

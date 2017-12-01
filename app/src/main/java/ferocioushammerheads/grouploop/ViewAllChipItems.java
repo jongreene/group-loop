@@ -1,6 +1,7 @@
 package ferocioushammerheads.grouploop;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -9,18 +10,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.google.android.gms.plus.PlusOneButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * A fragment with a Google +1 button.
@@ -118,30 +121,51 @@ public class ViewAllChipItems extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
         chipItems = (ListView) view.findViewById(R.id.chipItems);
-//        list = new ArrayList<String>();
-//        list.add("Hello, World");
-//        listAdapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1, list);
         listAdapter = new ListAdapter(view.getContext(), list);
         chipItems.setAdapter(listAdapter);
-        FirebaseDatabase.getInstance().getReference().child("items")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        Log.d("Tag", "==============");
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            String itemName = (String) snapshot.getValue();
-                            String itemKey = (String) snapshot.getKey();
-                            Log.d("Snapshot", itemName);
-//                            list.add(someitem);
-                            AdapterChipItem tempItem = new AdapterChipItem(itemName, itemKey);
-                            list.add(tempItem);
-                        }
-                        listAdapter.notifyDataSetChanged();
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
+        DatabaseReference textList = FirebaseDatabase.getInstance().getReference().child("groups").child(MainActivity.currentGroup.getGroupId()).child("chipItems");
+//        DatabaseReference schedules = FirebaseDatabase.getInstance().getReference().child("groups").child(MainActivity.currentGroup.getGroupId()).child("chipItemsSchedule");
+//
+        textList.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    String tempKey = snapshot.getKey();
+                    ChipItemTextList temp = snapshot.getValue(ChipItemTextList.class);
+                    AdapterChipItem tempItem = new AdapterChipItem(temp.getName(), tempKey, "List");
+                    list.add(tempItem);
+                    listAdapter.notifyDataSetChanged();
+
+
+                }
+//                Log.d("List Data", dataSnapshot.getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        chipItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("Item clicked", Integer.toString(position));
+                AdapterChipItem temp = list.get(position);
+                Log.d("Item name", temp.getName());
+                Log.d("View id", Integer.toString(view.getId()));
+                Log.d("View ID", temp.getID());
+
+                SharedPreferences pref = getContext().getSharedPreferences("MyPref", 0);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString("itemid", temp.getID());
+                editor.commit();
+                Log.d("sharedpref",pref.getString("itemid", null));
+                mListener.onFragmentInteraction(view);
+
+
+            }
+        });
 
     }
 
@@ -183,6 +207,7 @@ public class ViewAllChipItems extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(String test);
         void onFragmentInteraction(View view);
+        void onFragmentInteraction();
     }
 
     private class ButtonClickListener implements View.OnClickListener {
@@ -198,6 +223,9 @@ public class ViewAllChipItems extends Fragment {
                     String value = chipSearch.getText().toString();
 
                     mListener.onFragmentInteraction(value);
+                }
+                else if (clickedId == R.id.chipItems){
+                    mListener.onFragmentInteraction(view);
                 }
             }
         }

@@ -1,36 +1,34 @@
 package ferocioushammerheads.grouploop;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
- * Created by bishe on 11/26/2017.
+ * Created by bishe on 11/30/2017.
  */
 
-public class ChipItem_TextList {
+public class ChipItemSchedule {
     private String name;
     private String creatorName;
     private String creatorID;
     private String itemID;
-    private List<String> items;
+    //Map <Time, userid>
+    private Map<String, String> schedule;
 
-
-    public ChipItem_TextList(){
+    public ChipItemSchedule(){
     }
 
-    public ChipItem_TextList(String w){
+    public ChipItemSchedule(String w){
         this.name = w;
         this.creatorName = "bish";
         this.creatorID = "12345";
         this.itemID = w;
-        items = new ArrayList<String>();
-        items.add("bananas");
-        items.add("apples");
+        this.schedule = new HashMap<>();
+        schedule.put("1AM", "randomAssUser");
+        schedule.put("3AM", "anotherRandomUser");
     }
-
-
 
     public String getName(){
         return name;
@@ -48,8 +46,8 @@ public class ChipItem_TextList {
         return itemID;
     }
 
-    public List<String> getItems(){
-        return items;
+    public Map<String, String> getSchedule() {
+        return schedule;
     }
 
 }

@@ -33,6 +33,8 @@ public class UserAccount extends AppCompatActivity
 
     private TextView mUserName, mGroupList, mActiveGroup, mEmail;
 
+    private int externChangeGroup = -1;
+
 //    moved to MainActivity
 //    public static AccountTools firebaseTools;
 
@@ -63,18 +65,23 @@ public class UserAccount extends AppCompatActivity
 
         MainActivity.firebaseTools.getInstance().setupTools(this,MainActivity.mAuth, MainActivity.mDatabase);
 
-//        firebaseTools.signOut();
+//        MainActivity.firebaseTools.signOut();
 
-        Bundle b = getIntent().getExtras();
-        int value = -1; // or other values
-        if (b != null) {
-            value = b.getInt("key");
+        Bundle initFrag = getIntent().getExtras();
+        int value = -1;
+        if (initFrag != null) {
+            value = initFrag.getInt("key");
         }
 
 //        use bundle value to determine initial fragment
         if (value == 1) {
             fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
-        } else {
+        } else if(value == 2) {
+            fragmentChanger(ChangeGroup.class, R.id.user_account_frag_frame, "ChangeGroup");
+        } else if(value == 3) { //special case for when change group was loaded from chip items
+            externChangeGroup = 3;
+            fragmentChanger(ChangeGroup.class, R.id.user_account_frag_frame, "ChangeGroup");
+        }else {
             fragmentChanger(Login.class, R.id.user_account_frag_frame, "Login");
         }
     }
@@ -83,8 +90,6 @@ public class UserAccount extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-
-
         return true;
     }
 
@@ -93,35 +98,52 @@ public class UserAccount extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment myFragment = fragmentManager.findFragmentByTag("UserAccountPreferences");
-        if (myFragment != null && myFragment.isVisible()) {
-            Toast.makeText(getApplicationContext(), "Default behavior", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-        } else {
-            user = MainActivity.mAuth.getCurrentUser();
-            switch (item.getItemId()) {
-                case R.id.action_logout:
-                    if (user != null) {
-                        MainActivity.firebaseTools.signOut();
-                        Intent intent = new Intent(this, MainActivity.class);
-                        startActivity(intent);
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Not logged in.", Toast.LENGTH_SHORT).show();
-                    }
+
+        user = MainActivity.mAuth.getCurrentUser();
+        switch (item.getItemId()) {
+            case R.id.action_logout:
+                if (user != null) {
+                    AccountTools tmpTools = MainActivity.firebaseTools.getInstance();
+                    tmpTools.signOut();
+                    Intent intent = new Intent(this, MainActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Not logged in.", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.action_change_group:
+                if (user != null) {
+                    fragmentChanger(ChangeGroup.class, R.id.user_account_frag_frame, "ChangeGroup");
+                } else {
+                    Toast.makeText(getApplicationContext(), "Not logged in.", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case android.R.id.home:
+                // special case. returns to ChipItems
+                if(externChangeGroup == 3){
+                    Intent intent = new Intent(this, ChipItems.class);
+                    startActivity(intent);
+
                     break;
-                case android.R.id.home:
+                }
+
+                if (myFragment != null && myFragment.isVisible()) {
+                    Toast.makeText(getApplicationContext(), "Default behavior", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(this, MainActivity.class);
+                    startActivity(intent);
+                } else {
                     Toast.makeText(getApplicationContext(), "Overriding default", Toast.LENGTH_SHORT).show();
-//                    fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
-                    if(fragmentManager.findFragmentByTag("CreateGroup") != null && fragmentManager.findFragmentByTag("CreateGroup").isVisible()) {
+                    if (fragmentManager.findFragmentByTag("CreateGroup") != null && fragmentManager.findFragmentByTag("CreateGroup").isVisible()) {
                         fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
-                    } else if(fragmentManager.findFragmentByTag("ChangeGroup") != null && fragmentManager.findFragmentByTag("ChangeGroup").isVisible()){
+                    } else if (fragmentManager.findFragmentByTag("ChangeGroup") != null && fragmentManager.findFragmentByTag("ChangeGroup").isVisible()) {
                         fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
                     } else {
                         fragmentChanger(ChangeGroup.class, R.id.user_account_frag_frame, "ChangeGroup");
                     }
-                    break;
-            }
+                }
+                break;
         }
+
         return true;
     }
 
@@ -130,6 +152,13 @@ public class UserAccount extends AppCompatActivity
     public void onBackPressed() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment myFragment = fragmentManager.findFragmentByTag("UserAccountPreferences");
+
+        // special case. returns to ChipItems
+        if(externChangeGroup == 3){
+            Intent intent = new Intent(this, ChipItems.class);
+            startActivity(intent);
+        }
+
         if (myFragment != null && myFragment.isVisible()) {
             Toast.makeText(getApplicationContext(), "Default behavior", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, MainActivity.class);
@@ -247,7 +276,9 @@ public class UserAccount extends AppCompatActivity
     // Define the actual handler for the event.
     public void loggedInEvent() {
         MainActivity.user = MainActivity.mAuth.getCurrentUser();
-        fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
+//        fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
 
     }
 

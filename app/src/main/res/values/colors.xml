@@ -8,5 +8,6 @@
     <color name="grey_300">#E0E0E0</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="test">#76eeeeee</color>
 
 </resources>

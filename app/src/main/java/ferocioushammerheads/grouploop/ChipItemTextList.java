@@ -52,20 +52,22 @@ public class ChipItemTextList {
         return nullArrayListCheck(items);
     }
 
+    public void addItem(String item){
+        items = nullArrayListCheck(items);
+        items.add(item);
+    }
+
+    public void removeItemAt(int index){
+        items = nullArrayListCheck(items);
+        items.remove(index);
+    }
+
     //    used to initialize any ArrayList that isn't already
     private ArrayList nullArrayListCheck(ArrayList arrayIn){
         if(arrayIn == null){
             arrayIn = new ArrayList();
         }
         return arrayIn;
-    }
-
-    public void addItem(String item){
-        items.add(item);
-    }
-
-    public void removeItemAt(int index){
-        items.remove(index);
     }
 
 }

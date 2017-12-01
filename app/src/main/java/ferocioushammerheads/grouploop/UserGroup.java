@@ -83,7 +83,7 @@ public class UserGroup {
         return(nullArrayListCheck(members));
     }
 
-    public List<ChipItemTextList> getChipItems(){
+    public ArrayList<ChipItemTextList> getChipItems(){
         return(nullArrayListCheck(chipItems));
     }
 

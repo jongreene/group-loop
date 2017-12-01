@@ -52,4 +52,12 @@ public class ChipItemTextList {
         return items;
     }
 
+    public void addItem(String item){
+        items.add(item);
+    }
+
+    public void removeItemAt(int index){
+        items.remove(index);
+    }
+
 }

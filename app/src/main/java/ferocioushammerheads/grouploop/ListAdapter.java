@@ -33,5 +33,7 @@ public class ListAdapter extends ArrayAdapter<AdapterChipItem> {
         return convertView;
     }
 
-
+    public AdapterChipItem getanItem(int position){
+        return getItem(position);
+    }
 }

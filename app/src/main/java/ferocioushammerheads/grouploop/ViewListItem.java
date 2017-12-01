@@ -1,7 +1,9 @@
 package ferocioushammerheads.grouploop;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +22,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -55,7 +58,7 @@ public class ViewListItem extends Fragment {
     private FloatingActionButton mAddItemMenu;
     private Button mAddNewItem;
     private ButtonClickListener mButtonClickListener;
-
+    private ListView listView;
     public ViewListItem() {
         // Required empty public constructor
     }
@@ -104,61 +107,91 @@ public class ViewListItem extends Fragment {
          * Assigning the list view
          * Binding the Adapter
          */
-        final ListView listView = (ListView) view.findViewById(R.id.List);
-        adapter = new ArrayAdapter<String>(view.getContext(),
-                android.R.layout.simple_list_item_1,
-                listItems); //found at source 1
-        listView.setAdapter(adapter);
 
         /**
          * Event listener for children of items (currently only single group functionality works 11/5/2017)
          * Other onChild methods not defined for now, When child is added to the database it gets added to the listview
          */
-        FirebaseDatabase.getInstance().getReference("items").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                Log.d(TAG, "ListView item clicked." + dataSnapshot.getKey());
-                listItems.add(dataSnapshot.getValue().toString());
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+//        FirebaseDatabase.getInstance().getReference("items").addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+//                Log.d(TAG, "ListView item clicked." + dataSnapshot.getKey());
+//                listItems.add(dataSnapshot.getValue().toString());
+//                adapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
+//            }
+//
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//            }
+//
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//            }
+//        });
 
 
         /**
          * sample listener function
          */
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d(TAG, "ListView item clicked.");
-                Log.d(TAG, "LIST ID: " + listView.getItemIdAtPosition(position));
-            }
-        });
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                listItems.remove(i);
-                adapter.notifyDataSetChanged();
-                return true;
-            }
-        });
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Log.d(TAG, "ListView item clicked.");
+//                Log.d(TAG, "LIST ID: " + listView.getItemIdAtPosition(position));
+//            }
+//        });
+//        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                listItems.remove(i);
+//                adapter.notifyDataSetChanged();
+//                return true;
+//            }
+//        });
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
+        SharedPreferences pref = getContext().getSharedPreferences("MyPref", 0);
+        SharedPreferences.Editor editor = pref.edit();
+        String tempID = pref.getString("itemid", null);
+        Log.d("Sharedpred", tempID);
+
+        listView = (ListView) view.findViewById(R.id.List);
+        adapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1, listItems);
+        listView.setAdapter(adapter);
+
+        DatabaseReference textList = FirebaseDatabase.getInstance().getReference().child("groups").child(MainActivity.currentGroup.getGroupId()).child("chipItems").child(tempID).child("items");
+        textList.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    String tempKey = (String) snapshot.getValue();
+                    listItems.add(tempKey);
+                    adapter.notifyDataSetChanged();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

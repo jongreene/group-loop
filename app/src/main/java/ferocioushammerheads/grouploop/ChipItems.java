@@ -120,9 +120,16 @@ public class ChipItems extends AppCompatActivity
 //            switch to add chip item fragment
             fragmentChanger(CreateChipItem.class,R.id.ChipItemInterfaceFrame,"AddChipItem");
         }
+        else{
+            fragmentChanger(ViewListItem.class, R.id.ChipItemInterfaceFrame, "ViewListItem");
+        }
 //        will be used when new buttons are added from other fragments
 //        else if (view.getId() == R.id.ChipItemSearch) {
 //
 //        }
     }
+
+
+
+
 }

@@ -9,7 +9,7 @@ public class UserGroup {
     private String groupId;
     private ArrayList<String> members;
 //    private ArrayList<ChipItems> chipItems;
-    private ArrayList<ChipItem_TextList> chipItems;
+    private ArrayList<ChipItemTextList> chipItems;
 
     public UserGroup(){}
 
@@ -28,10 +28,10 @@ public class UserGroup {
         members.add(member);
     }
 
-    public void addChipItem(ChipItem_TextList chipItem_textList){
+    public void addChipItem(ChipItemTextList chipItem_textList){
         chipItems = nullArrayListCheck(chipItems);
 
-        ChipItem_TextList tmp = new ChipItem_TextList("poop");
+        ChipItemTextList tmp = new ChipItemTextList("poop");
         chipItems.add(tmp);
     }
 
@@ -62,7 +62,7 @@ public class UserGroup {
         this.members = users;
     }
 
-    public void setChipItems(ArrayList<ChipItem_TextList> chipItems) {
+    public void setChipItems(ArrayList<ChipItemTextList> chipItems) {
 
         this.chipItems = nullArrayListCheck(chipItems);
     }
@@ -83,7 +83,7 @@ public class UserGroup {
         return(nullArrayListCheck(members));
     }
 
-    public List<ChipItem_TextList> getChipItems(){
+    public List<ChipItemTextList> getChipItems(){
         return(nullArrayListCheck(chipItems));
     }
 

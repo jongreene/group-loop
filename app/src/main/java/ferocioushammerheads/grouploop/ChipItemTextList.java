@@ -9,7 +9,7 @@ import java.util.List;
  * Created by bishe on 11/26/2017.
  */
 
-public class ChipItem_TextList {
+public class ChipItemTextList {
     private String name;
     private String creatorName;
     private String creatorID;
@@ -17,10 +17,10 @@ public class ChipItem_TextList {
     private List<String> items;
 
 
-    public ChipItem_TextList(){
+    public ChipItemTextList(){
     }
 
-    public ChipItem_TextList(String w){
+    public ChipItemTextList(String w){
         this.name = w;
         this.creatorName = "bish";
         this.creatorID = "12345";

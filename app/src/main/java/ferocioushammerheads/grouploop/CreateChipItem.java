@@ -13,8 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -162,22 +160,22 @@ public class CreateChipItem extends Fragment implements View.OnClickListener {
         String itemName = editText.getText().toString();
         Log.d("Adding user", itemName);
 
-        switch (itemType){
-            case "List":
-                ChipItem_TextList tmp1 = new ChipItem_TextList("testst");
-                MainActivity.currentGroup.addChipItemTextList(tmp1);
-                UserAccount.mDatabaseRef.child("groups").child("bisherTest").child("chipItems").setValue(currentGroup.getChipItemsTextList());
-                break;
+//        switch (itemType){
+//            case "List":
+//                ChipItemTextList tmp1 = new ChipItemTextList("testst");
+//                MainActivity.currentGroup.addChipItemTextList(tmp1);
+//                UserAccount.mDatabaseRef.child("groups").child("bisherTest").child("chipItems").setValue(currentGroup.getChipItemsTextList());
+//                break;
+//
+//            case "Schedule":
+//                ChipItemSchedule tmp2 = new ChipItemSchedule("dfasdf");
+//                MainActivity.currentGroup.addChipItemSchedule(tmp2);
+//                UserAccount.mDatabaseRef.child("groups").child(currentGroup.getGroupId()).child("chipItems").setValue(currentGroup.getChipItemsSchedule());
+//                break;
+//
+//        }
 
-            case "Schedule":
-                ChipItemSchedule tmp2 = new ChipItemSchedule("dfasdf");
-                MainActivity.currentGroup.addChipItemSchedule(tmp2);
-                UserAccount.mDatabaseRef.child("groups").child(currentGroup.getGroupId()).child("chipItems").setValue(currentGroup.getChipItemsSchedule());
-                break;
-
-        }
-
-        ChipItem_TextList tmp = new ChipItem_TextList("this is new");
+        ChipItemTextList tmp = new ChipItemTextList("this is new");
 
         MainActivity.currentGroup.addChipItem(tmp);
         MainActivity.mDatabase.child("groups").child(currentGroup.getGroupId()).child("chipItems").setValue(currentGroup.getChipItems());

@@ -69,27 +69,28 @@ public class AccountTools {
 
     public void setSomethingHappened(boolean somethingHappened, int option){
         this.somethingHappened = somethingHappened;
-        doWork(option);
     }
 
-    public void doWork (int option)
+    public void doWork ()
     {
         // Check the predicate, which is set elsewhere.
         if (somethingHappened)
         {
-            if(option == 1) {
-                // Signal the even by invoking the interface's method.
-                ie.loggedInEvent();
-                ie.loadProfileEvent();
-            } else if(option == 2){
-                ie.loadProfileEvent();
-            }
-
-            somethingHappened = false;
+            // Signal the even by invoking the interface's method.
+            ie.loggedInEvent();
+            ie.loadProfileEvent();
         }
-        //...
     }
 
+    public void toastUp(String toastText)
+    {
+        // Check the predicate, which is set elsewhere.
+        if (somethingHappened)
+        {
+            ie.toastUp(toastText);
+
+        }
+    }
     ////////////////////////////////////////////////////////////////////////////////////
 
     AccountTools(FirebaseAuth mAuth, DatabaseReference mDatabase){
@@ -125,6 +126,8 @@ public class AccountTools {
 //                            generates a folder under users for the user
                             writeNewUser(user.getUid(), username, username);
                             setSomethingHappened(true,1);
+                            doWork();
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -161,6 +164,8 @@ public class AccountTools {
                             FirebaseUser user = mAuth.getCurrentUser();
 //                            hideProgressDialog();
                             setSomethingHappened(true,1);
+                            doWork();
+                            setSomethingHappened(false,1);
                             if(user.isEmailVerified()){
 //                                finish();
                             }
@@ -197,9 +202,10 @@ public class AccountTools {
                     public void onComplete(@NonNull Task<Void> task) {
                         // [START_EXCLUDE]
                         if (task.isSuccessful()) {
-//                            Toast.makeText(view.getContext(),
-//                                    "Verification email sent to " + user.getEmail(),
-//                                    Toast.LENGTH_SHORT).show();
+                            setSomethingHappened(true,2);
+                            toastUp("Verification email sent successfully.");
+                            setSomethingHappened(false,2);
+
                         } else {
                             Log.e(TAG, "sendEmailVerification", task.getException());
 //                            Toast.makeText(view.getContext(),
@@ -273,7 +279,6 @@ public class AccountTools {
                 UserGroup tmpGroup = dataSnapshot.getValue(UserGroup.class);
                 MainActivity.currentGroup = tmpGroup;
                 Log.d(TAG, "group creator:" + tmpGroup.getCreator());
-//                setSomethingHappened(true,2);
             }
 
             @Override

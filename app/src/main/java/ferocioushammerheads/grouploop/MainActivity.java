@@ -23,6 +23,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
     public static AccountTools firebaseTools;
 
     // [START declare_auth]
-    private FirebaseAuth mAuth;
+    public static FirebaseAuth mAuth;
     // [END declare_auth]
     public static DatabaseReference mDatabase;
 
@@ -81,10 +82,13 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
         // [END initialize_auth]
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        
+
         AccountTools tmpTools = AccountTools.getInstance();
         tmpTools.setupTools(this, mAuth, mDatabase);
-        tmpTools.loadProfile();
+
+        if(user != null) {
+            tmpTools.loadProfile();
+        }
 
         updateUserEnvironment();
     }
@@ -151,9 +155,14 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
     }
 
     // Define the actual handler for the event.
-    public void loggedInEvent() {}
+    public void loggedInEvent() {
+
+    }
 
     // Define the actual handler for the event.
     public static DatabaseReference mDatabaseRef;
     public void loadProfileEvent() {}
+    public void toastUp(String toastText){
+        Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show();
+    }
 }

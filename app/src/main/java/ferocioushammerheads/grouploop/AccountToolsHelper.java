@@ -7,4 +7,5 @@ package ferocioushammerheads.grouploop;
 public interface AccountToolsHelper {
     void loggedInEvent ();
     void loadProfileEvent();
+    void toastUp(String toastText);
 }

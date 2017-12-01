@@ -38,11 +38,6 @@ public class UserAccount extends AppCompatActivity
 
     FirebaseUser user;
 
-    // [START declare_auth]
-    private FirebaseAuth mAuth;
-    // [END declare_auth]
-
-    private View view;
 
     private static final String TAG = "UserAccount";
 
@@ -60,13 +55,13 @@ public class UserAccount extends AppCompatActivity
         // [END toolbar_setup]
 
         // [START initialize_auth]
-        mAuth = FirebaseAuth.getInstance();
-        mAuth.getCurrentUser();
+        if(MainActivity.mAuth == null) {
+            MainActivity.mAuth = FirebaseAuth.getInstance();
+            MainActivity.mAuth.getCurrentUser();
+        }
         // [END initialize_auth]
 
-        view = this.findViewById(android.R.id.content).getRootView();
-
-//        MainActivity.firebaseTools.getInstance().setupTools(this, mAuth, mDatabase);
+        MainActivity.firebaseTools.getInstance().setupTools(this,MainActivity.mAuth, MainActivity.mDatabase);
 
 //        firebaseTools.signOut();
 
@@ -103,7 +98,7 @@ public class UserAccount extends AppCompatActivity
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         } else {
-            user = mAuth.getCurrentUser();
+            user = MainActivity.mAuth.getCurrentUser();
             switch (item.getItemId()) {
                 case R.id.action_logout:
                     if (user != null) {
@@ -117,7 +112,9 @@ public class UserAccount extends AppCompatActivity
                 case android.R.id.home:
                     Toast.makeText(getApplicationContext(), "Overriding default", Toast.LENGTH_SHORT).show();
 //                    fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
-                    if(fragmentManager.findFragmentByTag("CreateGroup") != null && !fragmentManager.findFragmentByTag("CreateGroup").isVisible()) {
+                    if(fragmentManager.findFragmentByTag("CreateGroup") != null && fragmentManager.findFragmentByTag("CreateGroup").isVisible()) {
+                        fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
+                    } else if(fragmentManager.findFragmentByTag("ChangeGroup") != null && fragmentManager.findFragmentByTag("ChangeGroup").isVisible()){
                         fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
                     } else {
                         fragmentChanger(ChangeGroup.class, R.id.user_account_frag_frame, "ChangeGroup");
@@ -139,7 +136,9 @@ public class UserAccount extends AppCompatActivity
             startActivity(intent);
         } else {
             Toast.makeText(getApplicationContext(), "Overriding default", Toast.LENGTH_SHORT).show();
-            if(fragmentManager.findFragmentByTag("CreateGroup") != null && !fragmentManager.findFragmentByTag("CreateGroup").isVisible()) {
+            if(fragmentManager.findFragmentByTag("CreateGroup") != null && fragmentManager.findFragmentByTag("CreateGroup").isVisible()) {
+                fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
+            } else if(fragmentManager.findFragmentByTag("ChangeGroup") != null && fragmentManager.findFragmentByTag("ChangeGroup").isVisible()){
                 fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
             } else {
                 fragmentChanger(ChangeGroup.class, R.id.user_account_frag_frame, "ChangeGroup");
@@ -210,11 +209,10 @@ public class UserAccount extends AppCompatActivity
     public void onFragmentInteraction() {
     }
 
-//    TODO: check where this is being called
     public void onFragmentInteraction(UserProfile profile) {}
 
     public void onFragmentInteraction(View view) {
-        user = mAuth.getCurrentUser();
+        user = MainActivity.mAuth.getCurrentUser();
         if (view.getId() == R.id.pref_login_button) {
 //            switch to add chip item fragment
             if (user == null) {
@@ -246,24 +244,9 @@ public class UserAccount extends AppCompatActivity
 
     }
 
-    //    call back functionality for fragments
-    public void onFragmentInteraction(int operation) {
-        if (operation == 0) {
-            //        check if user is logged in and load profile if they are
-            if (MainActivity.user != null) {
-//                loadUserProfile();
-            }
-        } else if (operation == 1) {
-//            firebaseTools.signOut();
-//            Intent intent = new Intent(this, MainActivity.class);
-//            startActivity(intent);
-        }
-
-    }
-
     // Define the actual handler for the event.
     public void loggedInEvent() {
-        MainActivity.user = mAuth.getCurrentUser();
+        MainActivity.user = MainActivity.mAuth.getCurrentUser();
         fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
 
     }
@@ -286,5 +269,10 @@ public class UserAccount extends AppCompatActivity
             }
         };
         mDatabaseRef.addValueEventListener(postListener);
+    }
+
+    public void toastUp(String toastText){
+        Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show();
+
     }
 }

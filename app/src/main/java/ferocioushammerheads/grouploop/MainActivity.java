@@ -16,7 +16,6 @@
 package ferocioushammerheads.grouploop;
 
 import android.content.Intent;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -24,6 +23,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,8 +36,6 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivity extends AppCompatActivity implements AccountToolsHelper{
     private static final String TAG = "AccountTools";
 
-    private Button ChangeGroupItems;
-    private Button ChangeLogin;
 
     private Button mChipItemsButton, mPreferencesButton;
 
@@ -51,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
     public static AccountTools firebaseTools;
 
     // [START declare_auth]
-    private FirebaseAuth mAuth;
+    public static FirebaseAuth mAuth;
     // [END declare_auth]
     public static DatabaseReference mDatabase;
 
@@ -88,26 +86,29 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
         AccountTools tmpTools = AccountTools.getInstance();
         tmpTools.setupTools(this, mAuth, mDatabase);
 
-        loadProfileEvent();
-
-//        load current group
-
-//        tmpTools.loadGroup(userProfile.getCurrentGroup());
+        if(user != null) {
+            tmpTools.loadProfile();
+        }
 
         updateUserEnvironment();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        return true;
+    private class ButtonClickListener implements View.OnClickListener {
+        ButtonClickListener() {}
+
+        @Override
+        public void onClick(View view) {
+            int clickedId = view.getId();
+            if (clickedId == R.id.chipItemsButtons || clickedId == R.id.preferencesButton) {
+                changeActivity(view);
+            } else {
+
+            }
+        }
     }
 
     public void updateUserEnvironment(){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        Button login_button = findViewById(R.id.viewChangeLogin);
+        Button login_button = findViewById(R.id.preferencesButton);
 
         if (user != null) {
             Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
@@ -118,47 +119,51 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
             else{
                 login_button.setText(R.string.button_login_logout_logged_in_no_email);
             }
-
-            findViewById(R.id.viewChangeGroupItems).setVisibility(View.VISIBLE);
-            findViewById(R.id.viewScheduleDemo).setVisibility(View.VISIBLE);
-
-        } else {
+            findViewById(R.id.chipItemsButtons).setVisibility(View.VISIBLE);
+        }
+        else {
             Log.d(TAG, "onAuthStateChanged:signed_out");
 
-            findViewById(R.id.viewChangeGroupItems).setVisibility(View.GONE);
-            findViewById(R.id.viewScheduleDemo).setVisibility(View.GONE);
+            findViewById(R.id.chipItemsButtons).setVisibility(View.GONE);
 
             login_button.setText(R.string.button_login_logout_logged_out);
         }
-
-
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1) {
+    public void changeActivity(View view){
+        if (view.getId() == R.id.chipItemsButtons) {
+            Intent intent = new Intent(this, ChipItems.class);
+            startActivity(intent);
+        }
+        else if (view.getId() == R.id.preferencesButton) {
+            Intent intent = new Intent(this, UserAccount.class);
+
+            Bundle b = new Bundle();
+//            1: logged in. 2: otherwise
+            if(user!=null) {
+                b.putInt("key", 1);
+            } else {
+                b.putInt("key", 2);
+            }
+//            Put your key in your next Intent
+            intent.putExtras(b);
+
+            startActivity(intent);
+            finish();
             updateUserEnvironment();
         }
     }
 
+    // Define the actual handler for the event.
+    public void loggedInEvent() {
 
-    /** Called when the user taps the LoginLogout button */
-    public void loginPage(View view) {
-        Intent intent = new Intent(this, LoginLogout.class);
-        startActivityForResult(intent, 1);
-        updateUserEnvironment();
+
     }
 
-    /** Called when the user taps the GroupItems button */
-    public void groupItemsPage(View view) {
-//        Intent intent = new Intent(this, GroupItems.class);
-        Intent intent = new Intent(this, ListItem.class);
-        startActivity(intent);
+    // Define the actual handler for the event.
+    public static DatabaseReference mDatabaseRef;
+    public void loadProfileEvent() {}
+    public void toastUp(String toastText){
+        Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show();
     }
-
-    /** Called when the user taps the GroupItems button */
-    public void scheduleItemPage(View view) {
-        Intent intent = new Intent(this, ScheduleItem.class);
-        startActivity(intent);
-    }
-
 }

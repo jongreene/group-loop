@@ -67,42 +67,32 @@ public class AccountTools {
         somethingHappened = false;
     }
 
-    public void setSomethingHappened(boolean somethingHappened, int option){
+    public void setSomethingHappened(boolean somethingHappened){
         this.somethingHappened = somethingHappened;
-        doWork(option);
     }
 
-    public void doWork (int option)
+    public void doWork ()
     {
         // Check the predicate, which is set elsewhere.
         if (somethingHappened)
         {
-            if(option == 1) {
-                // Signal the even by invoking the interface's method.
-                ie.loggedInEvent();
-                ie.loadProfileEvent();
-            } else if(option == 2){
-                ie.loadProfileEvent();
-            }
-
-            somethingHappened = false;
+            // Signal the even by invoking the interface's method.
+            ie.loggedInEvent();
+//            ie.loadProfileEvent();
         }
-        //...
     }
 
+    public void toastUp(String toastText)
+    {
+        // Check the predicate, which is set elsewhere.
+        if (somethingHappened)
+        {
+            ie.toastUp(toastText);
+
+        }
+    }
     ////////////////////////////////////////////////////////////////////////////////////
 
-    AccountTools(FirebaseAuth mAuth, DatabaseReference mDatabase){
-        this.mAuth = mAuth;
-        this.mDatabase = mDatabase;
-
-//        if (this instanceof OnSignInListener) {
-//            mSignIn = (OnSignInListener) view.getContext();
-//        } else {
-//            throw new RuntimeException(view.getContext().toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-    }
 
     public void createAccount(String email, String password) {
         final String username = email;
@@ -124,7 +114,9 @@ public class AccountTools {
                             FirebaseUser user = mAuth.getCurrentUser();
 //                            generates a folder under users for the user
                             writeNewUser(user.getUid(), username, username);
-                            setSomethingHappened(true,1);
+                            setSomethingHappened(true);
+                            doWork();
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -157,26 +149,17 @@ public class AccountTools {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-//                            hideProgressDialog();
-                            setSomethingHappened(true,1);
-                            if(user.isEmailVerified()){
-//                                finish();
-                            }
+                            setSomethingHappened(true);
+                            doWork();
+                            toastUp("Sign in was a success");
+                            setSomethingHappened(false);
+                            loadProfile();
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-//                            Toast.makeText(view.getContext(),"Authentication failed.",
-//                                    Toast.LENGTH_SHORT).show();
-//                            updateUI(null);
-//                            hideProgressDialog();
+                            setSomethingHappened(true);
+                            toastUp("Failed to sign in");
+                            setSomethingHappened(false);
                         }
-                        // [START_EXCLUDE]
-                        if (!task.isSuccessful()) {
-//                            mStatusTextView.setText(R.string.auth_failed);
-                        }
-                        // [END_EXCLUDE]
                     }
                 });
 
@@ -197,14 +180,12 @@ public class AccountTools {
                     public void onComplete(@NonNull Task<Void> task) {
                         // [START_EXCLUDE]
                         if (task.isSuccessful()) {
-//                            Toast.makeText(view.getContext(),
-//                                    "Verification email sent to " + user.getEmail(),
-//                                    Toast.LENGTH_SHORT).show();
+                            setSomethingHappened(true);
+                            toastUp("Verification email sent successfully.");
+                            setSomethingHappened(false);
+
                         } else {
                             Log.e(TAG, "sendEmailVerification", task.getException());
-//                            Toast.makeText(view.getContext(),
-//                                    "Failed to send verification email.",
-//                                    Toast.LENGTH_SHORT).show();
                         }
                         // [END_EXCLUDE]
                     }
@@ -244,15 +225,9 @@ public class AccountTools {
         mDatabase.child("users").child(userProfile.getUserId()).setValue(userProfile);
     }
 
-    public void updateGroup(UserGroup userGroup){
-        mDatabase.child("groups").child(userProfile.getUserId()).setValue(userProfile);
-    }
-
     private static AccountTools instance = null;
 
-    private void AccountTools(){
-
-    }
+    private void AccountTools(){}
 
     public static AccountTools getInstance(){
         if(instance==null){
@@ -273,7 +248,6 @@ public class AccountTools {
                 UserGroup tmpGroup = dataSnapshot.getValue(UserGroup.class);
                 MainActivity.currentGroup = tmpGroup;
                 Log.d(TAG, "group creator:" + tmpGroup.getCreator());
-                setSomethingHappened(true,2);
             }
 
             @Override
@@ -284,4 +258,23 @@ public class AccountTools {
         mDatabaseRef.addValueEventListener(postListener);
     }
 
+    public void loadProfile() {
+        String userRefString = "/users/" + MainActivity.user.getUid();
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference(userRefString);
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                UserProfile tmpProfile = dataSnapshot.getValue(UserProfile.class);
+                MainActivity.userProfile = tmpProfile;
+                Log.d(TAG, "email from snapshot:" + tmpProfile.getEmail());
+                loadGroup(tmpProfile.getCurrentGroup());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+            }
+        };
+        mDatabaseRef.addValueEventListener(postListener);
+    }
 }

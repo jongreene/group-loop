@@ -255,9 +255,9 @@ public class ViewCalendarItem extends Fragment {
     }
 
     private void calendarToDatabase(View view) {
-        /*int yy = ((DatePicker)view.findViewById(R.id.datePicker)).getYear();
-        int mm = ((DatePicker)view.findViewById(R.id.datePicker)).getMonth();
-        int dd = ((DatePicker)view.findViewById(R.id.datePicker)).getDayOfMonth();*/
+        int yy = calendar.getYear();
+        int mm = calendar.getMonth();
+        int dd = calendar.getDayOfMonth();
         /*
         TODO database stuff
          */

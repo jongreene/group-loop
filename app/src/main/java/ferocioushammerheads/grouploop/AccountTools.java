@@ -67,7 +67,7 @@ public class AccountTools {
         somethingHappened = false;
     }
 
-    public void setSomethingHappened(boolean somethingHappened, int option){
+    public void setSomethingHappened(boolean somethingHappened){
         this.somethingHappened = somethingHappened;
     }
 
@@ -78,7 +78,7 @@ public class AccountTools {
         {
             // Signal the even by invoking the interface's method.
             ie.loggedInEvent();
-            ie.loadProfileEvent();
+//            ie.loadProfileEvent();
         }
     }
 
@@ -93,17 +93,6 @@ public class AccountTools {
     }
     ////////////////////////////////////////////////////////////////////////////////////
 
-    AccountTools(FirebaseAuth mAuth, DatabaseReference mDatabase){
-        this.mAuth = mAuth;
-        this.mDatabase = mDatabase;
-
-//        if (this instanceof OnSignInListener) {
-//            mSignIn = (OnSignInListener) view.getContext();
-//        } else {
-//            throw new RuntimeException(view.getContext().toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-    }
 
     public void createAccount(String email, String password) {
         final String username = email;
@@ -125,7 +114,7 @@ public class AccountTools {
                             FirebaseUser user = mAuth.getCurrentUser();
 //                            generates a folder under users for the user
                             writeNewUser(user.getUid(), username, username);
-                            setSomethingHappened(true,1);
+                            setSomethingHappened(true);
                             doWork();
 
                         } else {
@@ -160,28 +149,17 @@ public class AccountTools {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-//                            hideProgressDialog();
-                            setSomethingHappened(true,1);
+                            setSomethingHappened(true);
                             doWork();
-                            setSomethingHappened(false,1);
-                            if(user.isEmailVerified()){
-//                                finish();
-                            }
+                            toastUp("Sign in was a success");
+                            setSomethingHappened(false);
+                            loadProfile();
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-//                            Toast.makeText(view.getContext(),"Authentication failed.",
-//                                    Toast.LENGTH_SHORT).show();
-//                            updateUI(null);
-//                            hideProgressDialog();
+                            setSomethingHappened(true);
+                            toastUp("Failed to sign in");
+                            setSomethingHappened(false);
                         }
-                        // [START_EXCLUDE]
-                        if (!task.isSuccessful()) {
-//                            mStatusTextView.setText(R.string.auth_failed);
-                        }
-                        // [END_EXCLUDE]
                     }
                 });
 
@@ -202,15 +180,12 @@ public class AccountTools {
                     public void onComplete(@NonNull Task<Void> task) {
                         // [START_EXCLUDE]
                         if (task.isSuccessful()) {
-                            setSomethingHappened(true,2);
+                            setSomethingHappened(true);
                             toastUp("Verification email sent successfully.");
-                            setSomethingHappened(false,2);
+                            setSomethingHappened(false);
 
                         } else {
                             Log.e(TAG, "sendEmailVerification", task.getException());
-//                            Toast.makeText(view.getContext(),
-//                                    "Failed to send verification email.",
-//                                    Toast.LENGTH_SHORT).show();
                         }
                         // [END_EXCLUDE]
                     }
@@ -250,15 +225,9 @@ public class AccountTools {
         mDatabase.child("users").child(userProfile.getUserId()).setValue(userProfile);
     }
 
-    public void updateGroup(UserGroup userGroup){
-        mDatabase.child("groups").child(userProfile.getUserId()).setValue(userProfile);
-    }
-
     private static AccountTools instance = null;
 
-    private void AccountTools(){
-
-    }
+    private void AccountTools(){}
 
     public static AccountTools getInstance(){
         if(instance==null){

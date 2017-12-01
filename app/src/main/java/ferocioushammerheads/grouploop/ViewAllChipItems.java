@@ -123,7 +123,8 @@ public class ViewAllChipItems extends Fragment {
         chipItems = (ListView) view.findViewById(R.id.chipItems);
         listAdapter = new ListAdapter(view.getContext(), list);
         chipItems.setAdapter(listAdapter);
-        DatabaseReference textList = FirebaseDatabase.getInstance().getReference().child("groups").child(MainActivity.currentGroup.getGroupId()).child("chipItems");
+
+        DatabaseReference textList = FirebaseDatabase.getInstance().getReference().child("groups").child("newGroup").child("chipItems");
 //        DatabaseReference schedules = FirebaseDatabase.getInstance().getReference().child("groups").child(MainActivity.currentGroup.getGroupId()).child("chipItemsSchedule");
 //
         textList.addValueEventListener(new ValueEventListener() {

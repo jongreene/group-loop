@@ -116,6 +116,7 @@ public class AccountTools {
                             writeNewUser(user.getUid(), username, username);
                             setSomethingHappened(true);
                             doWork();
+                            setSomethingHappened(false);
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -247,7 +248,7 @@ public class AccountTools {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 UserGroup tmpGroup = dataSnapshot.getValue(UserGroup.class);
                 MainActivity.currentGroup = tmpGroup;
-                Log.d(TAG, "group creator:" + tmpGroup.getCreator());
+//                Log.d(TAG, "group creator:" + tmpGroup.getCreator());
             }
 
             @Override
@@ -267,7 +268,13 @@ public class AccountTools {
                 UserProfile tmpProfile = dataSnapshot.getValue(UserProfile.class);
                 MainActivity.userProfile = tmpProfile;
                 Log.d(TAG, "email from snapshot:" + tmpProfile.getEmail());
-                loadGroup(tmpProfile.getCurrentGroup());
+                if(tmpProfile.getGroupList().size()>0) {
+                    loadGroup(tmpProfile.getCurrentGroup());
+
+                    setSomethingHappened(true);
+                    doWork();
+                    setSomethingHappened(false);
+                }
             }
 
             @Override

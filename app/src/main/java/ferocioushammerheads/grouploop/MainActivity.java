@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
         AccountTools tmpTools = AccountTools.getInstance();
         tmpTools.setupTools(this, mAuth, mDatabase);
 
+//        tmpTools.signOut();
         if(user != null) {
             tmpTools.loadProfile();
         }
@@ -124,7 +125,11 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
             else{
                 login_button.setText(R.string.button_login_logout_logged_in_no_email);
             }
-            findViewById(R.id.chipItemsButtons).setVisibility(View.VISIBLE);
+
+            if(MainActivity.userProfile != null && MainActivity.userProfile.getCurrentGroup() != null) {
+                findViewById(R.id.chipItemsButtons).setVisibility(View.VISIBLE);
+            }
+
         }
         else {
             Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -161,12 +166,16 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
 
     // Define the actual handler for the event.
     public void loggedInEvent() {
-
+        updateUserEnvironment();
     }
 
     // Define the actual handler for the event.
     public static DatabaseReference mDatabaseRef;
-    public void loadProfileEvent() {}
+
+    public void loadProfileEvent() {
+
+    }
+
     public void toastUp(String toastText){
         Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show();
     }

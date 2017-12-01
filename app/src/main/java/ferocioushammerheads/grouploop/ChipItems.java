@@ -36,14 +36,7 @@ public class ChipItems extends AppCompatActivity
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         fragmentChanger(ViewAllChipItems.class,R.id.ChipItemInterfaceFrame, "ViewAllChipItems");
-
-//        AccountTools tmpTools = AccountTools.getInstance();
-//        tmpTools.loadProfileEvent();
-////        load current group
-//        tmpTools.loadGroup(userProfile.getCurrentGroup());
-
     }
 
     @Override
@@ -133,8 +126,6 @@ public class ChipItems extends AppCompatActivity
             e.printStackTrace();
         }
 
-        Fragment tmpFrag = fragmentManager.findFragmentByTag(fragName);
-
         if (fragName == "ViewAllChipItems") {
             getSupportActionBar().setTitle("View All Chip Items");
         } else if (fragName == "ViewCalendarItem") {
@@ -144,7 +135,6 @@ public class ChipItems extends AppCompatActivity
         } else if (fragName == "CreateChipItem") {
             getSupportActionBar().setTitle("Create Chip Item");
         }
-
 
         fragmentManager.beginTransaction().replace(containerName, fragment, fragName).commit();
     }

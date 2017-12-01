@@ -137,6 +137,20 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
+                <ImageView
+                    android:id="@+id/imageView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="46dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:paddingBottom="0dp"
+                    android:src="@drawable/simple_line"
+                    app:layout_constraintBottom_toTopOf="@+id/pref_change_add_group_button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.501"
+                    app:layout_constraintStart_toStartOf="parent" />
+
                 <Button
                     android:id="@+id/pref_notification_settings_button"
                     style="@style/Widget.AppCompat.Button.Borderless"
@@ -148,6 +162,20 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
+                <ImageView
+                    android:id="@+id/imageView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="46dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:paddingBottom="0dp"
+                    android:src="@drawable/simple_line"
+                    app:layout_constraintBottom_toTopOf="@+id/pref_login_button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.501"
+                    app:layout_constraintStart_toStartOf="parent" />
+
                 <Button
                     android:id="@+id/pref_change_add_group_button"
                     style="@style/Widget.AppCompat.Button.Borderless"
@@ -157,6 +185,20 @@
                     android:visibility="visible"
                     app:layout_constraintBottom_toTopOf="@+id/pref_login_button"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="46dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:paddingBottom="0dp"
+                    android:src="@drawable/simple_line"
+                    app:layout_constraintBottom_toBottomOf="@+id/pref_login_button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.501"
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <Button

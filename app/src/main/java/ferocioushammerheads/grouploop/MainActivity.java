@@ -15,6 +15,7 @@
 
 package ferocioushammerheads.grouploop;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -52,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
     public static FirebaseAuth mAuth;
     // [END declare_auth]
     public static DatabaseReference mDatabase;
+
+    public static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +94,8 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
         }
 
         updateUserEnvironment();
+
+        context = this.getBaseContext();
     }
 
     private class ButtonClickListener implements View.OnClickListener {
@@ -143,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
             if(user!=null) {
                 b.putInt("key", 1);
             } else {
-                b.putInt("key", 2);
+                b.putInt("key", -1);
             }
 //            Put your key in your next Intent
             intent.putExtras(b);

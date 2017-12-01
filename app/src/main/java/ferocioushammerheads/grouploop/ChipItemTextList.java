@@ -14,7 +14,7 @@ public class ChipItemTextList {
     private String creatorName;
     private String creatorID;
     private String itemID;
-    private List<String> items;
+    private ArrayList<String> items;
 
 
     public ChipItemTextList(){
@@ -49,7 +49,15 @@ public class ChipItemTextList {
     }
 
     public List<String> getItems(){
-        return items;
+        return nullArrayListCheck(items);
+    }
+
+    //    used to initialize any ArrayList that isn't already
+    private ArrayList nullArrayListCheck(ArrayList arrayIn){
+        if(arrayIn == null){
+            arrayIn = new ArrayList();
+        }
+        return arrayIn;
     }
 
     public void addItem(String item){

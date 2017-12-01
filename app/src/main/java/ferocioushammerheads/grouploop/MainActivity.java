@@ -132,7 +132,8 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
 
     public void changeActivity(View view){
         if (view.getId() == R.id.chipItemsButtons) {
-            Intent intent = new Intent(this, ChipItems.class);
+            //Intent intent = new Intent(this, ChipItems.class);
+            Intent intent = new Intent(this, ViewCalendarItem.class);
             startActivity(intent);
         }
         else if (view.getId() == R.id.preferencesButton) {

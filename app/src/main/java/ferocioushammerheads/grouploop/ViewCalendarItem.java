@@ -15,6 +15,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.util.Log;
 
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,12 +35,10 @@ import java.util.Map;
  * create an instance of this fragment.
  */
 public class ViewCalendarItem extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -51,14 +50,15 @@ public class ViewCalendarItem extends Fragment {
     private DatePicker calendar;
     private FloatingActionButton dateSelection;
     //add description view
-    private EditText description;
-    private Button addDescription;
+    //private EditText description;
+    //private Button addDescription;
     //checkbox view
     private FloatingActionButton checkBoxSelection;
     private ScrollView checkboxStuff;
     private Map<String, String> myMap = new HashMap<>();
 
     private ButtonClickListener myBCL;
+    private FirebaseUser user;
 
     public ViewCalendarItem() {
         // Required empty public constructor
@@ -72,7 +72,6 @@ public class ViewCalendarItem extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment ViewCalendarItem.
      */
-    // TODO: Rename and change types and number of parameters
     public static ViewCalendarItem newInstance(String param1, String param2) {
         ViewCalendarItem fragment = new ViewCalendarItem();
         Bundle args = new Bundle();
@@ -103,6 +102,7 @@ public class ViewCalendarItem extends Fragment {
         checkBoxSelection = view.findViewById(R.id.FABcheckbox);
         checkboxStuff = view.findViewById(R.id.scrollCheckBox);
         String keyTemp;
+        user = MainActivity.mAuth.getCurrentUser();
         //https://stackoverflow.com/questions/25714520/filling-hashmap-within-loop
         for(int i=0; i<24; i++) {
             if(i==0) {
@@ -123,8 +123,8 @@ public class ViewCalendarItem extends Fragment {
         }
 
         //description view
-        description = view.findViewById(R.id.editTextUserDescription);
-        addDescription = view.findViewById(R.id.button);
+        //description = view.findViewById(R.id.editTextUserDescription);
+        //addDescription = view.findViewById(R.id.button);
         //buttons
         if(myBCL == null) {
             myBCL = new ButtonClickListener();
@@ -134,7 +134,7 @@ public class ViewCalendarItem extends Fragment {
         }*/
         dateSelection.setOnClickListener(myBCL);
         checkBoxSelection.setOnClickListener(myBCL);
-        addDescription.setOnClickListener(myBCL);
+        //addDescription.setOnClickListener(myBCL);
         /*
          * TODO: Firebase stuff
          */
@@ -145,8 +145,8 @@ public class ViewCalendarItem extends Fragment {
         view.findViewById(R.id.datePicker).setVisibility(View.VISIBLE);
         view.findViewById(R.id.FABdateAdd).setVisibility(View.VISIBLE);
 
-        view.findViewById(R.id.editTextUserDescription).setVisibility(View.GONE);
-        view.findViewById(R.id.button).setVisibility(View.GONE);
+        //view.findViewById(R.id.editTextUserDescription).setVisibility(View.GONE);
+        //view.findViewById(R.id.button).setVisibility(View.GONE);
 
         view.findViewById(R.id.FABcheckbox).setVisibility(View.GONE);
         view.findViewById(R.id.scrollCheckBox).setVisibility(View.GONE);
@@ -165,37 +165,37 @@ public class ViewCalendarItem extends Fragment {
         view.findViewById(R.id.datePicker).setVisibility(View.GONE);
         view.findViewById(R.id.FABdateAdd).setVisibility(View.GONE);
 
-        view.findViewById(R.id.editTextUserDescription).setVisibility(View.GONE);
-        view.findViewById(R.id.button).setVisibility(View.GONE);
+        //view.findViewById(R.id.editTextUserDescription).setVisibility(View.GONE);
+        //view.findViewById(R.id.button).setVisibility(View.GONE);
 
         view.findViewById(R.id.FABcheckbox).setVisibility(View.VISIBLE);
         view.findViewById(R.id.scrollCheckBox).setVisibility(View.VISIBLE);
 
-        ((TextView)view.findViewById(R.id.textView12am)).setText("hello");
-        /*
-        view.findViewById(R.id.textView01am).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.textView02am).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.textView03am).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.textView04am).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.textView05am).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.textView06am).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.textView07am).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.textView08am).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.textView09am).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.textView10am).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.textView11am).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.textView12pm).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.textView01pm).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.textView02pm).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.textView03pm).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.textView04pm).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.textView05pm).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.textView06pm).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.textView07pm).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.textView08pm).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.textView09pm).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.textView10pm).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.textView11pm).setVisibility(View.VISIBLE);*/
+        ((TextView)view.findViewById(R.id.textView12am)).setText(myMap.get("12am"));
+        ((TextView)view.findViewById(R.id.textView01am)).setText(myMap.get("1am"));
+        ((TextView)view.findViewById(R.id.textView02am)).setText(myMap.get("2am"));
+        ((TextView)view.findViewById(R.id.textView03am)).setText(myMap.get("3am"));
+        ((TextView)view.findViewById(R.id.textView04am)).setText(myMap.get("4am"));
+        ((TextView)view.findViewById(R.id.textView05am)).setText(myMap.get("5am"));
+        ((TextView)view.findViewById(R.id.textView06am)).setText(myMap.get("6am"));
+        ((TextView)view.findViewById(R.id.textView07am)).setText(myMap.get("7am"));
+        ((TextView)view.findViewById(R.id.textView08am)).setText(myMap.get("8am"));
+        ((TextView)view.findViewById(R.id.textView09am)).setText(myMap.get("9am"));
+        ((TextView)view.findViewById(R.id.textView10am)).setText(myMap.get("10am"));
+        ((TextView)view.findViewById(R.id.textView11am)).setText(myMap.get("11am"));
+
+        ((TextView)view.findViewById(R.id.textView12pm)).setText(myMap.get("12pm"));
+        ((TextView)view.findViewById(R.id.textView01pm)).setText(myMap.get("1pm"));
+        ((TextView)view.findViewById(R.id.textView02pm)).setText(myMap.get("2pm"));
+        ((TextView)view.findViewById(R.id.textView03pm)).setText(myMap.get("3pm"));
+        ((TextView)view.findViewById(R.id.textView04pm)).setText(myMap.get("4pm"));
+        ((TextView)view.findViewById(R.id.textView05pm)).setText(myMap.get("5pm"));
+        ((TextView)view.findViewById(R.id.textView06pm)).setText(myMap.get("6pm"));
+        ((TextView)view.findViewById(R.id.textView07pm)).setText(myMap.get("7pm"));
+        ((TextView)view.findViewById(R.id.textView08pm)).setText(myMap.get("8pm"));
+        ((TextView)view.findViewById(R.id.textView09pm)).setText(myMap.get("9pm"));
+        ((TextView)view.findViewById(R.id.textView10pm)).setText(myMap.get("10pm"));
+        ((TextView)view.findViewById(R.id.textView11pm)).setText(myMap.get("11pm"));
     }
 
     /*public void toDescriptionView(View v) {
@@ -253,7 +253,7 @@ public class ViewCalendarItem extends Fragment {
                     keyTemp = (i-12)+"pm";
                 }
                 //https://stackoverflow.com/questions/4157972/how-to-update-a-value-given-a-key-in-a-java-hashmap
-                //myMap.put(keyTemp, UserProfile.getUid());
+                myMap.put(keyTemp, user.getUid());
             }
         }
         /*
@@ -313,15 +313,18 @@ public class ViewCalendarItem extends Fragment {
             if(mListener != null) {
                 int buttonID = view.getId();
                 if(buttonID == R.id.FABdateAdd) {
+                    calendarToDatabase(view);
                     toCheckboxView(view);
                 }
                 else if(buttonID == R.id.FABcheckbox) {
+                    checkBoxtoDatabase(view);
+                    toCheckboxView(view);
                     //toDescriptionView(view);
                     /*TODO user id stuff*/
                 }
-                else if(buttonID == R.id.button) {
+                /*else if(buttonID == R.id.button) {
                     toCheckboxView(view);
-                }
+                }*/
             }
         }
     }

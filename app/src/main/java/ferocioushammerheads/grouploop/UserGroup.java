@@ -31,8 +31,8 @@ public class UserGroup {
     public void addChipItem(ChipItemTextList chipItem_textList){
         chipItems = nullArrayListCheck(chipItems);
 
-        ChipItemTextList tmp = new ChipItemTextList("poop");
-        chipItems.add(tmp);
+//        ChipItemTextList tmp = new ChipItemTextList("poop");
+        chipItems.add(chipItem_textList);
     }
 
     public boolean removeMember(int index){

@@ -42,8 +42,6 @@ public class UserAccount extends AppCompatActivity
     private FirebaseAuth mAuth;
     // [END declare_auth]
 
-    private View view;
-
     private static final String TAG = "UserAccount";
 
 
@@ -63,8 +61,6 @@ public class UserAccount extends AppCompatActivity
         mAuth = FirebaseAuth.getInstance();
         mAuth.getCurrentUser();
         // [END initialize_auth]
-
-        view = this.findViewById(android.R.id.content).getRootView();
 
 //        MainActivity.firebaseTools.getInstance().setupTools(this, mAuth, mDatabase);
 
@@ -117,7 +113,9 @@ public class UserAccount extends AppCompatActivity
                 case android.R.id.home:
                     Toast.makeText(getApplicationContext(), "Overriding default", Toast.LENGTH_SHORT).show();
 //                    fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
-                    if(fragmentManager.findFragmentByTag("CreateGroup") != null && !fragmentManager.findFragmentByTag("CreateGroup").isVisible()) {
+                    if(fragmentManager.findFragmentByTag("CreateGroup") != null && fragmentManager.findFragmentByTag("CreateGroup").isVisible()) {
+                        fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
+                    } else if(fragmentManager.findFragmentByTag("ChangeGroup") != null && fragmentManager.findFragmentByTag("ChangeGroup").isVisible()){
                         fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
                     } else {
                         fragmentChanger(ChangeGroup.class, R.id.user_account_frag_frame, "ChangeGroup");
@@ -139,7 +137,9 @@ public class UserAccount extends AppCompatActivity
             startActivity(intent);
         } else {
             Toast.makeText(getApplicationContext(), "Overriding default", Toast.LENGTH_SHORT).show();
-            if(fragmentManager.findFragmentByTag("CreateGroup") != null && !fragmentManager.findFragmentByTag("CreateGroup").isVisible()) {
+            if(fragmentManager.findFragmentByTag("CreateGroup") != null && fragmentManager.findFragmentByTag("CreateGroup").isVisible()) {
+                fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
+            } else if(fragmentManager.findFragmentByTag("ChangeGroup") != null && fragmentManager.findFragmentByTag("ChangeGroup").isVisible()){
                 fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
             } else {
                 fragmentChanger(ChangeGroup.class, R.id.user_account_frag_frame, "ChangeGroup");
@@ -210,7 +210,6 @@ public class UserAccount extends AppCompatActivity
     public void onFragmentInteraction() {
     }
 
-//    TODO: check where this is being called
     public void onFragmentInteraction(UserProfile profile) {}
 
     public void onFragmentInteraction(View view) {
@@ -242,21 +241,6 @@ public class UserAccount extends AppCompatActivity
             if (user != null) {
                 fragmentChanger(CreateGroup.class, R.id.user_account_frag_frame, "CreateGroup");
             }
-        }
-
-    }
-
-    //    call back functionality for fragments
-    public void onFragmentInteraction(int operation) {
-        if (operation == 0) {
-            //        check if user is logged in and load profile if they are
-            if (MainActivity.user != null) {
-//                loadUserProfile();
-            }
-        } else if (operation == 1) {
-//            firebaseTools.signOut();
-//            Intent intent = new Intent(this, MainActivity.class);
-//            startActivity(intent);
         }
 
     }

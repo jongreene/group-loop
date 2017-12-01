@@ -50,8 +50,6 @@ public class UserAccountPreferences extends Fragment {
         user = mAuth.getCurrentUser();
         // [END initialize_auth]
 
-        mListener.onFragmentInteraction(0);
-
 //
         super.onCreate(savedInstanceState);
 
@@ -110,7 +108,6 @@ public class UserAccountPreferences extends Fragment {
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(View view);
-        void onFragmentInteraction(int operation);
         void onFragmentInteraction(UserProfile profile);
     }
 

@@ -25,12 +25,9 @@ public class UserProfile {
         this.userId = userId;
         this.username = username;
         this.email = email;
-//        this.currentGroup = "default";
 
         ArrayList<String> test;
         groupList = new ArrayList<String>();
-        groupList.add("Party house");
-        groupList.add("Moms");
     }
 
     public UserProfile(UserProfile c) {
@@ -40,6 +37,7 @@ public class UserProfile {
         currentGroup = c.currentGroup;
 
         groupList = c.groupList;
+        groupList = nullArrayListCheck(groupList);
     }
 
     public String getUserId() {
@@ -54,15 +52,14 @@ public class UserProfile {
         return email;
     }
 
-    public String getCurrentGroup() {
-        return currentGroup;
-    }
+    public String getCurrentGroup() { return currentGroup; }
 
     public ArrayList<String> getGroupList() {
-        return groupList;
+        return nullArrayListCheck(groupList);
     }
 
     public Boolean setCurrentGroup(int index) {
+        groupList = nullArrayListCheck(groupList);
         if (groupList.size() >= index && index >= 0) {
             currentGroup = groupList.get(index);
             return true;
@@ -71,6 +68,7 @@ public class UserProfile {
     }
 
     public boolean addNewGroup(String newGroup){
+        groupList = nullArrayListCheck(groupList);
         if(newGroup.length()>0) {
             groupList.add(newGroup);
             return true;
@@ -79,6 +77,7 @@ public class UserProfile {
     }
 
     public boolean removeGroup(int index){
+        groupList = nullArrayListCheck(groupList);
         if (groupList.size() > index && index >= 0) {
             groupList.remove(index);
             return true;
@@ -87,11 +86,20 @@ public class UserProfile {
     }
 
     public boolean removeGroup(String groupName){
+        groupList = nullArrayListCheck(groupList);
         if(groupList.contains(groupName)){
             groupList.indexOf(groupName);
             return true;
         }
         return false;
+    }
+
+    //    used to initialize any ArrayList that isn't already
+    private ArrayList nullArrayListCheck(ArrayList arrayIn){
+        if(arrayIn == null){
+            arrayIn = new ArrayList();
+        }
+        return arrayIn;
     }
 
 }

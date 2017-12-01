@@ -2,7 +2,6 @@ package ferocioushammerheads.grouploop;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class UserGroup {
     private String creator;
@@ -10,10 +9,10 @@ public class UserGroup {
     private String groupId;
     private ArrayList<String> members;
 //    private ArrayList<ChipItems> chipItems;
-    private ArrayList<ChipItem_TextList> chipItemsTextList = new ArrayList<ChipItem_TextList>();
-    private ArrayList<ChipItemSchedule> chipItemsSchedule = new ArrayList<ChipItemSchedule>();
+    private ArrayList<ChipItem_TextList> chipItems;
 
     public UserGroup(){}
+
 //    String creator, String groupId
     public UserGroup(String creator, String groupId){
         this.creator = creator;
@@ -22,36 +21,22 @@ public class UserGroup {
 //        add creator to the list of users
         members = new ArrayList<String>();
         members.add(creator);
-
-        ChipItem_TextList tmp1 = new ChipItem_TextList("testtest");
-        ChipItemSchedule tmp2 = new ChipItemSchedule("lalal");
-
-//        chipItemsTextList = new ArrayList<ChipItem_TextList>();
-//        chipItemsSchedule = new ArrayList<ChipItemSchedule>();
-//
-        chipItemsTextList.add(tmp1);
-
-        addChipItemTextList(tmp1);
-        addChipItemSchedule(tmp2);
-
     }
 
     public void addMember(String member){
+        members = nullArrayListCheck(members);
         members.add(member);
     }
 
-    public void addChipItemTextList(ChipItem_TextList chipItem_textList){
+    public void addChipItem(ChipItem_TextList chipItem_textList){
+        chipItems = nullArrayListCheck(chipItems);
+
         ChipItem_TextList tmp = new ChipItem_TextList("poop");
-        chipItemsTextList.add(tmp);
+        chipItems.add(tmp);
     }
-
-    public void addChipItemSchedule(ChipItemSchedule chipitem){
-        ChipItemSchedule tmp = new ChipItemSchedule("poop");
-        chipItemsSchedule.add(tmp);
-    }
-
 
     public boolean removeMember(int index){
+        members = nullArrayListCheck(members);
         if (members.size() > index && index >= 0) {
             members.remove(index);
             return true;
@@ -72,17 +57,15 @@ public class UserGroup {
     }
 
     public void setMembers(ArrayList<String> users) {
+        members = nullArrayListCheck(members);
+
         this.members = users;
     }
 
-    public void setChipItemsTextList(ArrayList<ChipItem_TextList> chipItems) {
-        this.chipItemsTextList = chipItems;
-    }
-    public void setChipItemsSchedule(ArrayList<ChipItemSchedule> chipItems) {
-        this.chipItemsSchedule = chipItems;
-    }
+    public void setChipItems(ArrayList<ChipItem_TextList> chipItems) {
 
-
+        this.chipItems = nullArrayListCheck(chipItems);
+    }
 
 //    Getters
 
@@ -97,14 +80,20 @@ public class UserGroup {
     }
 
     public List<String> getMembers(){
-        return(members);
+        return(nullArrayListCheck(members));
     }
 
-    public List<ChipItem_TextList> getChipItemsTextList(){
-        return(chipItemsTextList);
+    public List<ChipItem_TextList> getChipItems(){
+        return(nullArrayListCheck(chipItems));
     }
-    public List<ChipItemSchedule> getChipItemsSchedule(){
-        return(chipItemsSchedule);
+
+    //    used to initialize any ArrayList that isn't already
+    private ArrayList nullArrayListCheck(ArrayList arrayIn){
+        if(arrayIn == null){
+            arrayIn = new ArrayList();
+        }
+        return arrayIn;
     }
+
 
 }

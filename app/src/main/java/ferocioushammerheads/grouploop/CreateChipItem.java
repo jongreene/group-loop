@@ -156,8 +156,8 @@ public class CreateChipItem extends Fragment implements View.OnClickListener {
     }
 
     public void onClick(View v){
-        Spinner spinner = view.findViewById(R.id.newChipItemType);
-        EditText editText = view.findViewById(R.id.newChipItemName);
+//        Spinner spinner = view.findViewById(R.id.newChipItemType);
+//        EditText editText = view.findViewById(R.id.newChipItemName);
         String itemType = spinner.getSelectedItem().toString();
         String itemName = editText.getText().toString();
         Log.d("Adding user", itemName);
@@ -177,6 +177,10 @@ public class CreateChipItem extends Fragment implements View.OnClickListener {
 
         }
 
+        ChipItem_TextList tmp = new ChipItem_TextList("this is new");
+
+        MainActivity.currentGroup.addChipItem(tmp);
+        MainActivity.mDatabase.child("groups").child(currentGroup.getGroupId()).child("chipItems").setValue(currentGroup.getChipItems());
 
 
     }

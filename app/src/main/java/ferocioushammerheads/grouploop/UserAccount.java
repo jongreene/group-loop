@@ -31,18 +31,11 @@ public class UserAccount extends AppCompatActivity
         AccountToolsHelper {
     public static DatabaseReference mDatabaseRef;
 
-    private TextView mUserName, mGroupList, mActiveGroup, mEmail;
-
     private int externChangeGroup = -1;
-
-//    moved to MainActivity
-//    public static AccountTools firebaseTools;
 
     FirebaseUser user;
 
-
     private static final String TAG = "UserAccount";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +130,8 @@ public class UserAccount extends AppCompatActivity
                         fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
                     } else if (fragmentManager.findFragmentByTag("ChangeGroup") != null && fragmentManager.findFragmentByTag("ChangeGroup").isVisible()) {
                         fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
+                    } else if(fragmentManager.findFragmentByTag("NotificationSettings") != null && fragmentManager.findFragmentByTag("NotificationSettings").isVisible()){
+                        fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
                     } else {
                         fragmentChanger(ChangeGroup.class, R.id.user_account_frag_frame, "ChangeGroup");
                     }
@@ -168,6 +163,8 @@ public class UserAccount extends AppCompatActivity
             if(fragmentManager.findFragmentByTag("CreateGroup") != null && fragmentManager.findFragmentByTag("CreateGroup").isVisible()) {
                 fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
             } else if(fragmentManager.findFragmentByTag("ChangeGroup") != null && fragmentManager.findFragmentByTag("ChangeGroup").isVisible()){
+                fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
+            } else if(fragmentManager.findFragmentByTag("NotificationSettings") != null && fragmentManager.findFragmentByTag("NotificationSettings").isVisible()){
                 fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "UserAccountPreferences");
             } else {
                 fragmentChanger(ChangeGroup.class, R.id.user_account_frag_frame, "ChangeGroup");

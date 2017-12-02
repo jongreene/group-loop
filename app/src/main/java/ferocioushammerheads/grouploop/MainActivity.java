@@ -64,9 +64,6 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        set current user
-        user = FirebaseAuth.getInstance().getCurrentUser();
-
         if (mButtonClickListener == null) {
             mButtonClickListener = new ButtonClickListener();
         }
@@ -81,7 +78,8 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
 
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
-        mAuth.getCurrentUser();
+        // set current user
+        user = mAuth.getCurrentUser();
         // [END initialize_auth]
 
         mDatabase = FirebaseDatabase.getInstance().getReference();

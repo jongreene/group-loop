@@ -204,7 +204,6 @@ public class UserAccount extends AppCompatActivity
             fragmentManager.beginTransaction().hide(NotificationSettingsFrag).commit();
 
         } else if (CreateGroupFrag != null && CreateGroupFrag.isVisible()) {
-//            TODO: go back to change groups page rather than UserProfile?
             fragmentManager.beginTransaction().hide(CreateGroupFrag).commit();
 
         }

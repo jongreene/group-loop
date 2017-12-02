@@ -85,10 +85,11 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
         // [END initialize_auth]
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        
+
         AccountTools tmpTools = AccountTools.getInstance();
         tmpTools.setupTools(this, mAuth, mDatabase);
 
+//        tmpTools.signOut();
         if(user != null) {
             tmpTools.loadProfile();
         }
@@ -138,7 +139,6 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
     public void changeActivity(View view){
         if (view.getId() == R.id.chipItemsButtons) {
             Intent intent = new Intent(this, ChipItems.class);
-            //Intent intent = new Intent(this, ViewCalendarItem.class);
             startActivity(intent);
         }
         else if (view.getId() == R.id.preferencesButton) {
@@ -162,7 +162,6 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
 
     // Define the actual handler for the event.
     public void loggedInEvent() {
-
 
     }
 

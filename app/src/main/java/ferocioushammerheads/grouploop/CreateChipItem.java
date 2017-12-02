@@ -175,7 +175,7 @@ public class CreateChipItem extends Fragment implements View.OnClickListener {
 //
 //        }
 
-        ChipItemTextList tmp = new ChipItemTextList("this is new");
+        ChipItemTextList tmp = new ChipItemTextList(itemName, MainActivity.user.getUid());
 
         MainActivity.currentGroup.addChipItem(tmp);
         MainActivity.mDatabase.child("groups").child(currentGroup.getGroupId()).child("chipItems").setValue(currentGroup.getChipItems());

@@ -26,6 +26,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import static ferocioushammerheads.grouploop.MainActivity.currentGroup;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +61,8 @@ public class ViewListItem extends Fragment {
     private Button mAddNewItem;
     private ButtonClickListener mButtonClickListener;
     private ListView listView;
+//    private SharedPreferences pref = getContext().getSharedPreferences("MyPref", 0);
+
     public ViewListItem() {
         // Required empty public constructor
     }
@@ -151,8 +155,8 @@ public class ViewListItem extends Fragment {
 //        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 //            @Override
 //            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                listItems.remove(i);
-//                adapter.notifyDataSetChanged();
+////                listItems.remove(i);
+////                adapter.notifyDataSetChanged();
 //                return true;
 //            }
 //        });
@@ -162,7 +166,7 @@ public class ViewListItem extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
         SharedPreferences pref = getContext().getSharedPreferences("MyPref", 0);
-        SharedPreferences.Editor editor = pref.edit();
+//        SharedPreferences.Editor editor = pref.edit();
         String tempID = pref.getString("itemid", null);
         Log.d("Sharedpred", tempID);
 
@@ -188,6 +192,23 @@ public class ViewListItem extends Fragment {
             }
         });
 
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            SharedPreferences pref = getContext().getSharedPreferences("MyPref", 0);
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                listItems.remove(i);
+//                adapter.notifyDataSetChanged();
+                ArrayList<ChipItemTextList> chipitems = MainActivity.currentGroup.getChipItems();
+                int itemIndex = Integer.parseInt(pref.getString("itemid", null));
+                chipitems.get(itemIndex).removeItemAt(i);
+                adapter.clear();
+                MainActivity.currentGroup.setChipItems(chipitems);
+                MainActivity.mDatabase.child("groups").child(currentGroup.getGroupId()).child("chipItems").setValue(currentGroup.getChipItems());
+
+
+                return true;
+            }
+        });
 
 
 
@@ -249,15 +270,29 @@ public class ViewListItem extends Fragment {
      * @param v
      */
     public void addItems(View v) {
+        SharedPreferences pref = getContext().getSharedPreferences("MyPref", 0);
         EditText tempname   = (EditText)view.findViewById(R.id.itemEdit);
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("items");
-        myRef = myRef.push();
-        myRef.setValue(tempname.getText().toString());
-        String key = myRef.getKey().toString();
-        Log.d(TAG, "objectID " +key);
+        ArrayList<ChipItemTextList> chipitems = MainActivity.currentGroup.getChipItems();
+        int itemIndex = Integer.parseInt(pref.getString("itemid", null));
+        String temptext = tempname.getText().toString();
+        chipitems.get(itemIndex).addItem(temptext);
+        adapter.clear();
+        MainActivity.currentGroup.setChipItems(chipitems);
+        MainActivity.mDatabase.child("groups").child(currentGroup.getGroupId()).child("chipItems").setValue(currentGroup.getChipItems());
+
+
+
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef = database.getReference("items");
+//        myRef = myRef.push();
+//        myRef.setValue(tempname.getText().toString());
+//        String key = myRef.getKey().toString();
+//        Log.d(TAG, "objectID " +key);
         TextView editText = (TextView)view.findViewById(R.id.itemEdit);
         editText.setText("");
+
+
+
         view.findViewById(R.id.add_menu_item).setVisibility(View.GONE);
         view.findViewById(R.id.listLayout).setVisibility(View.VISIBLE);
         view.findViewById(R.id.addItem).setVisibility(View.VISIBLE);

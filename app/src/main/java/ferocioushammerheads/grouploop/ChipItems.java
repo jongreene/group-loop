@@ -37,7 +37,7 @@ public class ChipItems extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        fragmentChanger(ViewCalendarItem.class,R.id.ChipItemInterfaceFrame, "ViewCalendarItem");
+        fragmentChanger(ViewAllChipItems.class,R.id.ChipItemInterfaceFrame, "ViewAllChipItems");
 
 
 //        AccountTools tmpTools = AccountTools.getInstance();

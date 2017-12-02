@@ -1,7 +1,8 @@
-package ferocioushammerheads.grouploop;
+package ferocioushammerheads.grouploop.UITesting;
 
 
 import android.support.test.espresso.ViewInteraction;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
@@ -16,6 +17,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import ferocioushammerheads.grouploop.MainActivity;
+import ferocioushammerheads.grouploop.R;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
@@ -29,24 +33,25 @@ import static org.hamcrest.Matchers.allOf;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class MainActivityTest {
+public class LoginLogoutTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void mainActivityTest2() {
+    public void loginLogoutTest() {
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(60000);
+            Thread.sleep(600);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
+
         ViewInteraction appCompatButton = onView(
-                allOf(withId(R.id.preferencesButton), withText("sign-in/sign-up"),
+                allOf(ViewMatchers.withId(R.id.preferencesButton), withText("sign-in/sign-up"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.drawer_layout),
@@ -59,7 +64,7 @@ public class MainActivityTest {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(3591542);
+            Thread.sleep(359);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -123,7 +128,7 @@ public class MainActivityTest {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(3528590);
+            Thread.sleep(35200);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

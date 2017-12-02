@@ -35,7 +35,16 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
+            android:background="@color/common_google_signin_btn_text_dark_default"
+            android:calendarTextColor="@color/black"
+            android:dayOfWeekBackground="@color/colorPrimary"
+
+            android:dayOfWeekTextAppearance="@color/colorPrimary"
+            android:foregroundTint="@color/common_google_signin_btn_text_dark_default"
+            android:headerBackground="@color/colorPrimary"
             android:visibility="visible"
+            android:yearListItemTextAppearance="@color/colorPrimary"
+            android:yearListSelectorColor="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -49,9 +58,9 @@
             android:layout_marginRight="16dp"
             android:clickable="true"
             android:src="@android:drawable/ic_menu_add"
-            android:tint="@color/colorPrimary"
+
             android:visibility="gone"
-            app:backgroundTint="@color/colorPrimary"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

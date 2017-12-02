@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -127,25 +128,49 @@ public class ViewAllChipItems extends Fragment {
         DatabaseReference textList = FirebaseDatabase.getInstance().getReference().child("groups").child(MainActivity.currentGroup.getGroupId()).child("chipItems");
 //        DatabaseReference schedules = FirebaseDatabase.getInstance().getReference().child("groups").child(MainActivity.currentGroup.getGroupId()).child("chipItemsSchedule");
 //
-        textList.addValueEventListener(new ValueEventListener() {
+//        textList.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+//                    String tempKey = snapshot.getKey();
+//                    ChipItemTextList temp = snapshot.getValue(ChipItemTextList.class);
+//                    AdapterChipItem tempItem = new AdapterChipItem(temp.getName(), tempKey, "List");
+//                    list.add(tempItem);
+//                    listAdapter.notifyDataSetChanged();
+//
+//
+//                }
+////                Log.d("List Data", dataSnapshot.getValue().toString());
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+
+        textList.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    String tempKey = snapshot.getKey();
-                    ChipItemTextList temp = snapshot.getValue(ChipItemTextList.class);
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                    String tempKey = dataSnapshot.getKey();
+                    ChipItemTextList temp = dataSnapshot.getValue(ChipItemTextList.class);
                     AdapterChipItem tempItem = new AdapterChipItem(temp.getName(), tempKey, "List");
                     list.add(tempItem);
                     listAdapter.notifyDataSetChanged();
-
-
-                }
-//                Log.d("List Data", dataSnapshot.getValue().toString());
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
+            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
             }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
         });
 
         chipItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {

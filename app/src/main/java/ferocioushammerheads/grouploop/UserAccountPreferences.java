@@ -144,7 +144,7 @@ public class UserAccountPreferences extends Fragment implements AccountToolsHelp
         mEmail = view.findViewById(R.id.pref_email);
 
         mUserName.setText(MainActivity.userProfile.getUsername());
-        mGroupList.setText(MainActivity.userProfile.getGroupList().toString());
+        mGroupList.setText(MainActivity.userProfile.getGroupListString());
         mActiveGroup.setText(MainActivity.userProfile.getCurrentGroup());
         mEmail.setText(MainActivity.userProfile.getEmail());
 

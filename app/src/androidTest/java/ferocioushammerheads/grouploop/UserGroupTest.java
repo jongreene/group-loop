@@ -10,6 +10,7 @@ import static org.junit.Assert.*;
 public class UserGroupTest {
     @Test
     public void addMember() throws Exception {
+        UserGroup test = new UserGroup("test123","GroupTest");
     }
 
     @Test

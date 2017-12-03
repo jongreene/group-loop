@@ -27,7 +27,34 @@ public class AccountTools {
     private AccountToolsHelper ie;
     private boolean somethingHappened;
 
-    AccountTools(){}
+    private boolean isSetup;
+
+    private static AccountTools instance = null;
+
+    private void AccountTools(){}
+
+    public static AccountTools getInstance(){
+        if(instance==null){
+            instance = new AccountTools();
+        }
+        return instance;
+    }
+
+    public boolean isSetup(){
+        return isSetup;
+    }
+
+    public void setupTools(UserAccountPreferences event,FirebaseAuth mAuth, DatabaseReference mDatabase){
+        this.mAuth = mAuth;
+        this.mDatabase = mDatabase;
+
+        // Save the event object for later use.
+        ie = event;
+        // Nothing to report yet.
+        somethingHappened = false;
+
+        isSetup = true;
+    }
 
     public void setupTools(UserAccount event,FirebaseAuth mAuth, DatabaseReference mDatabase){
         this.mAuth = mAuth;
@@ -37,6 +64,8 @@ public class AccountTools {
         ie = event;
         // Nothing to report yet.
         somethingHappened = false;
+
+        isSetup = true;
     }
 
     public void setupTools(MainActivity event,FirebaseAuth mAuth, DatabaseReference mDatabase){
@@ -47,6 +76,8 @@ public class AccountTools {
         ie = event;
         // Nothing to report yet.
         somethingHappened = false;
+
+        isSetup = true;
     }
 
     public void setSomethingHappened(boolean somethingHappened){
@@ -198,16 +229,7 @@ public class AccountTools {
         mDatabase.child("users").child(userProfile.getUserId()).setValue(userProfile);
     }
 
-    private static AccountTools instance = null;
 
-    private void AccountTools(){}
-
-    public static AccountTools getInstance(){
-        if(instance==null){
-            instance = new AccountTools();
-        }
-        return instance;
-    }
 
     private DatabaseReference mDatabaseRef;
     // Define the actual handler for the event.

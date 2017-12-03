@@ -136,7 +136,24 @@ public class UserProfileTest {
         UserProfile test = new UserProfile("test123", "Test McTest", "testtest@test.com");
         boolean testAddGroup1 = test.addNewGroup("testGroup1");
         boolean testAddGroup2 = test.addNewGroup("testGroup2");
-        
+        boolean testRemoveGroup = test.removeGroup(0);
+        String msg = "";
+        boolean throwError = false;
+        if(!(testAddGroup1 && testAddGroup2)) {
+            msg+="Error adding groups. ";
+            throwError = true;
+        }
+        if(!testRemoveGroup) {
+            msg+="Returned false for removing group. ";
+        }
+        if(test.getGroupList().contains("testGroup1")) {
+            msg+="Error removing groups. ";
+            throwError = true;
+        }
+        if(throwError) {
+            Exception inTestEx = new Exception(msg);
+            throw inTestEx;
+        }
     }
 
     @Test
@@ -144,6 +161,30 @@ public class UserProfileTest {
         UserProfile test = new UserProfile("test123", "Test McTest", "testtest@test.com");
         boolean testAddGroup1 = test.addNewGroup("testGroup1");
         boolean testAddGroup2 = test.addNewGroup("testGroup2");
+        boolean testRemoveGroup = test.removeGroup("testGroup1");
+        String msg = "";
+        boolean throwError = false;
+        if(!(testAddGroup1 && testAddGroup2)) {
+            msg+="Error adding groups. ";
+            if(!testAddGroup1) {
+                msg+="group 1. ";
+            }
+            if(!testAddGroup2) {
+                msg+="group 2. ";
+            }
+            throwError = true;
+        }
+        if(!testRemoveGroup) {
+            msg+="Returned false for removing group. ";
+        }
+        if(test.getGroupList().contains("testGroup1")) {
+            msg+="Error removing groups. ";
+            throwError = true;
+        }
+        if(throwError) {
+            Exception inTestEx = new Exception(msg);
+            throw inTestEx;
+        }
     }
 
 

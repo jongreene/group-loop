@@ -62,7 +62,7 @@ public class ChipItems extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.action_logout:
                 if (MainActivity.user != null) {
-                    AccountTools tmpTools = MainActivity.firebaseTools.getInstance();
+                    AccountTools tmpTools = AccountTools.getInstance();
                     tmpTools.signOut();
                     Intent intent = new Intent(this, MainActivity.class);
                     startActivity(intent);

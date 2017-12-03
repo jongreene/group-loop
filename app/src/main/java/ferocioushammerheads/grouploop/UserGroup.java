@@ -8,7 +8,6 @@ public class UserGroup {
     private String userId;
     private String groupId;
     private ArrayList<String> members;
-//    private ArrayList<ChipItems> chipItems;
     private ArrayList<ChipItemTextList> chipItems;
 
     public UserGroup(){}

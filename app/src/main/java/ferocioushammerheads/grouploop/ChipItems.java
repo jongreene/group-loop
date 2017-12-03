@@ -138,13 +138,23 @@ public class ChipItems extends AppCompatActivity
 
     public void onFragmentInteraction(){}
 
-    public void onFragmentInteraction(String test){
-        Log.d(TAG, "Value passed:" + test);
+    public void onFragmentInteraction(String frag){
+
+        if(frag.equals("list")){
+            fragmentChanger(ViewListItem.class, R.id.ChipItemInterfaceFrame, "ViewListItem");
+
+        }
+        else{
+            fragmentChanger(ViewCalendarItem.class, R.id.ChipItemInterfaceFrame, "ViewCalendarItem");
+
+        }
+
+        Log.d(TAG, "Value passed:" + frag);
     }
 
     public void onFragmentInteraction(View view){
         if (view.getId() == R.id.addChipItem) {
-            //  switch to add chip item fragment
+//            switch to add chip item fragment
             fragmentChanger(CreateChipItem.class,R.id.ChipItemInterfaceFrame,"CreateChipItem");
         }
         else{

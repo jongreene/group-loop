@@ -19,10 +19,7 @@ public class ChipItemTextList {
     public ChipItemTextList(String itemname, String creatorID){
         this.name = itemname;
         this.creatorID = creatorID;
-//        this.itemID = w;
         items = new ArrayList<String>();
-//        items.add("bananas");
-//        items.add("apples");
     }
 
 

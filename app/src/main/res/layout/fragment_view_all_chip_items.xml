@@ -76,7 +76,7 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
             <ListView
-                android:id="@+id/chipItems"
+                android:id="@+id/textListChipItems"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:headerDividersEnabled="false"

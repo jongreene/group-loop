@@ -71,6 +71,8 @@ public class UserAccount extends AppCompatActivity
 
         MainActivity.firebaseTools.getInstance().setupTools(this,MainActivity.mAuth, MainActivity.mDatabase);
 
+//        MainActivity.firebaseTools.loadProfile();
+
 //        MainActivity.firebaseTools.signOut();
 
         Bundle initFrag = getIntent().getExtras();
@@ -228,24 +230,7 @@ public class UserAccount extends AppCompatActivity
     }
 
     // Define the actual handler for the event.
-    public void loadProfileEvent() {
-        String userRefString = "/users/" + MainActivity.user.getUid();
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference(userRefString);
-        ValueEventListener postListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                UserProfile tmpProfile = dataSnapshot.getValue(UserProfile.class);
-                MainActivity.userProfile = tmpProfile;
-                Log.d(TAG, "email from snapshot:" + tmpProfile.getEmail());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-            }
-        };
-        mDatabaseRef.addValueEventListener(postListener);
-    }
+    public void loadProfileEvent() {}
 
     public void toastUp(String toastText){
         Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show();

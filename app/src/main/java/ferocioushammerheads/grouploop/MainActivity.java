@@ -84,12 +84,13 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        AccountTools tmpTools = AccountTools.getInstance();
-        tmpTools.setupTools(this, mAuth, mDatabase);
+
+        firebaseTools = AccountTools.getInstance();
+        firebaseTools.setupTools(this, mAuth, mDatabase);
 
 //        tmpTools.signOut();
         if(user != null) {
-            tmpTools.loadProfile();
+            firebaseTools.loadProfile();
         }
 
         updateUserEnvironment();
@@ -143,13 +144,13 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
             Intent intent = new Intent(this, UserAccount.class);
 
             Bundle b = new Bundle();
-//            1: logged in. 2: otherwise
+            //  1: logged in. 2: otherwise
             if(user!=null) {
                 b.putInt("key", 1);
             } else {
                 b.putInt("key", -1);
             }
-//            Put your key in your next Intent
+            //  Put your key in your next Intent
             intent.putExtras(b);
 
             startActivity(intent);

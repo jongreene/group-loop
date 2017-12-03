@@ -58,6 +58,19 @@ public class UserProfile {
         return nullArrayListCheck(groupList);
     }
 
+    public String getGroupListString() {
+        String groupListString = new String();
+        int count = 1;
+        for(String group : groupList){
+            groupListString += group;
+            if(count < groupList.size()){
+                groupListString += ", ";
+            }
+            count++;
+        }
+        return groupListString;
+    }
+
     public Boolean setCurrentGroup(int index) {
         groupList = nullArrayListCheck(groupList);
         if (groupList.size() >= index && index >= 0) {

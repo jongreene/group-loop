@@ -1,7 +1,9 @@
 package ferocioushammerheads.grouploop;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -21,9 +23,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import static ferocioushammerheads.grouploop.MainActivity.currentGroup;
 
 
 /**
@@ -55,10 +61,12 @@ public class ViewCalendarItem extends Fragment {
     //checkbox view
     private FloatingActionButton checkBoxSelection;
     private ScrollView checkboxStuff;
-    private Map<String, String> myMap = new HashMap<>();
+    private HashMap<String, String> myMap = new HashMap<>();
 
     private ButtonClickListener myBCL;
     private FirebaseUser user;
+    private HashMap<String, HashMap<String, String>> schedule = new HashMap<>();
+    private String dayID;
 
     private CheckBox cb12am;
     private CheckBox cb01am;
@@ -203,26 +211,26 @@ public class ViewCalendarItem extends Fragment {
         tv09pm=view.findViewById(R.id.textView09pm);
         tv10pm=view.findViewById(R.id.textView10pm);
         tv11pm=view.findViewById(R.id.textView11pm);
-        String keyTemp;
+//        String keyTemp;
         user = MainActivity.mAuth.getCurrentUser();
         //https://stackoverflow.com/questions/25714520/filling-hashmap-within-loop
-        for(int i=0; i<24; i++) {
-            if(i==0) {
-                myMap.put("12am", "not scheduled");
-            }
-            else if(i<12) {
-                keyTemp = ""+i+"am";
-                myMap.put(keyTemp, "not scheduled");
-            }
-            else if(i==12) {
-                myMap.put("12pm", "not scheduled");
-            }
-            else {
-                int temp = i-12;
-                keyTemp = ""+temp+"pm";
-                myMap.put(keyTemp, "not scheduled");
-            }
-        }
+//        for(int i=0; i<24; i++) {
+//            if(i==0) {
+//                myMap.put("12AM", "not scheduled");
+//            }
+//            else if(i<12) {
+//                keyTemp = ""+i+"AM";
+//                myMap.put(keyTemp, "not scheduled");
+//            }
+//            else if(i==12) {
+//                myMap.put("12AM", "not scheduled");
+//            }
+//            else {
+//                int temp = i-12;
+//                keyTemp = ""+temp+"PM";
+//                myMap.put(keyTemp, "not scheduled");
+//            }
+//        }
 
         //description view
         //description = view.findViewById(R.id.editTextUserDescription);
@@ -243,6 +251,42 @@ public class ViewCalendarItem extends Fragment {
         return view;
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
+        SharedPreferences pref = getContext().getSharedPreferences("MyPref", 0);
+        final String tempID = pref.getString("calID", null);
+
+        DatabaseReference textList = FirebaseDatabase.getInstance().getReference().child("groups").child(MainActivity.currentGroup.getGroupId()).child("scheduleChipItems").child(tempID).child("schedule");
+        textList.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                schedule = (HashMap<String, HashMap<String, String>>) dataSnapshot.getValue();
+                if(schedule == null){
+                    schedule = new HashMap<>();
+                }
+                Log.d("===Hash Map===", schedule.toString());
+
+                Log.d("===View Created===", "success");
+//                ArrayList<ChipItemTextList> chipitems = MainActivity.currentGroup.getTextListChipItems();
+//                int itemIndex = Integer.parseInt(tempID);
+//                chipitems.get(itemIndex).setItems(listItems);
+//                MainActivity.currentGroup.setTextListChipItems(chipitems);
+//                MainActivity.mDatabase.child("groups").child(currentGroup.getGroupId()).child("textListChipItems").setValue(currentGroup.getTextListChipItems());
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("Database Error", databaseError.toString());
+
+            }
+        });
+
+
+
+    }
+
     public void toCalendarView(View v) {
         view.findViewById(R.id.datePicker).setVisibility(View.VISIBLE);
         view.findViewById(R.id.FABdateAdd).setVisibility(View.VISIBLE);
@@ -258,11 +302,54 @@ public class ViewCalendarItem extends Fragment {
         int yy = calendar.getYear();
         int mm = calendar.getMonth();
         int dd = calendar.getDayOfMonth();
+        //string builder
         /*
         TODO database stuff
          */
+
+        String tmp = stringBuilder(yy, mm ,dd);
+        Log.d("cal txt", tmp);
+        dayID = tmp;
     }
 
+    private String stringBuilder(int yy, int mm, int dd){
+        String tmpYear = String.valueOf(yy);
+        String tmpMon = String.valueOf(mm+1);
+        String tmpDay = String.valueOf(dd);
+        if(mm < 10){
+            tmpMon = "0" + tmpMon;
+        }
+        if(dd < 10){
+            tmpDay = "0" + tmpDay;
+        }
+
+        String toReturn = tmpMon+tmpDay+tmpYear;
+
+        return toReturn;
+    }
+
+    private HashMap<String, String> emptyDayBuilder(HashMap<String, String> myMap){
+        String keyTemp;
+        for(int i=0; i<24; i++) {
+            if(i==0) {
+                myMap.put("12am", "not scheduled");
+            }
+            else if(i<12) {
+                keyTemp = ""+i+"am";
+                myMap.put(keyTemp, "not scheduled");
+            }
+            else if(i==12) {
+                myMap.put("12pm", "not scheduled");
+            }
+            else {
+                int temp = i-12;
+                keyTemp = ""+temp+"pm";
+                myMap.put(keyTemp, "not scheduled");
+            }
+        }
+
+        return myMap;
+    }
     public void toCheckboxView(View v) {
         view.findViewById(R.id.datePicker).setVisibility(View.GONE);
         view.findViewById(R.id.FABdateAdd).setVisibility(View.GONE);
@@ -273,6 +360,12 @@ public class ViewCalendarItem extends Fragment {
         view.findViewById(R.id.FABcheckbox).setVisibility(View.VISIBLE);
         view.findViewById(R.id.scrollCheckBox).setVisibility(View.VISIBLE);
 
+        if(schedule.get(dayID) == null){
+            myMap = emptyDayBuilder(myMap);
+        }
+        else{
+            myMap = schedule.get(dayID);
+        }
 
         tv12am.setText(myMap.get("12am"));
         tv01am.setText(myMap.get("1am"));
@@ -344,7 +437,7 @@ public class ViewCalendarItem extends Fragment {
         checkedBoxes[23] = cb11pm.isChecked();
         String keyTemp;
         for(int i=0; i<24; i++) {
-            if(checkedBoxes[i]==true) {
+            if(checkedBoxes[i]) {
                 if(i==0) {
                     keyTemp = "12am";
                 }
@@ -370,6 +463,16 @@ public class ViewCalendarItem extends Fragment {
         TODO:
         database stuff
          */
+
+        SharedPreferences pref = getContext().getSharedPreferences("MyPref", 0);
+        ArrayList<ChipItemSchedule> chipitems = MainActivity.currentGroup.getScheduleChipItems();
+        int itemIndex = Integer.parseInt(pref.getString("calID", null));
+        schedule.put(dayID, myMap);
+        chipitems.get(itemIndex).setSchedule(schedule);
+//        adapter.clear();
+        MainActivity.currentGroup.setScheduleChipItems(chipitems);
+        MainActivity.mDatabase.child("groups").child(currentGroup.getGroupId()).child("scheduleChipItems").setValue(currentGroup.getScheduleChipItems());
+
     }
 
     /*private void descriptionToDatabase(View view) {

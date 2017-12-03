@@ -37,7 +37,9 @@ public class ChipItems extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        fragmentChanger(ViewCalendarItem.class,R.id.ChipItemInterfaceFrame, "ViewCalendarItem");
+//        fragmentChanger(ViewCalendarItem.class,R.id.ChipItemInterfaceFrame, "ViewCalendarItem");
+        fragmentChanger(ViewAllChipItems.class,R.id.ChipItemInterfaceFrame, "ViewAllChipItems");
+
 
 
 //        AccountTools tmpTools = AccountTools.getInstance();
@@ -150,8 +152,18 @@ public class ChipItems extends AppCompatActivity
 //        blank fragment listener
     }
 
-    public void onFragmentInteraction(String test){
-        Log.d(TAG, "Value passed:" + test);
+    public void onFragmentInteraction(String frag){
+
+        if(frag.equals("list")){
+            fragmentChanger(ViewListItem.class, R.id.ChipItemInterfaceFrame, "ViewListItem");
+
+        }
+        else{
+            fragmentChanger(ViewCalendarItem.class, R.id.ChipItemInterfaceFrame, "ViewCalendarItem");
+
+        }
+
+        Log.d(TAG, "Value passed:" + frag);
     }
 
     public void onFragmentInteraction(View view){

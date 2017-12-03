@@ -136,6 +136,7 @@ public class UserProfileTest {
         UserProfile test = new UserProfile("test123", "Test McTest", "testtest@test.com");
         boolean testAddGroup1 = test.addNewGroup("testGroup1");
         boolean testAddGroup2 = test.addNewGroup("testGroup2");
+        
     }
 
     @Test

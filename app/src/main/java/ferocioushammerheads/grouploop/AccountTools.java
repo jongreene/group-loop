@@ -94,6 +94,16 @@ public class AccountTools {
         }
     }
 
+    public void profileLoaded ()
+    {
+        // Check the predicate, which is set elsewhere.
+        if (somethingHappened)
+        {
+            // Signal the even by invoking the interface's method.
+            ie.loadProfileEvent();
+        }
+    }
+
     public void toastUp(String toastText)
     {
         // Check the predicate, which is set elsewhere.
@@ -274,7 +284,7 @@ public class AccountTools {
 //                    TODO: find recursive call
                     setSomethingHappened(true);
                     doWork();
-//                    toastUp("UserProfile changed.");
+                    profileLoaded();
                     setSomethingHappened(false);
                 }
             }

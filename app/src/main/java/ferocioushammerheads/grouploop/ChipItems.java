@@ -36,15 +36,7 @@ public class ChipItems extends AppCompatActivity
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         fragmentChanger(ViewAllChipItems.class,R.id.ChipItemInterfaceFrame, "ViewAllChipItems");
-
-
-//        AccountTools tmpTools = AccountTools.getInstance();
-//        tmpTools.loadProfileEvent();
-////        load current group
-//        tmpTools.loadGroup(userProfile.getCurrentGroup());
-
     }
 
     @Override
@@ -85,11 +77,9 @@ public class ChipItems extends AppCompatActivity
                 break;
             case android.R.id.home:
                 if (myFragment != null && myFragment.isVisible()) {
-                    Toast.makeText(getApplicationContext(), "Default behavior", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(this, MainActivity.class);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(getApplicationContext(), "Overriding default", Toast.LENGTH_SHORT).show();
                     if (fragmentManager.findFragmentByTag("CreateChipItem") != null && fragmentManager.findFragmentByTag("CreateChipItem").isVisible()) {
                         fragmentChanger(ViewAllChipItems.class, R.id.ChipItemInterfaceFrame, "ViewAllChipItems");
                     } else if (fragmentManager.findFragmentByTag("ViewListItem") != null && fragmentManager.findFragmentByTag("ViewListItem").isVisible()) {
@@ -146,9 +136,7 @@ public class ChipItems extends AppCompatActivity
         fragmentManager.beginTransaction().replace(containerName, fragment, fragName).commit();
     }
 
-    public void onFragmentInteraction(){
-//        blank fragment listener
-    }
+    public void onFragmentInteraction(){}
 
     public void onFragmentInteraction(String test){
         Log.d(TAG, "Value passed:" + test);
@@ -156,15 +144,11 @@ public class ChipItems extends AppCompatActivity
 
     public void onFragmentInteraction(View view){
         if (view.getId() == R.id.addChipItem) {
-//            switch to add chip item fragment
+            //  switch to add chip item fragment
             fragmentChanger(CreateChipItem.class,R.id.ChipItemInterfaceFrame,"CreateChipItem");
         }
         else{
             fragmentChanger(ViewListItem.class, R.id.ChipItemInterfaceFrame, "ViewListItem");
         }
-//        will be used when new buttons are added from other fragments
-//        else if (view.getId() == R.id.ChipItemSearch) {
-//
-//        }
     }
 }

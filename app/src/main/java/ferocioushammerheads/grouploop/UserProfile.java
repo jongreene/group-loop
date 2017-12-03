@@ -103,8 +103,13 @@ public class UserProfile {
 
     public boolean removeGroup(String groupName){
         groupList = nullArrayListCheck(groupList);
+        int index = groupList.indexOf(groupName);
+
         if(groupList.contains(groupName)){
-            groupList.indexOf(groupName);
+            groupList.remove(index);
+            if(currentGroup.equals(groupName)){
+                setCurrentGroup(0);
+            }
             return true;
         }
         return false;

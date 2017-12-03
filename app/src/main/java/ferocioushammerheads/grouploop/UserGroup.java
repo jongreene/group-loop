@@ -8,8 +8,8 @@ public class UserGroup {
     private String userId;
     private String groupId;
     private ArrayList<String> members;
-//    private ArrayList<ChipItems> chipItems;
-    private ArrayList<ChipItemTextList> chipItems;
+//    private ArrayList<ChipItems> textListChipItems;
+    private ArrayList<ChipItemTextList> textListChipItems;
 
     public UserGroup(){}
 
@@ -29,10 +29,10 @@ public class UserGroup {
     }
 
     public void addChipItem(ChipItemTextList chipItem_textList){
-        chipItems = nullArrayListCheck(chipItems);
+        textListChipItems = nullArrayListCheck(textListChipItems);
 
 //        ChipItemTextList tmp = new ChipItemTextList("poop");
-        chipItems.add(chipItem_textList);
+        textListChipItems.add(chipItem_textList);
     }
 
     public boolean removeMember(int index){
@@ -62,9 +62,9 @@ public class UserGroup {
         this.members = users;
     }
 
-    public void setChipItems(ArrayList<ChipItemTextList> chipItems) {
+    public void setTextListChipItems(ArrayList<ChipItemTextList> textListChipItems) {
 
-        this.chipItems = nullArrayListCheck(chipItems);
+        this.textListChipItems = nullArrayListCheck(textListChipItems);
     }
 
 //    Getters
@@ -83,8 +83,8 @@ public class UserGroup {
         return(nullArrayListCheck(members));
     }
 
-    public ArrayList<ChipItemTextList> getChipItems(){
-        return(nullArrayListCheck(chipItems));
+    public ArrayList<ChipItemTextList> getTextListChipItems(){
+        return(nullArrayListCheck(textListChipItems));
     }
 
     //    used to initialize any ArrayList that isn't already

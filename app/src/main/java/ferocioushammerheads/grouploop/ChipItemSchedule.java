@@ -11,43 +11,47 @@ import java.util.Map;
 
 public class ChipItemSchedule {
     private String name;
-    private String creatorName;
     private String creatorID;
-    private String itemID;
-    //Map <Time, userid>
-    private Map<String, String> schedule;
+    private Map<String, String> schedule = new HashMap<>();
 
     public ChipItemSchedule(){
     }
 
-    public ChipItemSchedule(String w){
-        this.name = w;
-        this.creatorName = "bish";
-        this.creatorID = "12345";
-        this.itemID = w;
-        this.schedule = new HashMap<>();
-        schedule.put("1AM", "randomAssUser");
-        schedule.put("3AM", "anotherRandomUser");
+    public ChipItemSchedule(String name, String creatorID){
+        this.name = name;
+        this.creatorID = creatorID;
     }
 
     public String getName(){
         return name;
     }
 
-    public String getCreatorName(){
-        return creatorName;
+    public void setName(String name){
+        this.name = name;
     }
 
     public String getCreatorID(){
         return creatorID;
     }
 
-    public String getItemID(){
-        return itemID;
+    public void setCreatorID(String creatorID){
+        this.creatorID = creatorID;
     }
 
     public Map<String, String> getSchedule() {
-        return schedule;
+        return nullMapCheck(schedule);
     }
+
+    public void setSchedule(Map<String, String> aSchedule){
+        schedule = aSchedule;
+    }
+
+    private Map<String, String> nullMapCheck(Map<String, String> mapIn){
+        if(mapIn == null){
+            mapIn = new HashMap<String, String>();
+        }
+        return mapIn;
+    }
+
 
 }

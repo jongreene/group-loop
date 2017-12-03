@@ -121,11 +121,11 @@ public class ViewAllChipItems extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
-        chipItems = (ListView) view.findViewById(R.id.chipItems);
+        chipItems = (ListView) view.findViewById(R.id.textListChipItems);
         listAdapter = new ListAdapter(view.getContext(), list);
         chipItems.setAdapter(listAdapter);
 
-        DatabaseReference textList = FirebaseDatabase.getInstance().getReference().child("groups").child(MainActivity.currentGroup.getGroupId()).child("chipItems");
+        DatabaseReference textList = FirebaseDatabase.getInstance().getReference().child("groups").child(MainActivity.currentGroup.getGroupId()).child("textListChipItems");
 //        DatabaseReference schedules = FirebaseDatabase.getInstance().getReference().child("groups").child(MainActivity.currentGroup.getGroupId()).child("chipItemsSchedule");
 //
 //        textList.addValueEventListener(new ValueEventListener() {
@@ -250,7 +250,7 @@ public class ViewAllChipItems extends Fragment {
 
                     mListener.onFragmentInteraction(value);
                 }
-                else if (clickedId == R.id.chipItems){
+                else if (clickedId == R.id.textListChipItems){
                     mListener.onFragmentInteraction(view);
                 }
             }

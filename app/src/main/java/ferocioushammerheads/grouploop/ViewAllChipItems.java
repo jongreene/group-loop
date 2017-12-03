@@ -149,6 +149,7 @@ public class ViewAllChipItems extends Fragment {
 //            }
 //        });
 
+        //TODO: convert childeventlistener back to valueEventListener
         textList.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {

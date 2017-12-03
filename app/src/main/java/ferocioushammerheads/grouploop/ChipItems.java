@@ -37,8 +37,8 @@ public class ChipItems extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-//        fragmentChanger(ViewCalendarItem.class,R.id.ChipItemInterfaceFrame, "ViewCalendarItem");
-        fragmentChanger(ViewAllChipItems.class,R.id.ChipItemInterfaceFrame, "ViewAllChipItems");
+        fragmentChanger(ViewCalendarItem.class,R.id.ChipItemInterfaceFrame, "ViewCalendarItem");
+//        fragmentChanger(ViewAllChipItems.class,R.id.ChipItemInterfaceFrame, "ViewAllChipItems");
 
 
 
@@ -153,6 +153,10 @@ public class ChipItems extends AppCompatActivity
     }
 
     public void onFragmentInteraction(String test){
+        if(true){
+            fragmentChanger(ViewListItem.class, R.id.ChipItemInterfaceFrame, "ViewListItem");
+        }
+
         Log.d(TAG, "Value passed:" + test);
     }
 

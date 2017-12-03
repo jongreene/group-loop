@@ -197,43 +197,10 @@ public class ViewListItem extends Fragment {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                Log.d("Database Error", databaseError.toString());
 
             }
         });
-//        adapter.clear();
-//        textList.addChildEventListener(new ChildEventListener() {
-//                       @Override
-//                       public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-//                           String tempKey = (String) dataSnapshot.getValue();
-//                           listItems.add(tempKey);
-//                           adapter.notifyDataSetChanged();
-//                       }
-//
-//                       @Override
-//                       public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
-//                       }
-//
-//                       @Override
-//                       public void onChildRemoved(DataSnapshot dataSnapshot) {
-//                           if(removeFlag){
-//                               int rowIndex = Integer.parseInt(dataSnapshot.getKey());
-//                               listItems.remove(rowIndex);
-//                               adapter.notifyDataSetChanged();
-//                           }
-//                           else{
-//                               removeFlag = true;
-//                           }
-//
-//
-//                       }
-//
-//                       @Override
-//                       public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
-//
-//                       @Override
-//                       public void onCancelled(DatabaseError databaseError) {}
-//                   });
-//
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             SharedPreferences pref = getContext().getSharedPreferences("MyPref", 0);

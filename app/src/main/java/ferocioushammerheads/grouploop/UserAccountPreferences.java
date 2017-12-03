@@ -20,7 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class UserAccountPreferences extends Fragment {
+public class UserAccountPreferences extends Fragment implements AccountToolsHelper {
     private OnFragmentInteractionListener mListener;
 
     private ButtonClickListener mButtonClickListener;
@@ -50,18 +50,13 @@ public class UserAccountPreferences extends Fragment {
         user = mAuth.getCurrentUser();
         // [END initialize_auth]
 
-//
         super.onCreate(savedInstanceState);
 
-        if(user!=null) {
-            loadUserProfile();
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_user_account_preferences, container, false);
 
@@ -86,6 +81,9 @@ public class UserAccountPreferences extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setupFragment();
+        if(user!=null) {
+            updateUserProfileVariable();
+        }
 
     }
 
@@ -125,29 +123,6 @@ public class UserAccountPreferences extends Fragment {
         }
     }
 
-    public void loadUserProfile(){
-        if(user != null && MainActivity.user != null) {
-            String userRefString = "/users/" + MainActivity.user.getUid();
-            UserAccount.mDatabaseRef = FirebaseDatabase.getInstance().getReference(userRefString);
-            ValueEventListener postListener = new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    MainActivity.userProfile = dataSnapshot.getValue(UserProfile.class);
-                    Log.d(TAG, "email from snapshot:" + MainActivity.userProfile.getEmail());
-//                    mListener.onFragmentInteraction(MainActivity.userProfile);
-                    updateUserProfileVariable();
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-                }
-            };
-
-            UserAccount.mDatabaseRef.addValueEventListener(postListener);
-        }
-    }
-
     public void setupFragment(){
         if(user!=null) {
             mLoginButton.setText(R.string.button_Logout);
@@ -161,7 +136,6 @@ public class UserAccountPreferences extends Fragment {
         }
     }
 
-//    TODO: make sure database has the correct structure or modify UserProfile to handle
     public void updateUserProfileVariable(){
         // Views
         mUserName = view.findViewById(R.id.pref_username);
@@ -170,9 +144,13 @@ public class UserAccountPreferences extends Fragment {
         mEmail = view.findViewById(R.id.pref_email);
 
         mUserName.setText(MainActivity.userProfile.getUsername());
-        mGroupList.setText(MainActivity.userProfile.getGroupList().toString());
+        mGroupList.setText(MainActivity.userProfile.getGroupListString());
         mActiveGroup.setText(MainActivity.userProfile.getCurrentGroup());
         mEmail.setText(MainActivity.userProfile.getEmail());
 
     }
+
+    public void loggedInEvent (){}
+    public void loadProfileEvent(){}
+    public void toastUp(String toastText){}
 }

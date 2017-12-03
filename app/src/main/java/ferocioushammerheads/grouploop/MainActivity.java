@@ -64,9 +64,6 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        set current user
-        user = FirebaseAuth.getInstance().getCurrentUser();
-
         if (mButtonClickListener == null) {
             mButtonClickListener = new ButtonClickListener();
         }
@@ -81,17 +78,19 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
 
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
-        mAuth.getCurrentUser();
+        // set current user
+        user = mAuth.getCurrentUser();
         // [END initialize_auth]
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        AccountTools tmpTools = AccountTools.getInstance();
-        tmpTools.setupTools(this, mAuth, mDatabase);
+
+        firebaseTools = AccountTools.getInstance();
+        firebaseTools.setupTools(this, mAuth, mDatabase);
 
 //        tmpTools.signOut();
         if(user != null) {
-            tmpTools.loadProfile();
+            firebaseTools.loadProfile();
         }
 
         updateUserEnvironment();
@@ -125,11 +124,7 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
             else{
                 login_button.setText(R.string.button_login_logout_logged_in_no_email);
             }
-
-            if(MainActivity.userProfile != null && MainActivity.userProfile.getCurrentGroup() != null) {
-                findViewById(R.id.chipItemsButtons).setVisibility(View.VISIBLE);
-            }
-
+            findViewById(R.id.chipItemsButtons).setVisibility(View.VISIBLE);
         }
         else {
             Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -149,13 +144,13 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
             Intent intent = new Intent(this, UserAccount.class);
 
             Bundle b = new Bundle();
-//            1: logged in. 2: otherwise
+            //  1: logged in. 2: otherwise
             if(user!=null) {
                 b.putInt("key", 1);
             } else {
                 b.putInt("key", -1);
             }
-//            Put your key in your next Intent
+            //  Put your key in your next Intent
             intent.putExtras(b);
 
             startActivity(intent);
@@ -166,16 +161,12 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
 
     // Define the actual handler for the event.
     public void loggedInEvent() {
-        updateUserEnvironment();
+
     }
 
     // Define the actual handler for the event.
     public static DatabaseReference mDatabaseRef;
-
-    public void loadProfileEvent() {
-
-    }
-
+    public void loadProfileEvent() {}
     public void toastUp(String toastText){
         Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show();
     }

@@ -149,27 +149,31 @@ public class ChangeGroup extends Fragment {
         public void onClick(View view) {
             groupList = MainActivity.userProfile.getGroupList();
             if (mListener != null) {
-                AccountTools tmpTools = AccountTools.getInstance();
                 if(view.getId() == R.id.add_group_button){
+
+                    // this checks to see if the group exists in the database before adding
                     String userRefString = "/groups/";
                     mDatabaseRef = FirebaseDatabase.getInstance().getReference(userRefString);
-
                     mDatabaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot snapshot) {
                             if (snapshot.hasChild(mGroupName.getText().toString())) {
-                                AccountTools tmpTools = AccountTools.getInstance();
                                 MainActivity.userProfile.addNewGroup(mGroupName.getText().toString());
-                                tmpTools.updateUser(MainActivity.userProfile);
+                                MainActivity.firebaseTools.getInstance().updateUser(MainActivity.userProfile);
 
                                 // workaround for listAdapter getting out of sync with groupList
                                 if(groupList.size() != listAdapter.getCount())
                                     listAdapter.add(mGroupName.getText().toString());
 
-                                Log.w(TAG, "Group exists");
+                                MainActivity.firebaseTools.setSomethingHappened(true);
+                                MainActivity.firebaseTools.toastUp("Group added!");
+                                MainActivity.firebaseTools.setSomethingHappened(false);
+
                             }
                             else {
-                                Log.w(TAG, "Group doesn't exist");
+                                MainActivity.firebaseTools.setSomethingHappened(true);
+                                MainActivity.firebaseTools.toastUp("Group not exist..");
+                                MainActivity.firebaseTools.setSomethingHappened(false);
                             }
                             mGroupName.setText("");
                         }
@@ -183,22 +187,31 @@ public class ChangeGroup extends Fragment {
                     showGroupOptionsMenu(false, null, 0, 0);
 
                 } else if(view.getId() == R.id.change_group_set_active){
+                    String group = MainActivity.userProfile.getGroupList().get(itemSelected);
+
+                    MainActivity.firebaseTools.setSomethingHappened(true);
+                    MainActivity.firebaseTools.toastUp("Set '" + group + "' as the active group.");
+                    MainActivity.firebaseTools.setSomethingHappened(false);
+
                     MainActivity.userProfile.setCurrentGroup(itemSelected);
-                    tmpTools.updateUser(MainActivity.userProfile);
+                    MainActivity.firebaseTools.updateUser(MainActivity.userProfile);
                     showGroupOptionsMenu(false, null, 0, 0);
 
-                    tmpTools.loadGroup(MainActivity.userProfile.getCurrentGroup());
+                    MainActivity.firebaseTools.loadGroup(MainActivity.userProfile.getCurrentGroup());
 
                 } else if(view.getId() == R.id.change_group_remove_group){
-                    String tmp = "" + itemSelected;
-                    Toast.makeText(view.getContext(),tmp,Toast.LENGTH_SHORT).show();
+                    String group = MainActivity.userProfile.getGroupList().get(itemSelected);
+
+                    MainActivity.firebaseTools.setSomethingHappened(true);
+                    MainActivity.firebaseTools.toastUp("Removed '" + group + "' from group list.");
+                    MainActivity.firebaseTools.setSomethingHappened(false);
+
                     MainActivity.userProfile.removeGroup(itemSelected);
-                    tmpTools.updateUser(MainActivity.userProfile);
+                    MainActivity.firebaseTools.updateUser(MainActivity.userProfile);
 
 //                    workaround for listAdapter getting out of sync with groupList
                     if(groupList.size() != listAdapter.getCount())
                         listAdapter.remove(listAdapter.getItem(itemSelected));
-//                    groupList = (ArrayList<String>) MainActivity.userProfile.getGroupList();
 
                     showGroupOptionsMenu(false, null, 0, 0);
 

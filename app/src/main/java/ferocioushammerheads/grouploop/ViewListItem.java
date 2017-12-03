@@ -175,33 +175,59 @@ public class ViewListItem extends Fragment {
         listView.setAdapter(adapter);
 
         DatabaseReference textList = FirebaseDatabase.getInstance().getReference().child("groups").child(MainActivity.currentGroup.getGroupId()).child("chipItems").child(tempID).child("items");
-        textList.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    String tempKey = (String) snapshot.getValue();
-                    listItems.add(tempKey);
-                    adapter.notifyDataSetChanged();
-                }
+//        textList.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+//                    String tempKey = (String) snapshot.getValue();
+//                    listItems.add(tempKey);
+//                    adapter.notifyDataSetChanged();
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+            textList.addChildEventListener(new ChildEventListener() {
+                       @Override
+                       public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                           String tempKey = (String) dataSnapshot.getValue();
+                           listItems.add(tempKey);
+                           adapter.notifyDataSetChanged();
+                       }
 
-            }
+                       @Override
+                       public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
+                       }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                       @Override
+                       public void onChildRemoved(DataSnapshot dataSnapshot) {
+                           int rowIndex = Integer.parseInt(dataSnapshot.getKey());
+                           listItems.remove(rowIndex);
+                           adapter.notifyDataSetChanged();
 
-            }
-        });
+                       }
+
+                       @Override
+                       public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+                       @Override
+                       public void onCancelled(DatabaseError databaseError) {}
+                   });
+
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             SharedPreferences pref = getContext().getSharedPreferences("MyPref", 0);
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                listItems.remove(i);
-//                adapter.notifyDataSetChanged();
                 ArrayList<ChipItemTextList> chipitems = MainActivity.currentGroup.getChipItems();
                 int itemIndex = Integer.parseInt(pref.getString("itemid", null));
                 chipitems.get(itemIndex).removeItemAt(i);
-                adapter.clear();
+//                listItems.remove(i);
+//                adapter.clear();
                 MainActivity.currentGroup.setChipItems(chipitems);
                 MainActivity.mDatabase.child("groups").child(currentGroup.getGroupId()).child("chipItems").setValue(currentGroup.getChipItems());
 
@@ -276,7 +302,7 @@ public class ViewListItem extends Fragment {
         int itemIndex = Integer.parseInt(pref.getString("itemid", null));
         String temptext = tempname.getText().toString();
         chipitems.get(itemIndex).addItem(temptext);
-        adapter.clear();
+//        adapter.clear();
         MainActivity.currentGroup.setChipItems(chipitems);
         MainActivity.mDatabase.child("groups").child(currentGroup.getGroupId()).child("chipItems").setValue(currentGroup.getChipItems());
 

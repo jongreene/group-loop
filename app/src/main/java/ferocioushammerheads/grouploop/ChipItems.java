@@ -36,7 +36,15 @@ public class ChipItems extends AppCompatActivity
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         fragmentChanger(ViewAllChipItems.class,R.id.ChipItemInterfaceFrame, "ViewAllChipItems");
+
+
+//        AccountTools tmpTools = AccountTools.getInstance();
+//        tmpTools.loadProfileEvent();
+////        load current group
+//        tmpTools.loadGroup(userProfile.getCurrentGroup());
+
     }
 
     @Override
@@ -54,7 +62,7 @@ public class ChipItems extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.action_logout:
                 if (MainActivity.user != null) {
-                    AccountTools tmpTools = MainActivity.firebaseTools.getInstance();
+                    AccountTools tmpTools = AccountTools.getInstance();
                     tmpTools.signOut();
                     Intent intent = new Intent(this, MainActivity.class);
                     startActivity(intent);
@@ -100,7 +108,6 @@ public class ChipItems extends AppCompatActivity
     public void onBackPressed() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment myFragment = fragmentManager.findFragmentByTag("ViewAllChipItems");
-
         if (myFragment != null && myFragment.isVisible()) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
@@ -160,8 +167,4 @@ public class ChipItems extends AppCompatActivity
 //
 //        }
     }
-
-
-
-
 }

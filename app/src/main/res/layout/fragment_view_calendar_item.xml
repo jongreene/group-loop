@@ -1,13 +1,492 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:scrollbarAlwaysDrawVerticalTrack="true"
+    android:scrollbars="vertical"
+    app:layout_scrollFlags="scroll"
     tools:context="ferocioushammerheads.grouploop.ViewCalendarItem">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/editTextUserDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="24dp"
+            android:ems="10"
+            android:hint="Description"
+            android:inputType="textPersonName"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <DatePicker
+            android:id="@+id/datePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/common_google_signin_btn_text_dark_default"
+            android:calendarTextColor="@color/black"
+            android:dayOfWeekBackground="@color/colorPrimary"
+
+            android:dayOfWeekTextAppearance="@color/colorPrimary"
+            android:foregroundTint="@color/common_google_signin_btn_text_dark_default"
+            android:headerBackground="@color/colorPrimary"
+            android:visibility="visible"
+            android:yearListItemTextAppearance="@color/colorPrimary"
+            android:yearListSelectorColor="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/FABcheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:clickable="true"
+            android:src="@android:drawable/ic_menu_add"
+
+            android:visibility="gone"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/FABdateAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:clickable="true"
+            android:src="@android:drawable/ic_menu_add"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:text="Done"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/editTextUserDescription"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ScrollView
+            android:id="@+id/scrollCheckBox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <CheckBox
+                    android:id="@+id/checkBox12am"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="1"
+                    android:text="12AM   " />
+
+                <CheckBox
+                    android:id="@+id/checkBox01am"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="2"
+                    android:text="1AM" />
+
+                <CheckBox
+                    android:id="@+id/checkBox02am"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="3"
+                    android:text="2AM" />
+
+                <CheckBox
+                    android:id="@+id/checkBox03am"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="4"
+                    android:text="3AM" />
+
+                <CheckBox
+                    android:id="@+id/checkBox04am"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="5"
+                    android:text="4AM" />
+
+                <CheckBox
+                    android:id="@+id/checkBox05am"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="6"
+                    android:text="5AM" />
+
+                <CheckBox
+                    android:id="@+id/checkBox06am"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="7"
+                    android:text="6AM" />
+
+                <CheckBox
+                    android:id="@+id/checkBox07am"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="8"
+                    android:text="7AM" />
+
+                <CheckBox
+                    android:id="@+id/checkBox08am"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="9"
+                    android:text="8AM" />
+
+                <CheckBox
+                    android:id="@+id/checkBox09am"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="10"
+                    android:text="9AM" />
+
+                <CheckBox
+                    android:id="@+id/checkBox10am"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="11"
+                    android:text="10AM" />
+
+                <CheckBox
+                    android:id="@+id/checkBox11am"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="12"
+                    android:text="11AM" />
+
+                <CheckBox
+                    android:id="@+id/checkBox12pm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="13"
+                    android:text="12PM" />
+
+                <CheckBox
+                    android:id="@+id/checkBox01pm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="14"
+                    android:text="1PM" />
+
+                <CheckBox
+                    android:id="@+id/checkBox02pm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="15"
+                    android:text="2PM" />
+
+                <CheckBox
+                    android:id="@+id/checkBox03pm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="16"
+                    android:text="3PM" />
+
+                <CheckBox
+                    android:id="@+id/checkBox04pm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="17"
+                    android:text="4PM" />
+
+                <CheckBox
+                    android:id="@+id/checkBox05pm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="18"
+                    android:text="5PM" />
+
+                <CheckBox
+                    android:id="@+id/checkBox06pm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="19"
+                    android:text="6PM" />
+
+                <CheckBox
+                    android:id="@+id/checkBox07pm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="20"
+                    android:text="7PM" />
+
+                <CheckBox
+                    android:id="@+id/checkBox08pm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="21"
+                    android:text="8PM" />
+
+                <CheckBox
+                    android:id="@+id/checkBox09pm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="22"
+                    android:text="9PM" />
+
+                <CheckBox
+                    android:id="@+id/checkBox10pm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="23"
+                    android:text="10PM" />
+
+                <CheckBox
+                    android:id="@+id/checkBox11pm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="24"
+                    android:text="11PM" />
+
+                <TextView
+                    android:id="@+id/textView12am"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="1"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView01am"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="2"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView02am"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="3"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView03am"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="4"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView04am"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="5"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView05am"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="6"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView06am"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="7"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView07am"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="8"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView08am"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="9"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView09am"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="10"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView10am"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="11"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView11am"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="12"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView12pm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="13"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView01pm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="14"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView02pm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="15"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView03pm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="16"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView04pm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="17"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView05pm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="18"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView06pm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="19"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView07pm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="20"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView08pm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="21"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView09pm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="22"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView10pm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="23"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView11pm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="24"
+                    android:text="TextView" />
+
+            </GridLayout>
+        </ScrollView>
+    </android.support.constraint.ConstraintLayout>
+
 
 </FrameLayout>

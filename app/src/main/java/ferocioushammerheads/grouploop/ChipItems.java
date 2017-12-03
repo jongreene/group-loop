@@ -85,11 +85,9 @@ public class ChipItems extends AppCompatActivity
                 break;
             case android.R.id.home:
                 if (myFragment != null && myFragment.isVisible()) {
-                    Toast.makeText(getApplicationContext(), "Default behavior", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(this, MainActivity.class);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(getApplicationContext(), "Overriding default", Toast.LENGTH_SHORT).show();
                     if (fragmentManager.findFragmentByTag("CreateChipItem") != null && fragmentManager.findFragmentByTag("CreateChipItem").isVisible()) {
                         fragmentChanger(ViewAllChipItems.class, R.id.ChipItemInterfaceFrame, "ViewAllChipItems");
                     } else if (fragmentManager.findFragmentByTag("ViewListItem") != null && fragmentManager.findFragmentByTag("ViewListItem").isVisible()) {

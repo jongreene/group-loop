@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class UserAccount extends AppCompatActivity
         implements Login.OnFragmentInteractionListener,
@@ -30,6 +31,9 @@ public class UserAccount extends AppCompatActivity
         NotificationSettings.OnFragmentInteractionListener,
         CreateGroup.OnFragmentInteractionListener,
         AccountToolsHelper {
+
+    private List<List<String>> listOfFragments;
+
     public static DatabaseReference mDatabaseRef;
 
     private int externChangeGroup = -1;
@@ -49,6 +53,15 @@ public class UserAccount extends AppCompatActivity
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // [END toolbar_setup]
+
+
+        listOfFragments = Arrays.asList(
+                Arrays.asList("User Account Preferences","UserAccountPreferences"),
+                Arrays.asList("Login","Login"),
+                Arrays.asList("Change Group","ChangeGroup"),
+                Arrays.asList("Notification Settings","NotificationSettings"),
+                Arrays.asList("Create Group","CreateGroup")
+                );
 
         // [START initialize_auth]
         if(MainActivity.mAuth == null) {
@@ -153,19 +166,7 @@ public class UserAccount extends AppCompatActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment;
 
-        ArrayList<Fragment> newFrag = new ArrayList<Fragment>();
-
         fragment = null;
-
-        Fragment[] thisFrag = new Fragment[]{
-                fragmentManager.findFragmentByTag("User Account Preferences"),
-                fragmentManager.findFragmentByTag("Login"),
-                fragmentManager.findFragmentByTag("Change Group"),
-                fragmentManager.findFragmentByTag("Notification Settings"),
-                fragmentManager.findFragmentByTag("Create Group"),
-                fragmentManager.findFragmentByTag(fragName)};
-
-        newFrag.addAll(Arrays.asList(thisFrag));
 
         try {
             fragment = (Fragment) newFragment.newInstance();
@@ -173,15 +174,14 @@ public class UserAccount extends AppCompatActivity
             e.printStackTrace();
         }
 
-        for(Fragment tmp : newFrag) {
-            hideFrag(fragmentManager, tmp);
+        for(List<String> tmp : listOfFragments){
+            hideFrag(fragmentManager,fragmentManager.findFragmentByTag(tmp.get(0)));
         }
 
         buildFrag(fragmentManager, containerName, fragment, fragName);
     }
 
-    public void onFragmentInteraction() {
-    }
+    public void onFragmentInteraction() {}
 
     public void onFragmentInteraction(UserProfile profile) {}
 
@@ -254,14 +254,15 @@ public class UserAccount extends AppCompatActivity
     public void checkCurrentFragment(){
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        if (fragmentManager.findFragmentByTag("Create Group") != null && fragmentManager.findFragmentByTag("Create Group").isVisible()) {
-            fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "User Account Preferences");
-        } else if (fragmentManager.findFragmentByTag("Change Group") != null && fragmentManager.findFragmentByTag("Change Group").isVisible()) {
-            fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "User Account Preferences");
-        } else if(fragmentManager.findFragmentByTag("Notification Settings") != null && fragmentManager.findFragmentByTag("Notification Settings").isVisible()){
-            fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "User Account Preferences");
-        } else {
-            fragmentChanger(ChangeGroup.class, R.id.user_account_frag_frame, "Change Group");
+        for(List<String> fragment : listOfFragments){
+            if (fragmentManager.findFragmentByTag(fragment.get(0)) != null && fragmentManager.findFragmentByTag(fragment.get(0)).isVisible()) {
+                if (fragment.get(0)=="Change Group"||fragment.get(0)=="Notification Settings"||fragment.get(0)=="Login") {
+                    fragmentChanger(UserAccountPreferences.class, R.id.user_account_frag_frame, "User Account Preferences");
+                } else if(fragment.get(0)=="Create Group"){
+                    fragmentChanger(ChangeGroup.class, R.id.user_account_frag_frame, "Change Group");
+                }
+                break;
+            }
         }
     }
 

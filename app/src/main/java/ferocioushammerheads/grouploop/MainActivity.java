@@ -35,7 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity implements AccountToolsHelper{
-    private static final String TAG = "AccountTools";
+    private static final String TAG = "MainActivity";
 
 
     private Button mChipItemsButton, mPreferencesButton;

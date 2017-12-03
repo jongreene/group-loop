@@ -79,8 +79,6 @@ public class AccountTools {
             return;
         }
 
-//        showProgressDialog();
-
         // [START create_user_with_email]
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -88,24 +86,20 @@ public class AccountTools {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
 //                            generates a folder under users for the user
                             writeNewUser(user.getUid(), username, username);
                             setSomethingHappened(true);
                             doWork();
+                            toastUp("Logged in.");
                             setSomethingHappened(false);
 
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-//                            Toast.makeText(view.getCon, "Authentication failed. Password not long enough.",Toast.LENGTH_SHORT).show();
-//                            updateUI(null);
+                            setSomethingHappened(true);
+                            toastUp("Authentication failed.");
+                            setSomethingHappened(false);
                         }
-
-                        // [START_EXCLUDE]
-//                        hideProgressDialog();
-                        // [END_EXCLUDE]
                     }
                 });
         // [END create_user_with_email]
@@ -162,7 +156,9 @@ public class AccountTools {
                             setSomethingHappened(false);
 
                         } else {
-                            Log.e(TAG, "sendEmailVerification", task.getException());
+                            setSomethingHappened(true);
+                            toastUp("Failed to send email");
+                            setSomethingHappened(false);
                         }
                         // [END_EXCLUDE]
                     }
@@ -175,7 +171,7 @@ public class AccountTools {
 
         if (email.length()<4) {
             setSomethingHappened(true);
-            toastUp("Failed to sign in");
+            toastUp("Failed to sign in. Too short.");
             setSomethingHappened(false);
 
             valid = false;
@@ -183,8 +179,9 @@ public class AccountTools {
 
         if (password.length()<6) {
             setSomethingHappened(true);
-            toastUp("Failed to sign in");
+            toastUp("Failed to sign in. Too short.");
             setSomethingHappened(false);
+
             valid = false;
         }
 
@@ -223,12 +220,19 @@ public class AccountTools {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 UserGroup tmpGroup = dataSnapshot.getValue(UserGroup.class);
                 MainActivity.currentGroup = tmpGroup;
-//                Log.d(TAG, "group creator:" + tmpGroup.getCreator());
+
+//                setSomethingHappened(true);
+//                toastUp("UserGroup changed.");
+//                setSomethingHappened(false);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+
+//                setSomethingHappened(true);
+//                toastUp("Database error.");
+//                setSomethingHappened(false);
             }
         };
         mDatabaseRef.addValueEventListener(postListener);
@@ -242,12 +246,13 @@ public class AccountTools {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 UserProfile tmpProfile = dataSnapshot.getValue(UserProfile.class);
                 MainActivity.userProfile = tmpProfile;
-                Log.d(TAG, "email from snapshot:" + tmpProfile.getEmail());
                 if(tmpProfile.getGroupList().size()>0) {
                     loadGroup(tmpProfile.getCurrentGroup());
 
+//                    TODO: find recursive call
                     setSomethingHappened(true);
                     doWork();
+//                    toastUp("UserProfile changed.");
                     setSomethingHappened(false);
                 }
             }

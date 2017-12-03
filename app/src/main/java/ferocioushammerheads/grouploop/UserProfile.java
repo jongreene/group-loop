@@ -71,6 +71,7 @@ public class UserProfile {
         groupList = nullArrayListCheck(groupList);
         if(newGroup.length()>0) {
             groupList.add(newGroup);
+            setCurrentGroup(groupList.indexOf(newGroup));
             return true;
         }
         return false;
@@ -78,8 +79,13 @@ public class UserProfile {
 
     public boolean removeGroup(int index){
         groupList = nullArrayListCheck(groupList);
-        if (groupList.size() > index && index >= 0) {
+        String selectedGroup = groupList.get(index);
+
+        if (index >= 0) {
             groupList.remove(index);
+            if(currentGroup.equals(selectedGroup)){
+                setCurrentGroup(0);
+            }
             return true;
         }
         return false;

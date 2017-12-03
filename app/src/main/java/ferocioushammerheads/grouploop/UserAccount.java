@@ -20,7 +20,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -54,7 +53,7 @@ public class UserAccount extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // [END toolbar_setup]
 
-
+        // Populate the fragments list with title and class names
         listOfFragments = Arrays.asList(
                 Arrays.asList("User Account Preferences","UserAccountPreferences"),
                 Arrays.asList("Login","Login"),
@@ -128,6 +127,7 @@ public class UserAccount extends AppCompatActivity
             case android.R.id.home:
                 // special case. returns to ChipItems
                 if(externChangeGroup == 3){
+                    externChangeGroup = -1;
                     Intent intent = new Intent(this, ChipItems.class);
                     startActivity(intent);
                     break;
@@ -150,6 +150,7 @@ public class UserAccount extends AppCompatActivity
 
         // special case. returns to ChipItems
         if(externChangeGroup == 3){
+            externChangeGroup = -1;
             Intent intent = new Intent(this, ChipItems.class);
             startActivity(intent);
         }

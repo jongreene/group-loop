@@ -1,11 +1,7 @@
 package ferocioushammerheads.grouploop;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -20,8 +16,6 @@ import com.google.firebase.database.ValueEventListener;
 
 
 public class AccountTools {
-//    private OnSignInListener mSignIn;
-
     private static final String TAG = "EmailPassword";
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -30,22 +24,10 @@ public class AccountTools {
 
     private UserProfile userProfile;
 
-    ////////////////////////////////////////////////////////////////////////////////////
-
     private AccountToolsHelper ie;
     private boolean somethingHappened;
 
     AccountTools(){}
-
-    AccountTools(AccountTools accountTools){
-        this.mAuth = accountTools.mAuth;
-        this.mDatabase = accountTools.mDatabase;
-
-        // Save the event object for later use.
-        ie = accountTools.ie;
-        // Nothing to report yet.
-        somethingHappened = accountTools.somethingHappened;
-    }
 
     public void setupTools(UserAccount event,FirebaseAuth mAuth, DatabaseReference mDatabase){
         this.mAuth = mAuth;
@@ -78,7 +60,6 @@ public class AccountTools {
         {
             // Signal the even by invoking the interface's method.
             ie.loggedInEvent();
-//            ie.loadProfileEvent();
         }
     }
 
@@ -88,16 +69,13 @@ public class AccountTools {
         if (somethingHappened)
         {
             ie.toastUp(toastText);
-
         }
     }
-    ////////////////////////////////////////////////////////////////////////////////////
 
 
     public void createAccount(String email, String password) {
         final String username = email;
-        Log.d(TAG, "createAccount:" + email);
-        if (!validateForm()) {
+        if (!validateForm(email, password)) {
             return;
         }
 
@@ -137,11 +115,9 @@ public class AccountTools {
 
     public void signIn(String email, String password) {
         Log.d(TAG, "signIn:" + email);
-        if (!validateForm()) {
+        if (!validateForm(email, password)) {
             return;
         }
-
-//        showProgressDialog();
 
         // [START sign_in_with_email]
         mAuth.signInWithEmailAndPassword(email, password)
@@ -194,24 +170,23 @@ public class AccountTools {
         // [END send_email_verification]
     }
 
-    private boolean validateForm() {
+    private boolean validateForm(String email, String password) {
         boolean valid = true;
-//
-//        String email = mEmailField.getText().toString();
-//        if (TextUtils.isEmpty(email)) {
-//            mEmailField.setError("Required.");
-//            valid = false;
-//        } else {
-//            mEmailField.setError(null);
-//        }
-//
-//        String password = mPasswordField.getText().toString();
-//        if (TextUtils.isEmpty(password)) {
-//            mPasswordField.setError("Required.");
-//            valid = false;
-//        } else {
-//            mPasswordField.setError(null);
-//        }
+
+        if (email.length()<4) {
+            setSomethingHappened(true);
+            toastUp("Failed to sign in");
+            setSomethingHappened(false);
+
+            valid = false;
+        }
+
+        if (password.length()<6) {
+            setSomethingHappened(true);
+            toastUp("Failed to sign in");
+            setSomethingHappened(false);
+            valid = false;
+        }
 
         return valid;
     }

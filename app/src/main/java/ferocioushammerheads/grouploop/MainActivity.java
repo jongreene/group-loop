@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
     // [END declare_auth]
     public static DatabaseReference mDatabase;
 
-    public static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +94,6 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
 
         updateUserEnvironment();
 
-        context = this.getBaseContext();
     }
 
     private class ButtonClickListener implements View.OnClickListener {

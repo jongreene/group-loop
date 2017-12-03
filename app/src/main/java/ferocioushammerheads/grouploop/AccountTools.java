@@ -14,6 +14,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 
 public class AccountTools {
     private static final String TAG = "EmailPassword";
@@ -118,8 +120,17 @@ public class AccountTools {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
-//                            generates a folder under users for the user
-                            writeNewUser(user.getUid(), username, username);
+
+                            // handles null pointer issues
+                            String uid = "";
+                            try {
+                                uid = user.getUid();
+                            } catch (Exception e){
+                                e.printStackTrace();
+                            }
+                            // generates a folder under users for the user
+                            writeNewUser(uid, username, username);
+
                             setSomethingHappened(true);
                             doWork();
                             toastUp("Logged in.");
@@ -198,25 +209,21 @@ public class AccountTools {
     }
 
     private boolean validateForm(String email, String password) {
-        boolean valid = true;
-
         if (email.length()<4) {
             setSomethingHappened(true);
             toastUp("Failed to sign in. Too short.");
             setSomethingHappened(false);
 
-            valid = false;
-        }
-
-        if (password.length()<6) {
+            return false;
+        } else if (password.length()<6) {
             setSomethingHappened(true);
             toastUp("Failed to sign in. Too short.");
             setSomethingHappened(false);
 
-            valid = false;
+            return false;
         }
 
-        return valid;
+        return true;
     }
 
     private void writeNewUser(String userId, String name, String email) {
@@ -240,22 +247,11 @@ public class AccountTools {
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                UserGroup tmpGroup = dataSnapshot.getValue(UserGroup.class);
-                MainActivity.currentGroup = tmpGroup;
-
-//                setSomethingHappened(true);
-//                toastUp("UserGroup changed.");
-//                setSomethingHappened(false);
+                MainActivity.currentGroup = dataSnapshot.getValue(UserGroup.class);
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-
-//                setSomethingHappened(true);
-//                toastUp("Database error.");
-//                setSomethingHappened(false);
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         };
         mDatabaseRef.addValueEventListener(postListener);
     }
@@ -268,13 +264,20 @@ public class AccountTools {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 UserProfile tmpProfile = dataSnapshot.getValue(UserProfile.class);
                 MainActivity.userProfile = tmpProfile;
-                if(tmpProfile.getGroupList().size()>0) {
+
+                // handles null pointer issues
+                ArrayList<String> groupList;
+                try {
+                    groupList = tmpProfile.getGroupList();
+                } catch (Exception e){
+                    groupList = new ArrayList<String>();
+                    e.printStackTrace();
+                }
+                if(groupList.size()>0) {
                     loadGroup(tmpProfile.getCurrentGroup());
 
-//                    TODO: find recursive call
                     setSomethingHappened(true);
                     doWork();
-//                    toastUp("UserProfile changed.");
                     setSomethingHappened(false);
                 }
             }

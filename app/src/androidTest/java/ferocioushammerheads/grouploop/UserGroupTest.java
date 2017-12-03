@@ -111,8 +111,8 @@ public class UserGroupTest {
     public void getMembers() throws Exception {
         UserGroup tester = new UserGroup("testName","GroupTest");
         ArrayList<String> members = new ArrayList<String>();
-        members.add(1, "Test1");
-        members.add(2, "Test2");
+        members.add(0, "Test1");
+        members.add(1, "Test2");
         tester.setMembers(members);
         if(!tester.getMembers().contains("Test1")||!tester.getMembers().contains("Test2")){
             Exception inGetMembers = new Exception("ERROR -- UserGroupTest -- in getMembers(). Getting members from a group FAILED.");

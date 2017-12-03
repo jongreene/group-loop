@@ -25,9 +25,6 @@ public class UserProfile {
         this.userId = userId;
         this.username = username;
         this.email = email;
-
-        ArrayList<String> test;
-        groupList = new ArrayList<String>();
     }
 
     public UserProfile(UserProfile c) {

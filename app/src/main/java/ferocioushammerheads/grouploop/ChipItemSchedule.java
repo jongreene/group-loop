@@ -12,7 +12,9 @@ import java.util.Map;
 public class ChipItemSchedule {
     private String name;
     private String creatorID;
-    private Map<String, String> schedule = new HashMap<>();
+//    private Map<String, String> schedule = new HashMap<>();
+//    private ArrayList<Map<String, String>> schedule = new ArrayList<>();
+    private HashMap<String, HashMap<String, String>> schedule = new HashMap<>();
 
     public ChipItemSchedule(){
     }
@@ -20,6 +22,21 @@ public class ChipItemSchedule {
     public ChipItemSchedule(String name, String creatorID){
         this.name = name;
         this.creatorID = creatorID;
+        HashMap<String, String> tmp1 = new HashMap<>();
+        HashMap<String, String> tmp2 = new HashMap<>();
+
+//        tmp1.put("1AM", "dude");
+//        tmp1.put("12AM", "guy");
+//        tmp1.put("3PM", "della");
+//
+//        tmp2.put("1AM", "dude");
+//        tmp2.put("12AM", "guy");
+//        tmp2.put("3PM", "della");
+//
+//        schedule.put("11032017", tmp1);
+//        schedule.put("12012018", tmp2);
+
+
     }
 
     public String getName(){
@@ -38,17 +55,17 @@ public class ChipItemSchedule {
         this.creatorID = creatorID;
     }
 
-    public Map<String, String> getSchedule() {
+    public HashMap<String, HashMap<String, String>> getSchedule() {
         return nullMapCheck(schedule);
     }
 
-    public void setSchedule(Map<String, String> aSchedule){
+    public void setSchedule(HashMap<String, HashMap<String, String>> aSchedule){
         schedule = aSchedule;
     }
 
-    private Map<String, String> nullMapCheck(Map<String, String> mapIn){
+    private HashMap<String, HashMap<String, String>> nullMapCheck(HashMap<String, HashMap<String, String>> mapIn){
         if(mapIn == null){
-            mapIn = new HashMap<String, String>();
+            mapIn = new HashMap<>();
         }
         return mapIn;
     }

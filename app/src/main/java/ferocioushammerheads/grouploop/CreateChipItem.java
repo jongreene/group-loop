@@ -160,37 +160,40 @@ public class CreateChipItem extends Fragment implements View.OnClickListener {
         String itemType = spinner.getSelectedItem().toString();
         String itemName = editText.getText().toString();
         Log.d("Adding user", itemName);
-
-//        switch (itemType){
-//            case "List":
-//                ChipItemTextList tmp1 = new ChipItemTextList("testst");
-//                MainActivity.currentGroup.addChipItemTextList(tmp1);
-//                UserAccount.mDatabaseRef.child("groups").child("bisherTest").child("chipItems").setValue(currentGroup.getChipItemsTextList());
-//                break;
-//
-//            case "Schedule":
-//                ChipItemSchedule tmp2 = new ChipItemSchedule("dfasdf");
-//                MainActivity.currentGroup.addChipItemSchedule(tmp2);
-//                UserAccount.mDatabaseRef.child("groups").child(currentGroup.getGroupId()).child("chipItems").setValue(currentGroup.getChipItemsSchedule());
-//                break;
-//
-//        }
-
-        ChipItemTextList tmp = new ChipItemTextList(itemName, MainActivity.user.getUid());
-
-        MainActivity.currentGroup.addTextListChipItem(tmp);
-        MainActivity.mDatabase.child("groups").child(currentGroup.getGroupId()).child("textListChipItems").setValue(currentGroup.getTextListChipItems());
         SharedPreferences pref = getContext().getSharedPreferences("MyPref", 0);
         SharedPreferences.Editor editor = pref.edit();
-        String tempID = String.valueOf(MainActivity.currentGroup.getTextListChipItems().size() - 1);
-        editor.putString("itemid", tempID);
-        editor.commit();
 
-        if(mListener != null){
-            mListener.onFragmentInteraction("calendar");
 
+        switch (itemType){
+            case "List":
+                ChipItemTextList tmp = new ChipItemTextList(itemName, MainActivity.user.getUid());
+                MainActivity.currentGroup.addTextListChipItem(tmp);
+                MainActivity.mDatabase.child("groups").child(currentGroup.getGroupId()).child("textListChipItems").setValue(currentGroup.getTextListChipItems());
+                String tempID = String.valueOf(MainActivity.currentGroup.getTextListChipItems().size() - 1);
+                editor.putString("itemid", tempID);
+                editor.commit();
+                if(mListener != null){
+                    mListener.onFragmentInteraction("list");
+                }
+
+                break;
+
+            case "Schedule":
+                ChipItemSchedule tmpSchedule = new ChipItemSchedule(itemName, MainActivity.user.getUid());
+                MainActivity.currentGroup.addScheduleChipItem(tmpSchedule);
+                MainActivity.mDatabase.child("groups").child(currentGroup.getGroupId()).child("scheduleChipItems").setValue(currentGroup.getScheduleChipItems());
+                MainActivity.mDatabase.child("groups").child(currentGroup.getGroupId()).child("textListChipItems").setValue(currentGroup.getTextListChipItems());
+                String tempCalID = String.valueOf(MainActivity.currentGroup.getScheduleChipItems().size() - 1);
+                editor.putString("calID", tempCalID);
+                editor.commit();
+                if(mListener != null){
+                    mListener.onFragmentInteraction("calendar");
+                }
+                break;
 
         }
+
+
 
     }
 

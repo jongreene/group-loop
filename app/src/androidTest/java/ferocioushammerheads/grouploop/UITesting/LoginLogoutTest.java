@@ -21,15 +21,16 @@ import ferocioushammerheads.grouploop.MainActivity;
 import ferocioushammerheads.grouploop.R;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static android.support.test.espresso.action.ViewActions.pressImeActionButton;
 import static android.support.test.espresso.action.ViewActions.replaceText;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -44,11 +45,10 @@ public class LoginLogoutTest {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(600);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
 
         ViewInteraction appCompatButton = onView(
                 allOf(ViewMatchers.withId(R.id.preferencesButton), withText("sign-in/sign-up"),
@@ -64,7 +64,7 @@ public class LoginLogoutTest {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(359);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -78,20 +78,10 @@ public class LoginLogoutTest {
                                                 0)),
                                 0),
                         isDisplayed()));
-        appCompatEditText.perform(click());
+        appCompatEditText.perform(replaceText("test@test.com"), closeSoftKeyboard());
+
 
         ViewInteraction appCompatEditText2 = onView(
-                allOf(withId(R.id.field_email),
-                        childAtPosition(
-                                allOf(withId(R.id.email_password_fields),
-                                        childAtPosition(
-                                                withId(R.id.relativeLayout),
-                                                0)),
-                                0),
-                        isDisplayed()));
-        appCompatEditText2.perform(replaceText("jonjon@jon.com"), closeSoftKeyboard());
-
-        ViewInteraction appCompatEditText3 = onView(
                 allOf(withId(R.id.field_password),
                         childAtPosition(
                                 allOf(withId(R.id.email_password_fields),
@@ -100,18 +90,13 @@ public class LoginLogoutTest {
                                                 0)),
                                 1),
                         isDisplayed()));
-        appCompatEditText3.perform(replaceText("password123"), closeSoftKeyboard());
+        appCompatEditText2.perform(replaceText("password"), closeSoftKeyboard());
 
-        ViewInteraction appCompatEditText4 = onView(
-                allOf(withId(R.id.field_password), withText("password123"),
-                        childAtPosition(
-                                allOf(withId(R.id.email_password_fields),
-                                        childAtPosition(
-                                                withId(R.id.relativeLayout),
-                                                0)),
-                                1),
-                        isDisplayed()));
-        appCompatEditText4.perform(pressImeActionButton());
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         ViewInteraction appCompatButton2 = onView(
                 allOf(withId(R.id.email_sign_in_button), withText("Sign In"),
@@ -128,20 +113,40 @@ public class LoginLogoutTest {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(35200);
+            Thread.sleep(12000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        ViewInteraction button = onView(
-                allOf(withId(R.id.preferencesButton),
+        ViewInteraction appCompatButton3 = onView(
+                allOf(withId(R.id.preferencesButton), withText("Preferences/Verify Email"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.drawer_layout),
-                                        0),
+                                        1),
                                 2),
                         isDisplayed()));
-        button.check(matches(isDisplayed()));
+        appCompatButton3.perform(click());
+
+        // Added a sleep statement to match the app's execution delay.
+        // The recommended way to handle such scenarios is to use Espresso idling resources:
+        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        ViewInteraction appCompatButton4 = onView(
+                allOf(withId(R.id.pref_login_button), withText("Logout"),
+                        childAtPosition(
+                                allOf(withId(R.id.constraintLayout2),
+                                        childAtPosition(
+                                                withClassName(is("android.support.constraint.ConstraintLayout")),
+                                                1)),
+                                6),
+                        isDisplayed()));
+        appCompatButton4.perform(click());
 
     }
 

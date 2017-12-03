@@ -9,5 +9,6 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="test">#76eeeeee</color>
+    <color name="no_color">#00eeeeee</color>
 
 </resources>

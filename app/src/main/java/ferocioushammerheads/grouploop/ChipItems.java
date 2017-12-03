@@ -36,7 +36,15 @@ public class ChipItems extends AppCompatActivity
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        fragmentChanger(ViewAllChipItems.class,R.id.ChipItemInterfaceFrame, "ViewAllChipItems");
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        fragmentChanger(ViewAllChipItems.class,R.id.ChipItemInterfaceFrame, "ViewCalendarItem");
+
+
+//        AccountTools tmpTools = AccountTools.getInstance();
+//        tmpTools.loadProfileEvent();
+////        load current group
+//        tmpTools.loadGroup(userProfile.getCurrentGroup());
+
     }
 
     @Override
@@ -100,7 +108,6 @@ public class ChipItems extends AppCompatActivity
     public void onBackPressed() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment myFragment = fragmentManager.findFragmentByTag("ViewAllChipItems");
-
         if (myFragment != null && myFragment.isVisible()) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
@@ -160,8 +167,4 @@ public class ChipItems extends AppCompatActivity
 //
 //        }
     }
-
-
-
-
 }

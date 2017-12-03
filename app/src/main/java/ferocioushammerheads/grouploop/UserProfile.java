@@ -25,9 +25,6 @@ public class UserProfile {
         this.userId = userId;
         this.username = username;
         this.email = email;
-
-        ArrayList<String> test;
-        groupList = new ArrayList<String>();
     }
 
     public UserProfile(UserProfile c) {
@@ -56,6 +53,19 @@ public class UserProfile {
 
     public ArrayList<String> getGroupList() {
         return nullArrayListCheck(groupList);
+    }
+
+    public String getGroupListString() {
+        String groupListString = new String();
+        int count = 1;
+        for(String group : groupList){
+            groupListString += group;
+            if(count < groupList.size()){
+                groupListString += ", ";
+            }
+            count++;
+        }
+        return groupListString;
     }
 
     public Boolean setCurrentGroup(int index) {
@@ -93,8 +103,13 @@ public class UserProfile {
 
     public boolean removeGroup(String groupName){
         groupList = nullArrayListCheck(groupList);
+        int index = groupList.indexOf(groupName);
+
         if(groupList.contains(groupName)){
-            groupList.indexOf(groupName);
+            groupList.remove(index);
+            if(currentGroup.equals(groupName)){
+                setCurrentGroup(0);
+            }
             return true;
         }
         return false;

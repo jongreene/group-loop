@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
             firebaseTools.loadProfile();
         }
 
-        updateUserEnvironment();
+//        updateUserEnvironment();
 
     }
 

@@ -96,6 +96,16 @@ public class AccountTools {
         }
     }
 
+    public void loadProfileEvent ()
+    {
+        // Check the predicate, which is set elsewhere.
+        if (somethingHappened)
+        {
+            // Signal the even by invoking the interface's method.
+            ie.loadProfileEvent();
+        }
+    }
+
     public void toastUp(String toastText)
     {
         // Check the predicate, which is set elsewhere.
@@ -258,8 +268,11 @@ public class AccountTools {
                 if(tmpProfile.getGroupList().size()>0) {
                     loadGroup(tmpProfile.getCurrentGroup());
 
+
+
                     setSomethingHappened(true);
                     doWork();
+                    loadProfileEvent();
                     setSomethingHappened(false);
                 }
             }

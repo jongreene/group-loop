@@ -55,25 +55,32 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:clickable="true"
-            android:src="@android:drawable/ic_menu_add"
-
+            android:src="@android:drawable/ic_input_add"
+            android:tint="@android:color/background_light"
             android:visibility="gone"
-
+            app:backgroundTint="@color/colorPrimary"
+            app:elevation="10dp"
+            app:fabSize="normal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:rippleColor="@android:color/black"
+            app:srcCompat="@android:drawable/ic_input_add"
+            tools:ignore="MissingConstraints" />
+
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/FABdateAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="51dp"
+            android:layout_height="63dp"
             android:layout_marginBottom="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
             android:clickable="true"
-            android:src="@android:drawable/ic_menu_add"
+            android:src="@android:drawable/ic_input_add"
+            android:tint="@android:color/background_light"
             android:visibility="visible"
+            app:backgroundTint="@color/colorPrimary"
+            app:elevation="10dp"
+            app:fabSize="normal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

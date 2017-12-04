@@ -54,8 +54,6 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
     // [END declare_auth]
     public static DatabaseReference mDatabase;
 
-    public static Context context;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +90,9 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
         if(user != null) {
             firebaseTools.loadProfile();
         }
+
+        updateUserEnvironment();
+
     }
 
     private class ButtonClickListener implements View.OnClickListener {

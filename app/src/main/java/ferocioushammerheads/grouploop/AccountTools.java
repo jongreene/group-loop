@@ -14,6 +14,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 
 public class AccountTools {
     private static final String TAG = "EmailPassword";
@@ -91,16 +93,6 @@ public class AccountTools {
         {
             // Signal the even by invoking the interface's method.
             ie.loggedInEvent();
-        }
-    }
-
-    public void profileLoaded ()
-    {
-        // Check the predicate, which is set elsewhere.
-        if (somethingHappened)
-        {
-            // Signal the even by invoking the interface's method.
-            ie.loadProfileEvent();
         }
     }
 
@@ -208,25 +200,21 @@ public class AccountTools {
     }
 
     private boolean validateForm(String email, String password) {
-        boolean valid = true;
-
         if (email.length()<4) {
             setSomethingHappened(true);
             toastUp("Failed to sign in. Too short.");
             setSomethingHappened(false);
 
-            valid = false;
-        }
-
-        if (password.length()<6) {
+            return false;
+        } else if (password.length()<6) {
             setSomethingHappened(true);
             toastUp("Failed to sign in. Too short.");
             setSomethingHappened(false);
 
-            valid = false;
+            return false;
         }
 
-        return valid;
+        return true;
     }
 
     private void writeNewUser(String userId, String name, String email) {
@@ -250,25 +238,11 @@ public class AccountTools {
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                UserGroup tmpGroup = dataSnapshot.getValue(UserGroup.class);
-                MainActivity.currentGroup = tmpGroup;
-
-                MainActivity.currentGroup.addMember(MainActivity.userProfile.getUserId());
-
-//                setSomethingHappened(true);
-//                toastUp("UserGroup changed.");
-//                setSomethingHappened(false);
-
+                MainActivity.currentGroup = dataSnapshot.getValue(UserGroup.class);
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-
-//                setSomethingHappened(true);
-//                toastUp("Database error.");
-//                setSomethingHappened(false);
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         };
         mDatabaseRef.addValueEventListener(postListener);
     }
@@ -284,10 +258,8 @@ public class AccountTools {
                 if(tmpProfile.getGroupList().size()>0) {
                     loadGroup(tmpProfile.getCurrentGroup());
 
-//                    TODO: find recursive call
                     setSomethingHappened(true);
                     doWork();
-                    profileLoaded();
                     setSomethingHappened(false);
                 }
             }
@@ -298,12 +270,5 @@ public class AccountTools {
             }
         };
         mDatabaseRef.addValueEventListener(postListener);
-    }
-
-    public void updateGroupMembers(){
-        String ref = "/groups/" + MainActivity.currentGroup.getGroupId() + "/members/";
-        MainActivity.mDatabase
-                .child(ref)
-                .setValue(MainActivity.currentGroup.getMembers());
     }
 }

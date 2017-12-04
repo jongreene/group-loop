@@ -154,7 +154,7 @@ public class ChipItems extends AppCompatActivity
 
     public void onFragmentInteraction(String frag){
 
-        if(frag.equals("list")){
+        if(frag.equals("List")){
             fragmentChanger(ViewListItem.class, R.id.ChipItemInterfaceFrame, "ViewListItem");
 
         }

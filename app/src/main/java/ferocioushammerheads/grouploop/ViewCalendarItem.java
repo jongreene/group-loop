@@ -23,6 +23,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -213,29 +214,6 @@ public class ViewCalendarItem extends Fragment {
         tv11pm=view.findViewById(R.id.textView11pm);
 //        String keyTemp;
         user = MainActivity.mAuth.getCurrentUser();
-        //https://stackoverflow.com/questions/25714520/filling-hashmap-within-loop
-//        for(int i=0; i<24; i++) {
-//            if(i==0) {
-//                myMap.put("12AM", "not scheduled");
-//            }
-//            else if(i<12) {
-//                keyTemp = ""+i+"AM";
-//                myMap.put(keyTemp, "not scheduled");
-//            }
-//            else if(i==12) {
-//                myMap.put("12AM", "not scheduled");
-//            }
-//            else {
-//                int temp = i-12;
-//                keyTemp = ""+temp+"PM";
-//                myMap.put(keyTemp, "not scheduled");
-//            }
-//        }
-
-        //description view
-        //description = view.findViewById(R.id.editTextUserDescription);
-        //addDescription = view.findViewById(R.id.button);
-        //buttons
         if(myBCL == null) {
             myBCL = new ButtonClickListener();
         }
@@ -244,10 +222,6 @@ public class ViewCalendarItem extends Fragment {
         }*/
         dateSelection.setOnClickListener(myBCL);
         checkBoxSelection.setOnClickListener(myBCL);
-        //addDescription.setOnClickListener(myBCL);
-        /*
-         * TODO: Firebase stuff
-         */
         return view;
     }
 
@@ -267,11 +241,6 @@ public class ViewCalendarItem extends Fragment {
                 Log.d("===Hash Map===", schedule.toString());
 
                 Log.d("===View Created===", "success");
-//                ArrayList<ChipItemTextList> chipitems = MainActivity.currentGroup.getTextListChipItems();
-//                int itemIndex = Integer.parseInt(tempID);
-//                chipitems.get(itemIndex).setItems(listItems);
-//                MainActivity.currentGroup.setTextListChipItems(chipitems);
-//                MainActivity.mDatabase.child("groups").child(currentGroup.getGroupId()).child("textListChipItems").setValue(currentGroup.getTextListChipItems());
 
 
             }
@@ -367,6 +336,7 @@ public class ViewCalendarItem extends Fragment {
             myMap = schedule.get(dayID);
         }
 
+
         tv12am.setText(myMap.get("12am"));
         tv01am.setText(myMap.get("1am"));
         tv02am.setText(myMap.get("2am"));
@@ -393,49 +363,188 @@ public class ViewCalendarItem extends Fragment {
         tv10pm.setText(myMap.get("10pm"));
         tv11pm.setText(myMap.get("11pm"));
 
+
+        if(!myMap.get("12am").equals("not scheduled")){
+            cb12am.setChecked(true);
+            if( !myMap.get("12am").equals(MainActivity.userProfile.getUsername())){
+                cb12am.setEnabled(false);
+            }
+        }
+        if(!myMap.get("1am").equals("not scheduled")){
+            cb01am.setChecked(true);
+            if( !myMap.get("1am").equals(MainActivity.userProfile.getUsername())){
+                cb01am.setEnabled(false);
+            }
+        }
+        if(!myMap.get("2am").equals("not scheduled")){
+            cb02am.setChecked(true);
+            if( !myMap.get("2am").equals(MainActivity.userProfile.getUsername())){
+                cb02am.setEnabled(false);
+            }
+        }
+        if(!myMap.get("3am").equals("not scheduled")){
+            cb03am.setChecked(true);
+            if( !myMap.get("3am").equals(MainActivity.userProfile.getUsername())){
+                cb03am.setEnabled(false);
+            }
+        }
+        if(!myMap.get("4am").equals("not scheduled")){
+            cb04am.setChecked(true);
+            if( !myMap.get("4am").equals(MainActivity.userProfile.getUsername())){
+                cb04am.setEnabled(false);
+            }
+        }
+        if(!myMap.get("5am").equals("not scheduled")){
+            cb05am.setChecked(true);
+            if( !myMap.get("5am").equals(MainActivity.userProfile.getUsername())){
+                cb05am.setEnabled(false);
+            }
+        }
+        if(!myMap.get("6am").equals("not scheduled")){
+            cb06am.setChecked(true);
+            if( !myMap.get("6am").equals(MainActivity.userProfile.getUsername())){
+                cb06am.setEnabled(false);
+            }
+        }
+        if(!myMap.get("7am").equals("not scheduled")){
+            cb07am.setChecked(true);
+            if( !myMap.get("7am").equals(MainActivity.userProfile.getUsername())){
+                cb07am.setEnabled(false);
+            }
+        }
+        if(!myMap.get("8am").equals("not scheduled")){
+            cb08am.setChecked(true);
+            if( !myMap.get("8am").equals(MainActivity.userProfile.getUsername())){
+                cb08am.setEnabled(false);
+            }
+        }
+        if(!myMap.get("9am").equals("not scheduled")){
+            cb09am.setChecked(true);
+            if( !myMap.get("9am").equals(MainActivity.userProfile.getUsername())){
+                cb09am.setEnabled(false);
+            }
+        }
+        if(!myMap.get("10am").equals("not scheduled")){
+            cb10am.setChecked(true);
+            if( !myMap.get("10am").equals(MainActivity.userProfile.getUsername())){
+                cb10am.setEnabled(false);
+            }
+        }
+        if(!myMap.get("11am").equals("not scheduled")){
+            cb11am.setChecked(true);
+            if( !myMap.get("11am").equals(MainActivity.userProfile.getUsername())){
+                cb11am.setEnabled(false);
+            }
+        }
+        if(!myMap.get("12pm").equals("not scheduled")){
+            cb12pm.setChecked(true);
+            if( !myMap.get("12pm").equals(MainActivity.userProfile.getUsername())){
+                cb12pm.setEnabled(false);
+            }
+        }
+        if(!myMap.get("1pm").equals("not scheduled")){
+            cb01pm.setChecked(true);
+            if( !myMap.get("1pm").equals(MainActivity.userProfile.getUsername())){
+                cb01pm.setEnabled(false);
+            }
+        }
+        if(!myMap.get("2pm").equals("not scheduled")){
+            cb02pm.setChecked(true);
+            if( !myMap.get("2pm").equals(MainActivity.userProfile.getUsername())){
+                cb02pm.setEnabled(false);
+            }
+        }
+        if(!myMap.get("3pm").equals("not scheduled")){
+            cb03pm.setChecked(true);
+            if( !myMap.get("3pm").equals(MainActivity.userProfile.getUsername())){
+                cb03pm.setEnabled(false);
+            }
+        }
+        if(!myMap.get("4pm").equals("not scheduled")){
+            cb04pm.setChecked(true);
+            if( !myMap.get("4pm").equals(MainActivity.userProfile.getUsername())){
+                cb04pm.setEnabled(false);
+            }
+        }
+        if(!myMap.get("5pm").equals("not scheduled")){
+            cb05pm.setChecked(true);
+            if( !myMap.get("5pm").equals(MainActivity.userProfile.getUsername())){
+                cb05pm.setEnabled(false);
+            }
+        }
+        if(!myMap.get("6pm").equals("not scheduled")){
+            cb06pm.setChecked(true);
+            if( !myMap.get("6pm").equals(MainActivity.userProfile.getUsername())){
+                cb06pm.setEnabled(false);
+            }
+        }
+        if(!myMap.get("7pm").equals("not scheduled")){
+            cb07pm.setChecked(true);
+            if( !myMap.get("7pm").equals(MainActivity.userProfile.getUsername())){
+                cb07pm.setEnabled(false);
+            }
+        }
+        if(!myMap.get("8pm").equals("not scheduled")){
+            cb08pm.setChecked(true);
+            if( !myMap.get("8pm").equals(MainActivity.userProfile.getUsername())){
+                cb08pm.setEnabled(false);
+            }
+        }
+        if(!myMap.get("9pm").equals("not scheduled")){
+            cb09pm.setChecked(true);
+            if( !myMap.get("9pm").equals(MainActivity.userProfile.getUsername())){
+                cb09pm.setEnabled(false);
+            }
+        }
+        if(!myMap.get("10pm").equals("not scheduled")){
+            cb10pm.setChecked(true);
+            if( !myMap.get("10pm").equals(MainActivity.userProfile.getUsername())){
+                cb10pm.setEnabled(false);
+            }
+        }
+        if(!myMap.get("11pm").equals("not scheduled")){
+            cb11pm.setChecked(true);
+            if( !myMap.get("11pm").equals(MainActivity.userProfile.getUsername())){
+                cb11pm.setEnabled(false);
+            }
+        }
+
+
+
+
     }
 
-    /*public void toDescriptionView(View v) {
-        view.findViewById(R.id.datePicker).setVisibility(View.GONE);
-        view.findViewById(R.id.FABdateAdd).setVisibility(View.GONE);
-
-        view.findViewById(R.id.editTextUserDescription).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.button).setVisibility(View.VISIBLE);
-
-        view.findViewById(R.id.FABcheckbox).setVisibility(View.GONE);
-        view.findViewById(R.id.scrollCheckBox).setVisibility(View.GONE);
-
-    }*/
 
     private void checkBoxtoDatabase(View view) {
         //From: https://stackoverflow.com/questions/9411540/android-get-checked-checkbox-values
         boolean[] checkedBoxes = new boolean[24];
         //boolean hi = ((CheckBox)findViewByID(R.id.checkBox01am)).isChecked();
-        checkedBoxes[0] = cb12am.isChecked();
-        checkedBoxes[1] = cb01am.isChecked();
-        checkedBoxes[2] = cb02am.isChecked();
-        checkedBoxes[3] = cb03am.isChecked();
-        checkedBoxes[4] = cb04am.isChecked();
-        checkedBoxes[5] = cb05am.isChecked();
-        checkedBoxes[6] = cb06am.isChecked();
-        checkedBoxes[7] = cb07am.isChecked();
-        checkedBoxes[8] = cb08am.isChecked();
-        checkedBoxes[9] = cb09am.isChecked();
-        checkedBoxes[10] = cb10am.isChecked();
-        checkedBoxes[11] = cb11am.isChecked();
-        checkedBoxes[12] = cb12pm.isChecked();
-        checkedBoxes[13] = cb01pm.isChecked();
-        checkedBoxes[14] = cb02pm.isChecked();
-        checkedBoxes[15] = cb03pm.isChecked();
-        checkedBoxes[16] = cb04pm.isChecked();
-        checkedBoxes[17] = cb05pm.isChecked();
-        checkedBoxes[18] = cb06pm.isChecked();
-        checkedBoxes[19] = cb07pm.isChecked();
-        checkedBoxes[20] = cb08pm.isChecked();
-        checkedBoxes[21] = cb09pm.isChecked();
-        checkedBoxes[22] = cb10pm.isChecked();
-        checkedBoxes[23] = cb11pm.isChecked();
+        checkedBoxes[0] = (cb12am.isChecked() && cb12am.isEnabled());
+        checkedBoxes[1] = (cb01am.isChecked() && cb01am.isEnabled());
+        checkedBoxes[2] = (cb02am.isChecked() && cb02am.isEnabled());
+        checkedBoxes[3] = (cb03am.isChecked() && cb03am.isEnabled());
+        checkedBoxes[4] = (cb04am.isChecked() && cb04am.isEnabled());
+        checkedBoxes[5] = (cb05am.isChecked() && cb05am.isEnabled());
+        checkedBoxes[6] = (cb06am.isChecked() && cb06am.isEnabled());
+        checkedBoxes[7] = (cb07am.isChecked() && cb07am.isEnabled());
+        checkedBoxes[8] = (cb08am.isChecked() && cb08am.isEnabled());
+        checkedBoxes[9] = (cb09am.isChecked() && cb09am.isEnabled());
+        checkedBoxes[10] = (cb10am.isChecked() && cb10am.isEnabled());
+        checkedBoxes[11] = (cb11am.isChecked() && cb11am.isEnabled());
+        checkedBoxes[12] = (cb12pm.isChecked() && cb12pm.isEnabled());
+        checkedBoxes[13] = (cb01pm.isChecked() && cb01pm.isEnabled());
+        checkedBoxes[14] = (cb02pm.isChecked() && cb02pm.isEnabled());
+        checkedBoxes[15] = (cb03pm.isChecked() && cb03pm.isEnabled());
+        checkedBoxes[16] = (cb04pm.isChecked() && cb04pm.isEnabled());
+        checkedBoxes[17] = (cb05pm.isChecked() && cb05pm.isEnabled());
+        checkedBoxes[18] = (cb06pm.isChecked() && cb06pm.isEnabled());
+        checkedBoxes[19] = (cb07pm.isChecked() && cb07pm.isEnabled());
+        checkedBoxes[20] = (cb08pm.isChecked() && cb08pm.isEnabled());
+        checkedBoxes[21] = (cb09pm.isChecked() && cb09pm.isEnabled());
+        checkedBoxes[22] = (cb10pm.isChecked() && cb10pm.isEnabled());
+        checkedBoxes[23] = (cb11pm.isChecked() && cb11pm.isEnabled());
         String keyTemp;
+
         for(int i=0; i<24; i++) {
             if(checkedBoxes[i]) {
                 if(i==0) {
@@ -452,17 +561,15 @@ public class ViewCalendarItem extends Fragment {
                 }
                 //https://stackoverflow.com/questions/4157972/how-to-update-a-value-given-a-key-in-a-java-hashmap
                 try {
-                    myMap.put(keyTemp, user.getUid());
+//                    myMap.put(keyTemp, user.getUid());
+                    myMap.put(keyTemp, MainActivity.userProfile.getUsername());
+
                 }
                 catch (Exception e) {
                     myMap.put(keyTemp, "unknown user scheduled");
                 }
             }
         }
-        /*
-        TODO:
-        database stuff
-         */
 
         SharedPreferences pref = getContext().getSharedPreferences("MyPref", 0);
         ArrayList<ChipItemSchedule> chipitems = MainActivity.currentGroup.getScheduleChipItems();
@@ -475,11 +582,6 @@ public class ViewCalendarItem extends Fragment {
 
     }
 
-    /*private void descriptionToDatabase(View view) {
-        //From: https://stackoverflow.com/questions/15301157/how-to-set-the-text-entered-in-android-studio-edittext-to-a-variable
-        String description = ((EditText)view.findViewById(R.id.editTextUserDescription)).getText().toString();
-
-    }*/
 
 
     // TODO: Rename method, update argument and hook method into UI event

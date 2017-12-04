@@ -117,50 +117,6 @@ public class ViewListItem extends Fragment {
          * Event listener for children of items (currently only single group functionality works 11/5/2017)
          * Other onChild methods not defined for now, When child is added to the database it gets added to the listview
          */
-//        FirebaseDatabase.getInstance().getReference("items").addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-//                Log.d(TAG, "ListView item clicked." + dataSnapshot.getKey());
-//                listItems.add(dataSnapshot.getValue().toString());
-//                adapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
-//            }
-//
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {
-//            }
-//
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//            }
-//        });
-
-
-        /**
-         * sample listener function
-         */
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Log.d(TAG, "ListView item clicked.");
-//                Log.d(TAG, "LIST ID: " + listView.getItemIdAtPosition(position));
-//            }
-//        });
-//        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-////                listItems.remove(i);
-////                adapter.notifyDataSetChanged();
-//                return true;
-//            }
-//        });
         return view;
     }
 
@@ -291,12 +247,6 @@ public class ViewListItem extends Fragment {
 
 
 
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference("items");
-//        myRef = myRef.push();
-//        myRef.setValue(tempname.getText().toString());
-//        String key = myRef.getKey().toString();
-//        Log.d(TAG, "objectID " +key);
         TextView editText = (TextView)view.findViewById(R.id.itemEdit);
         editText.setText("");
 

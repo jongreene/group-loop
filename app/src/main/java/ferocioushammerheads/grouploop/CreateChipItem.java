@@ -173,7 +173,7 @@ public class CreateChipItem extends Fragment implements View.OnClickListener {
                 editor.putString("itemid", tempID);
                 editor.commit();
                 if(mListener != null){
-                    mListener.onFragmentInteraction("list");
+                    mListener.onFragmentInteraction("List");
                 }
 
                 break;
@@ -187,7 +187,7 @@ public class CreateChipItem extends Fragment implements View.OnClickListener {
                 editor.putString("calID", tempCalID);
                 editor.commit();
                 if(mListener != null){
-                    mListener.onFragmentInteraction("calendar");
+                    mListener.onFragmentInteraction("Schedule");
                 }
                 break;
 

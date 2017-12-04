@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
+import static ferocioushammerheads.grouploop.MainActivity.currentGroup;
 
 /**
  * A fragment with a Google +1 button.
@@ -56,6 +57,8 @@ public class ViewAllChipItems extends Fragment {
 //    private ArrayAdapter<String> listAdapter;
     private ListAdapter listAdapter;
     private ArrayList<AdapterChipItem> list = new ArrayList<AdapterChipItem>();
+    private int textListNum, scheduleListNum;
+
 
 
     public ViewAllChipItems() {
@@ -125,53 +128,46 @@ public class ViewAllChipItems extends Fragment {
         listAdapter = new ListAdapter(view.getContext(), list);
         chipItems.setAdapter(listAdapter);
 
-        DatabaseReference textList = FirebaseDatabase.getInstance().getReference().child("groups").child(MainActivity.currentGroup.getGroupId()).child("textListChipItems");
-//        DatabaseReference schedules = FirebaseDatabase.getInstance().getReference().child("groups").child(MainActivity.currentGroup.getGroupId()).child("chipItemsSchedule");
-//
-//        textList.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-//                    String tempKey = snapshot.getKey();
-//                    ChipItemTextList temp = snapshot.getValue(ChipItemTextList.class);
-//                    AdapterChipItem tempItem = new AdapterChipItem(temp.getName(), tempKey, "List");
-//                    list.add(tempItem);
-//                    listAdapter.notifyDataSetChanged();
-//
-//
-//                }
-////                Log.d("List Data", dataSnapshot.getValue().toString());
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
+        DatabaseReference groupRef = FirebaseDatabase.getInstance().getReference().child("groups").child(MainActivity.currentGroup.getGroupId());
 
-        //TODO: convert childeventlistener back to valueEventListener
-        textList.addChildEventListener(new ChildEventListener() {
+        groupRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                    String tempKey = dataSnapshot.getKey();
-                    ChipItemTextList temp = dataSnapshot.getValue(ChipItemTextList.class);
-                    AdapterChipItem tempItem = new AdapterChipItem(temp.getName(), tempKey, "List");
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                listAdapter.clear();
+                UserGroup tempGroup = dataSnapshot.getValue(UserGroup.class);
+                MainActivity.currentGroup.setTextListChipItems(tempGroup.getTextListChipItems());
+                MainActivity.currentGroup.setScheduleChipItems(tempGroup.getScheduleChipItems());
+//                MainActivity.mDatabase.child("groups").child(currentGroup.getGroupId()).child("textListChipItems").setValue(currentGroup.getTextListChipItems());
+//                MainActivity.mDatabase.child("groups").child(currentGroup.getGroupId()).child("scheduleChipItems").setValue(currentGroup.getTextListChipItems());
+
+                int i = 0;
+                for(ChipItemTextList textList : tempGroup.getTextListChipItems()){
+                    String tempKey = String.valueOf(i);
+                    AdapterChipItem tempItem = new AdapterChipItem(textList.getName(), tempKey, "List");
                     list.add(tempItem);
                     listAdapter.notifyDataSetChanged();
+                    i = i+1;
+
+                }
+
+
+                i = 0;
+                for(ChipItemSchedule schedule : tempGroup.getScheduleChipItems()){
+                    String tempKey = String.valueOf(i);
+                    AdapterChipItem tempItem = new AdapterChipItem(schedule.getName(), tempKey, "Schedule");
+                    list.add(tempItem);
+                    listAdapter.notifyDataSetChanged();
+                    i = i+1;
+
+                }
+
+
             }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
+            public void onCancelled(DatabaseError databaseError) {
+
             }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {}
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
         });
 
         chipItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -185,10 +181,17 @@ public class ViewAllChipItems extends Fragment {
 
                 SharedPreferences pref = getContext().getSharedPreferences("MyPref", 0);
                 SharedPreferences.Editor editor = pref.edit();
-                editor.putString("itemid", temp.getID());
-                editor.commit();
-                Log.d("sharedpref",pref.getString("itemid", null));
-                mListener.onFragmentInteraction(view);
+                if(temp.getType().equals("List")){
+                    editor.putString("itemid", temp.getID());
+                    editor.commit();
+                    Log.d("sharedpref",pref.getString("itemid", null));
+                    mListener.onFragmentInteraction("List");
+                }
+                else{
+                    editor.putString("calID", temp.getID());
+                    editor.commit();
+                    mListener.onFragmentInteraction("Schedule");
+                }
 
 
             }
@@ -232,7 +235,7 @@ public class ViewAllChipItems extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(String test);
+        void onFragmentInteraction(String frag);
         void onFragmentInteraction(View view);
         void onFragmentInteraction();
     }

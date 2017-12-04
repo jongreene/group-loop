@@ -128,8 +128,6 @@ public class ViewAllChipItems extends Fragment {
         listAdapter = new ListAdapter(view.getContext(), list);
         chipItems.setAdapter(listAdapter);
 
-//        DatabaseReference textList = FirebaseDatabase.getInstance().getReference().child("groups").child(MainActivity.currentGroup.getGroupId()).child("textListChipItems");
-//        DatabaseReference schedules = FirebaseDatabase.getInstance().getReference().child("groups").child(MainActivity.currentGroup.getGroupId()).child("scheduleChipItems");
         DatabaseReference groupRef = FirebaseDatabase.getInstance().getReference().child("groups").child(MainActivity.currentGroup.getGroupId());
 
         groupRef.addValueEventListener(new ValueEventListener() {
@@ -171,110 +169,6 @@ public class ViewAllChipItems extends Fragment {
 
             }
         });
-
-//        textList.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                ArrayList<ChipItemTextList> templist = (ArrayList<ChipItemTextList>) dataSnapshot.getValue();
-//                if(templist == null){
-//                    templist = new ArrayList<>();
-//                }
-//                listAdapter.clear();
-//                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-//                    String tempKey = snapshot.getKey();
-//                    ChipItemTextList temp = snapshot.getValue(ChipItemTextList.class);
-//                    AdapterChipItem tempItem = new AdapterChipItem(temp.getName(), tempKey, "List");
-//                    list.add(tempItem);
-//                    listAdapter.notifyDataSetChanged();
-//
-//
-//                }
-//                ArrayList<ChipItemSchedule> sList = MainActivity.currentGroup.getScheduleChipItems();
-//                int i = 0;
-//                for(ChipItemSchedule schedule : sList){
-//                    String tempKey = String.valueOf(i);
-//                    AdapterChipItem tempItem = new AdapterChipItem(schedule.getName(), tempKey, "Schedule");
-//                    list.add(tempItem);
-//                    listAdapter.notifyDataSetChanged();
-//
-//                }
-//
-////                Log.d("List Data", dataSnapshot.getValue().toString());
-//                MainActivity.currentGroup.setTextListChipItems(templist);
-//                MainActivity.mDatabase.child("groups").child(currentGroup.getGroupId()).child("textListChipItems").setValue(currentGroup.getTextListChipItems());
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                Log.d("Database Error", databaseError.toString());
-//            }
-//        });
-
-//        schedules.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                ArrayList<ChipItemSchedule> templist = (ArrayList<ChipItemSchedule>) dataSnapshot.getValue();
-//                if(templist == null){
-//                    templist = new ArrayList<>();
-//                }
-//                ArrayList<ChipItemTextList> textList = MainActivity.currentGroup.getTextListChipItems();
-//                listAdapter.clear();
-//                int i = 0;
-//                for(ChipItemTextList item : textList){
-//                    String tempKey = String.valueOf(i);
-//                    AdapterChipItem tempItem = new AdapterChipItem(item.getName(), tempKey, "List");
-//                    list.add(tempItem);
-//                    listAdapter.notifyDataSetChanged();
-//
-//                }
-//                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-//                    String tempKey = snapshot.getKey();
-//                    ChipItemSchedule temp = snapshot.getValue(ChipItemSchedule.class);
-//                    AdapterChipItem tempItem = new AdapterChipItem(temp.getName(), tempKey, "Schedule");
-//                    list.add(tempItem);
-//                    listAdapter.notifyDataSetChanged();
-//
-//                }
-////                Log.d("List Data", dataSnapshot.getValue().toString());
-//                MainActivity.currentGroup.setScheduleChipItems(templist);
-//                MainActivity.mDatabase.child("groups").child(currentGroup.getGroupId()).child("scheduleChipItems").setValue(currentGroup.getTextListChipItems());
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                Log.d("Database Error", databaseError.toString());
-//            }
-//        });
-
-
-
-
-        //TODO: convert childeventlistener back to valueEventListener
-//        textList.addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-//                    String tempKey = dataSnapshot.getKey();
-//                    ChipItemTextList temp = dataSnapshot.getValue(ChipItemTextList.class);
-//                    AdapterChipItem tempItem = new AdapterChipItem(temp.getName(), tempKey, "List");
-//                    list.add(tempItem);
-//                    listAdapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
-//            }
-//
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {}
-//
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {}
-//        });
 
         chipItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

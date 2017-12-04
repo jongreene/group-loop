@@ -253,9 +253,12 @@ public class AccountTools {
                 UserGroup tmpGroup = dataSnapshot.getValue(UserGroup.class);
                 MainActivity.currentGroup = tmpGroup;
 
+                MainActivity.currentGroup.addMember(MainActivity.userProfile.getUserId());
+
 //                setSomethingHappened(true);
 //                toastUp("UserGroup changed.");
 //                setSomethingHappened(false);
+
             }
 
             @Override
@@ -295,5 +298,12 @@ public class AccountTools {
             }
         };
         mDatabaseRef.addValueEventListener(postListener);
+    }
+
+    public void updateGroupMembers(){
+        String ref = "/groups/" + MainActivity.currentGroup.getGroupId() + "/members/";
+        MainActivity.mDatabase
+                .child(ref)
+                .setValue(MainActivity.currentGroup.getMembers());
     }
 }

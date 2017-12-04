@@ -41,10 +41,16 @@ public class UserGroup {
         scheduleChipItems.add(chipItemSchedule);
     }
 
+    public boolean removeMember(String userId){
+        members = nullArrayListCheck(members);
+        int index = members.indexOf(userId);
 
-
-
-
+        if (members.size() > index && index >= 0) {
+            members.remove(index);
+            return true;
+        }
+        return false;
+    }
 
     public boolean removeMember(int index){
         members = nullArrayListCheck(members);

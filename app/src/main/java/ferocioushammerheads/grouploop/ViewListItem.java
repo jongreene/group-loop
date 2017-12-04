@@ -61,6 +61,7 @@ public class ViewListItem extends Fragment {
     private Button mAddNewItem;
     private ButtonClickListener mButtonClickListener;
     private ListView listView;
+    private boolean removeFlag;
 //    private SharedPreferences pref = getContext().getSharedPreferences("MyPref", 0);
 
     public ViewListItem() {
@@ -165,71 +166,53 @@ public class ViewListItem extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
+        removeFlag = true;
         SharedPreferences pref = getContext().getSharedPreferences("MyPref", 0);
 //        SharedPreferences.Editor editor = pref.edit();
-        String tempID = pref.getString("itemid", null);
+        final String tempID = pref.getString("itemid", null);
         Log.d("Sharedpred", tempID);
 
         listView = (ListView) view.findViewById(R.id.List);
         adapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1, listItems);
         listView.setAdapter(adapter);
 
-        DatabaseReference textList = FirebaseDatabase.getInstance().getReference().child("groups").child(MainActivity.currentGroup.getGroupId()).child("chipItems").child(tempID).child("items");
-//        textList.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-//                    String tempKey = (String) snapshot.getValue();
-//                    listItems.add(tempKey);
-//                    adapter.notifyDataSetChanged();
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-            textList.addChildEventListener(new ChildEventListener() {
-                       @Override
-                       public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                           String tempKey = (String) dataSnapshot.getValue();
-                           listItems.add(tempKey);
-                           adapter.notifyDataSetChanged();
-                       }
+        DatabaseReference textList = FirebaseDatabase.getInstance().getReference().child("groups").child(MainActivity.currentGroup.getGroupId()).child("textListChipItems").child(tempID).child("items");
+        textList.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                adapter.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    String tempKey = (String) snapshot.getValue();
+                    listItems.add(tempKey);
+                    adapter.notifyDataSetChanged();
+                }
+                ArrayList<ChipItemTextList> chipitems = MainActivity.currentGroup.getTextListChipItems();
+                int itemIndex = Integer.parseInt(tempID);
+                chipitems.get(itemIndex).setItems(listItems);
+                MainActivity.currentGroup.setTextListChipItems(chipitems);
+                MainActivity.mDatabase.child("groups").child(currentGroup.getGroupId()).child("textListChipItems").setValue(currentGroup.getTextListChipItems());
 
-                       @Override
-                       public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
-                       }
 
-                       @Override
-                       public void onChildRemoved(DataSnapshot dataSnapshot) {
-                           int rowIndex = Integer.parseInt(dataSnapshot.getKey());
-                           listItems.remove(rowIndex);
-                           adapter.notifyDataSetChanged();
+            }
 
-                       }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("Database Error", databaseError.toString());
 
-                       @Override
-                       public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
-
-                       @Override
-                       public void onCancelled(DatabaseError databaseError) {}
-                   });
-
+            }
+        });
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             SharedPreferences pref = getContext().getSharedPreferences("MyPref", 0);
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ArrayList<ChipItemTextList> chipitems = MainActivity.currentGroup.getChipItems();
+//                removeFlag = false;
+                ArrayList<ChipItemTextList> chipitems = MainActivity.currentGroup.getTextListChipItems();
                 int itemIndex = Integer.parseInt(pref.getString("itemid", null));
-                chipitems.get(itemIndex).removeItemAt(i);
-//                listItems.remove(i);
-//                adapter.clear();
-                MainActivity.currentGroup.setChipItems(chipitems);
-                MainActivity.mDatabase.child("groups").child(currentGroup.getGroupId()).child("chipItems").setValue(currentGroup.getChipItems());
+                listItems.remove(i);
+                chipitems.get(itemIndex).setItems(listItems);
+                MainActivity.currentGroup.setTextListChipItems(chipitems);
+                MainActivity.mDatabase.child("groups").child(currentGroup.getGroupId()).child("textListChipItems").setValue(currentGroup.getTextListChipItems());
 
 
                 return true;
@@ -298,13 +281,13 @@ public class ViewListItem extends Fragment {
     public void addItems(View v) {
         SharedPreferences pref = getContext().getSharedPreferences("MyPref", 0);
         EditText tempname   = (EditText)view.findViewById(R.id.itemEdit);
-        ArrayList<ChipItemTextList> chipitems = MainActivity.currentGroup.getChipItems();
+        ArrayList<ChipItemTextList> chipitems = MainActivity.currentGroup.getTextListChipItems();
         int itemIndex = Integer.parseInt(pref.getString("itemid", null));
         String temptext = tempname.getText().toString();
         chipitems.get(itemIndex).addItem(temptext);
 //        adapter.clear();
-        MainActivity.currentGroup.setChipItems(chipitems);
-        MainActivity.mDatabase.child("groups").child(currentGroup.getGroupId()).child("chipItems").setValue(currentGroup.getChipItems());
+        MainActivity.currentGroup.setTextListChipItems(chipitems);
+        MainActivity.mDatabase.child("groups").child(currentGroup.getGroupId()).child("textListChipItems").setValue(currentGroup.getTextListChipItems());
 
 
 

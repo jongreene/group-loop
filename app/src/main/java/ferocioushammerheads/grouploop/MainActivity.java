@@ -35,7 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity implements AccountToolsHelper{
-    private static final String TAG = "AccountTools";
+    private static final String TAG = "MainActivity";
 
 
     private Button mChipItemsButton, mPreferencesButton;
@@ -92,10 +92,6 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
         if(user != null) {
             firebaseTools.loadProfile();
         }
-
-        updateUserEnvironment();
-
-        context = this.getBaseContext();
     }
 
     private class ButtonClickListener implements View.OnClickListener {
@@ -166,7 +162,9 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
 
     // Define the actual handler for the event.
     public static DatabaseReference mDatabaseRef;
-    public void loadProfileEvent() {}
+    public void loadProfileEvent() {
+        updateUserEnvironment();
+    }
     public void toastUp(String toastText){
         Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show();
     }

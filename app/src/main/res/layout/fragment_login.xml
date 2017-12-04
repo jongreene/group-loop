@@ -125,7 +125,7 @@
 
                 <Button
                     android:id="@+id/email_sign_in_button"
-                    style="@android:style/Widget.DeviceDefault.Button"
+                    style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -133,7 +133,7 @@
 
                 <Button
                     android:id="@+id/email_create_account_button"
-                    style="@style/Widget.AppCompat.Button.Small"
+                    style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

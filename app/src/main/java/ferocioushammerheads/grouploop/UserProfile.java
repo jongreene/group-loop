@@ -59,9 +59,11 @@ public class UserProfile {
         String groupListString = "";
         int count = 1;
         for(String group : groupList){
-            groupListString.concat(group);
+//            groupListString.concat(group);
+            groupListString += group;
             if(count < groupList.size()){
-                groupListString.concat(", ");
+//                groupListString.concat(", ");
+                groupListString += ", ";
             }
             count++;
         }

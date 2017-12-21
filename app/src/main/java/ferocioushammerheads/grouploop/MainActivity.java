@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements AccountToolsHelpe
         firebaseTools = AccountTools.getInstance();
         firebaseTools.setupTools(this, mAuth, mDatabase);
 
-//        firebaseTools.signOut();
+        //firebaseTools.signOut();
         if(user != null) {
             firebaseTools.loadProfile();
         }
